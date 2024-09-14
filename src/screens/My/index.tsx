@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {useTranslation} from 'react-i18next';
 
 const MyScreen = () => {
+  const {t} = useTranslation();
   return (
     <View>
-      <Text>MyScreen</Text>
+      <Text style={{color: 'black'}}>{t('tabs_name.my')}</Text>
     </View>
-  )
-}
+  );
+};
 
-export default MyScreen
+export default MyScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

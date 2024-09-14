@@ -1,10 +1,12 @@
 {
-    "tabs_name": {
-      "home": "Home",
-      "other_chefs": "Other_Chefs",
-      "kitchen": "Kitchen",
-      "chat_bot": "Co-Chef",
-      "my": "My"
-    }
+  "tabs_name": {
+    "home": "Home",
+    "other_chefs": "Other_Chefs",
+    "kitchen": "Kitchen",
+    "chat_bot": "Co-Chef",
+    "my": "My"
+  },
+  "home": {
+    "recommend_for_you": "Recommended Dish"
   }
-  
+}

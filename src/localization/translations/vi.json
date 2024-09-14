@@ -1,10 +1,13 @@
 {
     "tabs_name": {
-      "home": "Home",
-      "other_chefs": "Other_Chefs",
-      "kitchen": "Kitchen",
+      "home": "Trang chủ",
+      "other_chefs": "Đầu bếp khác",
+      "kitchen": "Bếp của tôi",
       "chat_bot": "Co-Chef",
-      "my": "My"
+      "my": "Cá nhân"
+    },
+    "home": {
+      "recommend_for_you": "Recommended Dish"
     }
   }
   
