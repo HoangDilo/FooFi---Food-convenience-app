@@ -20,14 +20,7 @@ import MyScreen from '@/screens/My';
 import MyTab from '@/assets/icons/MyTab';
 import MyTabActive from '@/assets/icons/MyTabActive';
 import colorsConstant from '@/constants/colors.constant';
-
-type MainTabParamList = {
-  home_tab: undefined;
-  other_chefs: undefined;
-  kitchen: undefined;
-  chat_bot: undefined;
-  my: undefined;
-};
+import { MainTabParamList } from '@/types/navigation.type';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 

@@ -1,5 +1,5 @@
 import {Image, Pressable, StyleSheet, View} from 'react-native';
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import {deviceWidth} from '@/constants/device.constant';
 import {useTranslation} from 'react-i18next';
 import Typo from '@/components/Typo';
@@ -7,16 +7,17 @@ import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
 import colorsConstant from '@/constants/colors.constant';
 import IconXML from '@/components/IconXML';
 import ChevronRight from '@/assets/icons/ChevronRight';
-import { useNavigation } from '@react-navigation/native';
-import { TAB } from '@/constants/tabs.constant';
+import {useNavigation} from '@react-navigation/native';
 
 const RecommendSection = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
 
   const handlePress = useCallback(() => {
-    navigation.navigate(TAB.CHAT_BOT);
-  }, [])
+    navigation.navigate('my', {
+      id: 12,
+    });
+  }, []);
 
   return (
     <Pressable style={styles.wrapper} onPress={handlePress}>
