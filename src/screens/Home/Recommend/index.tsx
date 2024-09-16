@@ -28,11 +28,11 @@ const RecommendSection = () => {
       />
       <View style={styles.floatingView}>
         <View style={styles.gradientWrapper}>
-          <Svg height="120" width="100%" style={{flex: 1}}>
+          <Svg height="140" width="100%" style={{flex: 1}}>
             <Defs>
               <LinearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <Stop offset="0%" stopColor="#FFF" stopOpacity="0" />
-                <Stop offset="100%" stopColor="#FFFFFF" stopOpacity="1" />
+                <Stop offset="0%" stopColor="#000" stopOpacity="0" />
+                <Stop offset="100%" stopColor="#000" stopOpacity="1" />
               </LinearGradient>
             </Defs>
             <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   gradientWrapper: {
     width: deviceWidth,
-    height: 120,
+    height: 140,
     position: 'absolute',
     bottom: 0,
     zIndex: 0,
