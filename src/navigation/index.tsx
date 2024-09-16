@@ -3,7 +3,11 @@ import {STACK} from '../constants/screens.constant';
 import {NavigationContainer} from '@react-navigation/native';
 import TabNavigator from './TabNavigator';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  "main_tab": undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function MainNavigator() {
   return (
@@ -12,7 +16,7 @@ export default function MainNavigator() {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name={STACK.MAIN_TAB} component={TabNavigator} />
+        <Stack.Screen name={STACK.MAIN_TAB as "main_tab"} component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );

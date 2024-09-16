@@ -1,16 +1,25 @@
-import {Image, StyleSheet, View} from 'react-native';
-import React from 'react';
+import {Image, Pressable, StyleSheet, View} from 'react-native';
+import React, { useCallback } from 'react';
 import {deviceWidth} from '@/constants/device.constant';
 import {useTranslation} from 'react-i18next';
 import Typo from '@/components/Typo';
 import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
 import colorsConstant from '@/constants/colors.constant';
+import IconXML from '@/components/IconXML';
+import ChevronRight from '@/assets/icons/ChevronRight';
+import { useNavigation } from '@react-navigation/native';
+import { TAB } from '@/constants/tabs.constant';
 
 const RecommendSection = () => {
   const {t} = useTranslation();
+  const navigation = useNavigation();
+
+  const handlePress = useCallback(() => {
+    navigation.navigate(TAB.CHAT_BOT);
+  }, [])
 
   return (
-    <View style={styles.wrapper}>
+    <Pressable style={styles.wrapper} onPress={handlePress}>
       <Image
         source={{
           uri: 'https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg',
@@ -33,10 +42,13 @@ const RecommendSection = () => {
           <Typo style={styles.recommendLabel}>
             {t('home.recommend_for_you')}
           </Typo>
-          <Typo style={styles.dishName}>Bún chả Hà Lội</Typo>
+          <View style={styles.dishNameWrapper}>
+            <IconXML icon={ChevronRight} height={24} width={24} />
+            <Typo style={styles.dishName}>Bún chả Hà Lội</Typo>
+          </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -53,29 +65,40 @@ const styles = StyleSheet.create({
   floatingView: {
     position: 'absolute',
     bottom: 0,
+    width: '100%',
+    flex: 1,
   },
   textsWrapper: {
     paddingHorizontal: 12,
     marginBottom: 12,
+    flex: 1,
+    zIndex: 1,
   },
   recommendLabel: {
     color: colorsConstant.primary,
     fontSize: 16,
-    lineHeight: 18,
+    lineHeight: 20,
     fontWeight: '400',
     fontStyle: 'italic',
   },
   dishName: {
     fontWeight: 700,
     fontSize: 32,
-    lineHeight: 38,
+    lineHeight: 40,
     color: colorsConstant.primary,
     marginLeft: 8,
+  },
+  dishNameWrapper: {
+    flexDirection: 'row',
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 4,
   },
   gradientWrapper: {
     width: deviceWidth,
     height: 200,
     position: 'absolute',
     bottom: 0,
+    zIndex: 0,
   },
 });

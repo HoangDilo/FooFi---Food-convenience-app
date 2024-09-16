@@ -21,7 +21,15 @@ import MyTab from '@/assets/icons/MyTab';
 import MyTabActive from '@/assets/icons/MyTabActive';
 import colorsConstant from '@/constants/colors.constant';
 
-const Tab = createBottomTabNavigator();
+type MainTabParamList = {
+  home_tab: undefined;
+  other_chefs: undefined;
+  kitchen: undefined;
+  chat_bot: undefined;
+  my: undefined;
+};
+
+const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const tabIcon = {
   home_tab: {
@@ -76,11 +84,14 @@ const TabNavigator = () => {
           tabBarLabelStyle: styles.lablItem,
         };
       }}>
-      <Tab.Screen name={TAB.HOME_TAB} component={HomeScreen} />
-      <Tab.Screen name={TAB.OTHER_CHEFS} component={OtherChefsScreen} />
-      <Tab.Screen name={TAB.KITCHEN} component={KitchenScreen} />
-      <Tab.Screen name={TAB.CHAT_BOT} component={ChatBotScreen} />
-      <Tab.Screen name={TAB.MY} component={MyScreen} />
+      <Tab.Screen name={TAB.HOME_TAB as 'home_tab'} component={HomeScreen} />
+      <Tab.Screen
+        name={TAB.OTHER_CHEFS as 'other_chefs'}
+        component={OtherChefsScreen}
+      />
+      <Tab.Screen name={TAB.KITCHEN as 'kitchen'} component={KitchenScreen} />
+      <Tab.Screen name={TAB.CHAT_BOT as 'chat_bot'} component={ChatBotScreen} />
+      <Tab.Screen name={TAB.MY as 'my'} component={MyScreen} />
     </Tab.Navigator>
   );
 };
