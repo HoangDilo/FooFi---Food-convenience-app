@@ -1,23 +1,44 @@
-import {Image, Pressable, StyleSheet, View} from 'react-native';
-import React, {useCallback} from 'react';
+import {
+  Animated,
+  Easing,
+  Image,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
+import React, {useCallback, useRef} from 'react';
 import {deviceWidth} from '@/constants/device.constant';
 import {useTranslation} from 'react-i18next';
 import Typo from '@/components/Typo';
 import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
-import colorsConstant from '@/constants/colors.constant';
 import IconXML from '@/components/IconXML';
-import ChevronRight from '@/assets/icons/ChevronRight';
-import {useNavigation} from '@react-navigation/native';
+import ChevronRight from '@/assets/icons/ChevronRightWhite';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const RecommendSection = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
 
+  const changeDetail = useRef(new Animated.Value(1)).current;
+
   const handlePress = useCallback(() => {
-    navigation.navigate('my', {
-      id: 12,
+    Animated.timing(changeDetail, {
+      toValue: 0,
+      duration: 1000,
+      easing: Easing.bezier(0.65, 0, 0.35, 1),
+      useNativeDriver: true,
+    }).start(() => {
+      navigation.navigate('instruction', {
+        dish_id: 1,
+      });
     });
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      changeDetail.setValue(1);
+    }, []),
+  );
 
   return (
     <Pressable style={styles.wrapper} onPress={handlePress}>
@@ -43,10 +64,24 @@ const RecommendSection = () => {
           <Typo style={styles.recommendLabel}>
             {t('home.recommend_for_you')}
           </Typo>
-          <View style={styles.dishNameWrapper}>
+          <Animated.View
+            style={[
+              styles.dishNameWrapper,
+              {
+                opacity: changeDetail,
+                transform: [
+                  {
+                    translateX: changeDetail.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [100, 0],
+                    }),
+                  },
+                ],
+              },
+            ]}>
             <IconXML icon={ChevronRight} height={24} width={24} />
             <Typo style={styles.dishName}>Bún chả Hà Lội</Typo>
-          </View>
+          </Animated.View>
         </View>
       </View>
     </Pressable>
@@ -76,7 +111,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   recommendLabel: {
-    color: colorsConstant.primary,
+    color: '#FFF',
     fontSize: 16,
     lineHeight: 20,
     fontWeight: '400',
@@ -86,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: 32,
     lineHeight: 40,
-    color: colorsConstant.primary,
+    color: '#FFF',
     marginLeft: 8,
   },
   dishNameWrapper: {
