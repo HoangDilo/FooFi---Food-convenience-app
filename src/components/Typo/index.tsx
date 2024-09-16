@@ -1,28 +1,43 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, TextProps} from 'react-native';
+import React, {useMemo} from 'react';
 
 const InterFont = {
-  normal: 'normal',
-  bold: 'bold',
-  '100': 'light',
-  '200': 'light',
-  '300': 'light',
-  '400': 'normal',
-  '500': 'normal',
-  '600': 'semi-bold',
-  '700': 'bold',
-  '800': 'extra-bold',
-  '900': 'extra-bold',
+  normal: 'Regular',
+  bold: 'Bold',
+  '100': 'Light',
+  '200': 'Light',
+  '300': 'Light',
+  '400': 'Regular',
+  '500': 'Medium',
+  '600': 'SemiBold',
+  '700': 'Bold',
+  '800': 'ExtraBold',
+  '900': 'ExtraBold',
 };
 
-const Typo = () => {
+interface ITypoProps extends TextProps {}
+
+const Typo = (props: ITypoProps) => {
+  const {fontWeight = '400', fontStyle} = StyleSheet.flatten(props.style || {});
+  const fontFamily = useMemo(() => {
+    if (fontWeight.toString() === '400') {
+      return `Inter-${fontStyle === 'italic' ? 'Italic' : 'Regular'}`;
+    }
+    return `Inter-${
+      InterFont[fontWeight.toString() as keyof typeof InterFont]
+    }${fontStyle === 'italic' ? 'Italic' : ''}`;
+  }, []);
+
   return (
-    <View>
-      <Text>Typo</Text>
-    </View>
+    <Text {...props} style={[props.style, {fontFamily}, styles.disableStyle]} />
   );
 };
 
 export default Typo;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  disableStyle: {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+  },
+});

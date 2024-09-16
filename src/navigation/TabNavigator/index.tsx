@@ -19,6 +19,7 @@ import ChatBotActive from '@/assets/icons/ChatBotActive';
 import MyScreen from '@/screens/My';
 import MyTab from '@/assets/icons/MyTab';
 import MyTabActive from '@/assets/icons/MyTabActive';
+import colorsConstant from '@/constants/colors.constant';
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +67,7 @@ const TabNavigator = () => {
               height={24}
             />
           ),
-          tabBarActiveTintColor: '#f55600',
+          tabBarActiveTintColor: colorsConstant.primary,
           tabBarInactiveTintColor: '#8a8a8a',
           headerShown: false,
           title: tabIcon[route.name as keyof typeof tabIcon].label,

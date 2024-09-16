@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import Typo from '@/components/Typo';
 
 const ChatBotScreen = () => {
   return (
     <View>
-      <Text>ChatBotScreen</Text>
+      <Typo>ChatBotScreen</Typo>
     </View>
-  )
-}
+  );
+};
 
-export default ChatBotScreen
+export default ChatBotScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

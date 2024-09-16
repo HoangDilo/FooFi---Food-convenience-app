@@ -1,12 +1,13 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
+import Typo from '@/components/Typo';
 
 const MyScreen = () => {
   const {t} = useTranslation();
   return (
     <View>
-      <Text style={{color: 'black'}}>{t('tabs_name.my')}</Text>
+      <Typo style={{color: 'black'}}>{t('tabs_name.my')}</Typo>
     </View>
   );
 };
