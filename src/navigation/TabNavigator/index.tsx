@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Animated, Easing, StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {TAB} from '@/constants/tabs.constant';
@@ -20,7 +20,9 @@ import MyScreen from '@/screens/My';
 import MyTab from '@/assets/icons/MyTab';
 import MyTabActive from '@/assets/icons/MyTabActive';
 import colorsConstant from '@/constants/colors.constant';
-import { MainTabParamList } from '@/types/navigation.type';
+import {MainTabParamList} from '@/types/navigation.type';
+import {useAppSelector} from '@/hooks/redux';
+import {useEffect, useRef} from 'react';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -53,6 +55,20 @@ const tabIcon = {
 };
 
 const TabNavigator = () => {
+  const {isBottomTabHidden} = useAppSelector(state => state.system);
+  const hideAnimation = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (hideAnimation) {
+      Animated.timing(hideAnimation, {
+        toValue: 0,
+        easing: Easing.linear,
+        useNativeDriver: true,
+        duration: 1000,
+      }).start();
+    }
+  }, [isBottomTabHidden]);
+
   return (
     <Tab.Navigator
       screenOptions={({route}) => {
@@ -72,9 +88,12 @@ const TabNavigator = () => {
           tabBarInactiveTintColor: '#8a8a8a',
           headerShown: false,
           title: tabIcon[route.name as keyof typeof tabIcon].label,
-          tabBarStyle: styles.tabBarStyle,
+          tabBarStyle: [
+            styles.tabBarStyle,
+            {display: isBottomTabHidden ? 'none' : 'flex'},
+          ],
           tabBarItemStyle: styles.tabBarItem,
-          tabBarLabelStyle: styles.lablItem,
+          tabBarLabelStyle: styles.labelItem,
         };
       }}>
       <Tab.Screen name={TAB.HOME_TAB as 'home_tab'} component={HomeScreen} />
@@ -94,7 +113,7 @@ export default TabNavigator;
 const styles = StyleSheet.create({
   tabBarStyle: {
     borderTopWidth: 1,
-    borderTopColor: '#FFFFFF',
+    borderTopColor: colorsConstant.gray_3,
     height: 80,
     elevation: 10,
     shadowColor: '#000',
@@ -106,7 +125,7 @@ const styles = StyleSheet.create({
   tabBarItem: {
     paddingTop: 8,
   },
-  lablItem: {
+  labelItem: {
     fontSize: 12,
     fontWeight: 500,
   },

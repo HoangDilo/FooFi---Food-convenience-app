@@ -14,14 +14,18 @@ import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
 import IconXML from '@/components/IconXML';
 import ChevronRight from '@/assets/icons/ChevronRightWhite';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useAppDispatch} from '@/hooks/redux';
+import {setIsBottomTabHidden} from '@/store/reducers/system.reducer';
 
 const RecommendSection = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
 
   const changeDetail = useRef(new Animated.Value(1)).current;
 
   const handlePress = useCallback(() => {
+    dispatch(setIsBottomTabHidden(true));
     Animated.timing(changeDetail, {
       toValue: 0,
       duration: 1000,
@@ -37,6 +41,7 @@ const RecommendSection = () => {
   useFocusEffect(
     useCallback(() => {
       changeDetail.setValue(1);
+      dispatch(setIsBottomTabHidden(false));
     }, []),
   );
 
@@ -61,9 +66,22 @@ const RecommendSection = () => {
           </Svg>
         </View>
         <View style={styles.textsWrapper}>
-          <Typo style={styles.recommendLabel}>
-            {t('home.recommend_for_you')}
-          </Typo>
+          <Animated.View
+            style={{
+              opacity: changeDetail,
+              transform: [
+                {
+                  translateY: changeDetail.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [-20, 0],
+                  }),
+                },
+              ],
+            }}>
+            <Typo style={styles.recommendLabel}>
+              {t('home.recommend_for_you')}
+            </Typo>
+          </Animated.View>
           <Animated.View
             style={[
               styles.dishNameWrapper,

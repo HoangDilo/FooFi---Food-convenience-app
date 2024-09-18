@@ -4,8 +4,6 @@ import {useAppSelector} from '@/hooks/redux';
 
 const StatusBarCustom = () => {
   const {isScrolling} = useAppSelector(state => state.system);
-  console.log(isScrolling);
-
   return (
     <StatusBar
       barStyle={isScrolling ? 'dark-content' : 'light-content'}

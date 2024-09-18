@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const systemSliceInitialState = {
   isScrolling: false,
+  isBottomTabHidden: false,
 };
 
 export const systemSlice = createSlice({
@@ -11,9 +12,12 @@ export const systemSlice = createSlice({
     setIsScrolling: (state, action: PayloadAction<boolean>) => {
       state.isScrolling = action.payload;
     },
+    setIsBottomTabHidden: (state, action: PayloadAction<boolean>) => {
+      state.isBottomTabHidden = action.payload;
+    },
   },
 });
 
-export const {setIsScrolling} = systemSlice.actions;
+export const {setIsScrolling, setIsBottomTabHidden} = systemSlice.actions;
 
 export default systemSlice.reducer;
