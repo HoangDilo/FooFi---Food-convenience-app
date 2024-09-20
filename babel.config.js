@@ -4,12 +4,23 @@ module.exports = {
     [
       'module-resolver',
       {
-        extensions: ['.ios.js', '.android.js', '.ios.jsx', '.android.jsx', '.js', '.jsx', '.json', '.ts', '.tsx'],
+        extensions: [
+          '.ios.js',
+          '.android.js',
+          '.ios.jsx',
+          '.android.jsx',
+          '.js',
+          '.jsx',
+          '.json',
+          '.ts',
+          '.tsx',
+        ],
         root: ['.'],
         alias: {
-          '@': './src'
+          '@': './src',
         },
       },
+      'react-native-reanimated/plugin',
     ],
-  ]
+  ],
 };

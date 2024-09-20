@@ -1,7 +1,6 @@
 import {
   Animated,
   Easing,
-  Image,
   Pressable,
   StyleSheet,
   View,
@@ -16,6 +15,7 @@ import ChevronRight from '@/assets/icons/ChevronRightWhite';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '@/hooks/redux';
 import {setIsBottomTabHidden} from '@/store/reducers/system.reducer';
+import FastImage from 'react-native-fast-image';
 
 const RecommendSection = () => {
   const {t} = useTranslation();
@@ -47,7 +47,7 @@ const RecommendSection = () => {
 
   return (
     <Pressable style={styles.wrapper} onPress={handlePress}>
-      <Image
+      <FastImage
         source={{
           uri: 'https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg',
         }}
@@ -96,7 +96,8 @@ const RecommendSection = () => {
                   },
                 ],
               },
-            ]}>
+            ]}
+            >
             <IconXML icon={ChevronRight} height={24} width={24} />
             <Typo style={styles.dishName}>Bún chả Hà Lội</Typo>
           </Animated.View>
