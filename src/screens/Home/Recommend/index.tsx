@@ -1,10 +1,4 @@
-import {
-  Animated,
-  Easing,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Animated, Easing, Pressable, StyleSheet, View} from 'react-native';
 import React, {useCallback, useRef} from 'react';
 import {deviceWidth} from '@/constants/device.constant';
 import {useTranslation} from 'react-i18next';
@@ -96,8 +90,7 @@ const RecommendSection = () => {
                   },
                 ],
               },
-            ]}
-            >
+            ]}>
             <IconXML icon={ChevronRight} height={24} width={24} />
             <Typo style={styles.dishName}>Bún chả Hà Lội</Typo>
           </Animated.View>

@@ -1,13 +1,14 @@
 {
-    "tabs_name": {
-      "home": "Trang chủ",
-      "other_chefs": "Đầu bếp khác",
-      "kitchen": "Bếp của tôi",
-      "chat_bot": "Co-Chef",
-      "my": "Cá nhân"
-    },
-    "home": {
-      "recommend_for_you": "Recommended Dish",
-    }
+  "tabs_name": {
+    "home": "Trang chủ",
+    "other_chefs": "Đầu bếp khác",
+    "kitchen": "Bếp của tôi",
+    "chat_bot": "Co-Chef",
+    "my": "Cá nhân"
+  },
+  "home": {
+    "recommend_for_you": "Recommended Dish",
+    "its": "It's",
+    "now": "now"
   }
-  
+}
