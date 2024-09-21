@@ -1,4 +1,4 @@
-import {morningEndHour, sessions, sessionTime} from '@/constants/time.constant';
+import {sessions, sessionTime} from '@/constants/time.constant';
 import moment from 'moment';
 
 export const getDaySession = () => {
@@ -15,8 +15,6 @@ export const getDaySession = () => {
       (item === 'night' ? currentTomorrow : currentDate) +
       'T' +
       sessionTime[`${item}EndHour` as keyof typeof sessionTime];
-    console.log(startTime, endTime);
-
     const start = moment(startTime);
     const end = moment(endTime);
     if (moment(now).isBetween(start, end)) {

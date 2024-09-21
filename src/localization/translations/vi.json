@@ -6,6 +6,13 @@
     "chat_bot": "Co-Chef",
     "my": "Cá nhân"
   },
+  "daySession": {
+    "morning": "Morning",
+    "noon": "Noon",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "night": "Night"
+  },
   "home": {
     "recommend_for_you": "Recommended Dish",
     "its": "It's",

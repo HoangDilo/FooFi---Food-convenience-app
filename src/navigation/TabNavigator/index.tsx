@@ -97,11 +97,11 @@ const TabNavigator = () => {
         };
       }}>
       <Tab.Screen name={TAB.HOME_TAB as 'home_tab'} component={HomeScreen} />
+      <Tab.Screen name={TAB.KITCHEN as 'kitchen'} component={KitchenScreen} />
       <Tab.Screen
         name={TAB.OTHER_CHEFS as 'other_chefs'}
         component={OtherChefsScreen}
       />
-      <Tab.Screen name={TAB.KITCHEN as 'kitchen'} component={KitchenScreen} />
       <Tab.Screen name={TAB.CHAT_BOT as 'chat_bot'} component={ChatBotScreen} />
       <Tab.Screen name={TAB.MY as 'my'} component={MyScreen} />
     </Tab.Navigator>
