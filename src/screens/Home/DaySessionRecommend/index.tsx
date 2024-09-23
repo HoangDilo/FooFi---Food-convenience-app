@@ -27,12 +27,11 @@ const DaySessionRecommend = () => {
     <View style={styles.container}>
       <View style={styles.daySessionWrapper}>
         <Typo style={styles.daySessionLabel}>
-          {t('home.its')}
-          <Typo style={[styles.daySessionLabel, {textTransform: 'capitalize'}]}>
+          {t('home.its_now')}
+          <Typo style={styles.daySessionLabel}>
             {' '}
-            {sessionLabel}{' '}
+            {t(`daySession.${sessionLabel}`)}!
           </Typo>
-          {t('home.now')}!
         </Typo>
         <IconXML
           icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}

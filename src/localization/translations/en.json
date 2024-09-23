@@ -15,7 +15,9 @@
   },
   "home": {
     "recommend_for_you": "Best dish recommended for you",
-    "its": "It's",
-    "now": "now"
+    "its_now": "It's now",
+    "you_want_other": "You want other dishes?",
+    "find_your_dish": "Find any dish you want",
+    "search": "Search"
   }
 }

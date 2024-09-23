@@ -7,15 +7,17 @@
     "my": "Cá nhân"
   },
   "daySession": {
-    "morning": "Morning",
-    "noon": "Noon",
-    "afternoon": "Afternoon",
-    "evening": "Evening",
-    "night": "Night"
+    "morning": "Buổi sáng",
+    "noon": "Buổi trưa",
+    "afternoon": "Buổi chiều",
+    "evening": "Buổi tối",
+    "night": "Bổi đêm"
   },
   "home": {
-    "recommend_for_you": "Recommended Dish",
-    "its": "It's",
-    "now": "now"
+    "recommend_for_you": "Món ăn đề xuất cho bạn",
+    "its_now": "Bây giờ là",
+    "you_want_other": "Bạn muốn món ăn khác?",
+    "find_your_dish": "Tìm bất kỳ món ăn nào",
+    "search": "Tìm kiếm"
   }
 }
