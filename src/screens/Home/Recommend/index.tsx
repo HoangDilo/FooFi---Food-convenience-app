@@ -10,6 +10,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useAppDispatch} from '@/hooks/redux';
 import {setIsBottomTabHidden} from '@/store/reducers/system.reducer';
 import FastImage from 'react-native-fast-image';
+import {ScaledSheet} from 'react-native-size-matters/extend';
 
 const RecommendSection = () => {
   const {t} = useTranslation();
@@ -102,13 +103,13 @@ const RecommendSection = () => {
 
 export default RecommendSection;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   wrapper: {
     position: 'relative',
   },
   recommendFoodImage: {
     width: deviceWidth,
-    height: 320,
+    height: '320@s',
   },
   floatingView: {
     position: 'absolute',
@@ -131,8 +132,8 @@ const styles = StyleSheet.create({
   },
   dishName: {
     fontWeight: 700,
-    fontSize: 32,
-    lineHeight: 40,
+    fontSize: '32@s',
+    lineHeight: '40@s',
     color: '#FFF',
     marginLeft: 8,
   },

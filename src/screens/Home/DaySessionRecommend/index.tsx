@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import Typo from '@/components/Typo';
 import {useTranslation} from 'react-i18next';
 import {getDaySession} from '@/utils/time';
@@ -10,6 +10,7 @@ import Noon from '@/assets/icons/Noon';
 import Afternoon from '@/assets/icons/Afternoon';
 import Evening from '@/assets/icons/Evening';
 import Night from '@/assets/icons/Night';
+import { scale, ScaledSheet } from 'react-native-size-matters/extend';
 
 const SESSION_ICONS = {
   morning: Morning,
@@ -35,9 +36,19 @@ const DaySessionRecommend = () => {
         </Typo>
         <IconXML
           icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}
-          width={48}
-          height={48}
+          width={scale(48)}
+          height={scale(48)}
         />
+      </View>
+      <View>
+        <View>
+          <Typo style={styles.labelDishesList}>
+            {t('home.dishes_for')} {t(`daySession.${sessionLabel}`)}:
+          </Typo>
+          <Pressable>
+            <Typo style={styles.seeAll}>{t('see_all')}</Typo>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -45,12 +56,12 @@ const DaySessionRecommend = () => {
 
 export default DaySessionRecommend;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {},
   daySessionLabel: {
     color: colorsConstant.primary,
-    fontSize: 28,
-    lineHeight: 32,
+    fontSize: '28@s',
+    lineHeight: '32@s',
     fontWeight: '600',
   },
   daySessionWrapper: {
@@ -60,4 +71,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  labelDishesList: {
+    fontSize: 14,
+    color: colorsConstant.black_1,
+  },
+  seeAll: {
+
+  }
 });

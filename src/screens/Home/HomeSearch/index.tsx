@@ -7,10 +7,12 @@ import IconXML from '@/components/IconXML';
 import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
 import Animated from 'react-native-reanimated';
+import {deviceHeight, deviceWidth} from '@/constants/device.constant';
 
 const HomeSearch = () => {
   const {t} = useTranslation();
   const [isFocusInput, setIsFocusInput] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const handleFocusInput = useCallback(() => {
     setIsFocusInput(true);
@@ -19,6 +21,12 @@ const HomeSearch = () => {
   const handleBlurInput = useCallback(() => {
     setIsFocusInput(false);
   }, []);
+
+  const handleChangeText = useCallback((value: string) => {
+    setSearchValue(value);
+  }, []);
+
+  console.log(deviceHeight, deviceWidth);
 
   return (
     <View>
@@ -39,12 +47,14 @@ const HomeSearch = () => {
                 : colorsConstant.black_1,
             },
           ]}
+          value={searchValue}
           placeholder={isFocusInput ? '' : t('home.find_your_dish')}
           placeholderTextColor={colorsConstant.gray_1}
-          onFocus={handleFocusInput}
-          onBlur={handleBlurInput}
           cursorColor={colorsConstant.primary}
           underlineColorAndroid={colorsConstant.transparent}
+          onChangeText={handleChangeText}
+          onFocus={handleFocusInput}
+          onBlur={handleBlurInput}
         />
         <Animated.View>
           <TouchableHighlight
