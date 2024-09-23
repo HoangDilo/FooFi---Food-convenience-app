@@ -7,7 +7,6 @@ import IconXML from '@/components/IconXML';
 import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
 import Animated from 'react-native-reanimated';
-import {deviceHeight, deviceWidth} from '@/constants/device.constant';
 
 const HomeSearch = () => {
   const {t} = useTranslation();
@@ -25,8 +24,6 @@ const HomeSearch = () => {
   const handleChangeText = useCallback((value: string) => {
     setSearchValue(value);
   }, []);
-
-  console.log(deviceHeight, deviceWidth);
 
   return (
     <View>
@@ -87,6 +84,7 @@ const styles = StyleSheet.create({
     height: 40,
     flex: 1,
     fontSize: 16,
+    color: colorsConstant.black_1,
   },
   inputWrapper: {
     position: 'relative',
