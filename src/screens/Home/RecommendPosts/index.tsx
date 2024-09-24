@@ -1,14 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {Text, View} from 'react-native';
+import React from 'react';
+import {ScaledSheet} from 'react-native-size-matters/extend';
 
 const RecommendPosts = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>RecommendPosts</Text>
     </View>
-  )
-}
+  );
+};
 
-export default RecommendPosts
+export default RecommendPosts;
 
-const styles = StyleSheet.create({})
+const styles = ScaledSheet.create({
+    container: {
+        
+    }
+});

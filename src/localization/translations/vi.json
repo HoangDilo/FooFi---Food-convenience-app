@@ -27,7 +27,9 @@
     "find_your_dish": "Tìm bất kỳ món ăn nào",
     "search": "Tìm kiếm",
     "cooking_for": "Nấu món ăn cho",
-    "cooking_with_your_ingredients": "Nấu từ nguyên liệu sẵn có"
+    "cooking_with_your_ingredients": "Nấu từ nguyên liệu sẵn có",
+    "you_dont_want_session": "Bạn không muốn nấu"
   },
+  "other_options": "Lựa chọn khác",
   "see_more": "Xem thêm"
 }

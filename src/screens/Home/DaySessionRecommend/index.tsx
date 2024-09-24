@@ -1,5 +1,5 @@
-import {View} from 'react-native';
-import React, {memo, useMemo} from 'react';
+import {Pressable, View} from 'react-native';
+import React, {memo, useCallback, useMemo} from 'react';
 import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
 import colorsConstant from '@/constants/colors.constant';
@@ -21,6 +21,10 @@ const SESSION_ICONS = {
   evening: Evening,
   night: Night,
 };
+
+interface IDaySessionRecommendProps {
+  onChooseOtherOptions: () => void;
+}
 
 const DISHES_BY_SESSION: IItemDish[] = [
   {
@@ -85,40 +89,52 @@ const DISHES_BY_SESSION: IItemDish[] = [
   },
 ];
 
-const DaySessionRecommend = memo(() => {
-  const {t} = useTranslation();
-  const sessionLabel = useMemo(() => getDaySession(), []);
+const DaySessionRecommend = memo(
+  ({onChooseOtherOptions}: IDaySessionRecommendProps) => {
+    const {t} = useTranslation();
+    const sessionLabel = useMemo(() => getDaySession(), []);
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.daySessionWrapper}>
-        <Typo style={styles.daySessionLabel}>
-          {t('home.its_now')}
+    return (
+      <View style={styles.container}>
+        <View style={styles.daySessionWrapper}>
           <Typo style={styles.daySessionLabel}>
-            {' '}
-            {t(`daySession.${sessionLabel}`)}!
+            {t('home.its_now')}
+            <Typo style={styles.daySessionLabel}>
+              {' '}
+              {t(`daySession.${sessionLabel}`)}!
+            </Typo>
           </Typo>
-        </Typo>
-        <IconXML
-          icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}
-          width={scale(48)}
-          height={scale(48)}
+          <IconXML
+            icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}
+            width={scale(48)}
+            height={scale(48)}
+          />
+        </View>
+        <ListDishRecommendBy
+          renderData={DISHES_BY_SESSION}
+          label={`${t('home.cooking_for')} ${t(
+            `mealBySession.${sessionLabel}`,
+          )}:`}
         />
+        <View style={styles.otherOptions}>
+          <Typo style={styles.otherOptionText}>
+            {t('home.you_dont_want_session')}{' '}
+            {t(`mealBySession.${sessionLabel}`)}
+            {'? '}
+          </Typo>
+          <Pressable onPress={onChooseOtherOptions}>
+            <Typo style={styles.otherOptionsLabel}>{t('other_options')}</Typo>
+          </Pressable>
+        </View>
       </View>
-      <ListDishRecommendBy
-        renderData={DISHES_BY_SESSION}
-        label={`${t('home.cooking_for')} ${t(`daySession.${sessionLabel}`)}:`}
-      />
-    </View>
-  );
-});
+    );
+  },
+);
 
 export default DaySessionRecommend;
 
 const styles = ScaledSheet.create({
-  container: {
-    gap: 4,
-  },
+  container: {},
   daySessionLabel: {
     color: colorsConstant.primary,
     fontSize: '28@s',
@@ -128,8 +144,23 @@ const styles = ScaledSheet.create({
   daySessionWrapper: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
-    gap: 8,
+    gap: '8@s',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: '6@s',
+  },
+  otherOptions: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    flexDirection: 'row',
+  },
+  otherOptionText: {
+    fontSize: '13@s',
+    color: colorsConstant.gray_1,
+  },
+  otherOptionsLabel: {
+    fontSize: '13@s',
+    color: colorsConstant.secondary,
+    textDecorationLine: 'underline',
   },
 });

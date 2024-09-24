@@ -13,6 +13,13 @@
     "evening": "Evening",
     "night": "Night"
   },
+  "mealBySession": {
+    "morning": "Breakfast",
+    "noon": "Lunch",
+    "afternoon": "Linner",
+    "evening": "Dinner",
+    "night": "Supper"
+  },
   "home": {
     "recommend_for_you": "Best dish recommended for you",
     "its_now": "It's now",
@@ -20,7 +27,9 @@
     "find_your_dish": "Find any dish you want",
     "search": "Search",
     "cooking_for": "Cooking for",
-    "cooking_with_your_ingredients": "Cooking with your ingredients"
+    "cooking_with_your_ingredients": "Cooking with your ingredients",
+    "you_dont_want_session": "You don't want to cook"
   },
+  "other_options": "Other options",
   "see_more": "See more"
 }
