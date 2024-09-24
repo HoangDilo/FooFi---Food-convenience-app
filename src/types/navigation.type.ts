@@ -3,6 +3,10 @@ export type RootStackParamList = {
     instruction: {
       dish_id: number;
     }
+    search: {
+      query: string;
+      listItemsFilter: string[]
+    }
   };
 
 export type MainTabParamList = {

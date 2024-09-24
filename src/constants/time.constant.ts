@@ -23,3 +23,11 @@ export const sessionTime = {
 };
 
 export const sessions = ['morning', 'noon', 'afternoon', 'evening', 'night']
+
+export const meal = {
+  morning: 'breakfast',
+  noon: 'lunch',
+  afternoon: 'linner',
+  evening: 'dinner',
+  night: 'supper'
+}

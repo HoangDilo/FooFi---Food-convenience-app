@@ -6,10 +6,11 @@ import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
 import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
-import Animated from 'react-native-reanimated';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeSearch = () => {
   const {t} = useTranslation();
+  const navigation = useNavigation();
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
@@ -23,6 +24,13 @@ const HomeSearch = () => {
 
   const handleChangeText = useCallback((value: string) => {
     setSearchValue(value);
+  }, []);
+
+  const handlePressSearch = useCallback(() => {
+    navigation.navigate('search', {
+      query: searchValue,
+      listItemsFilter: [],
+    });
   }, []);
 
   return (
@@ -53,14 +61,12 @@ const HomeSearch = () => {
           onFocus={handleFocusInput}
           onBlur={handleBlurInput}
         />
-        <Animated.View>
-          <TouchableHighlight
-            style={styles.searchButton}
-            underlayColor={colorsConstant.primary_press}
-            onPress={() => console.log(123)}>
-            <Typo style={styles.searchLabel}>{t('home.search')}</Typo>
-          </TouchableHighlight>
-        </Animated.View>
+        <TouchableHighlight
+          style={styles.searchButton}
+          underlayColor={colorsConstant.primary_press}
+          onPress={handlePressSearch}>
+          <Typo style={styles.searchLabel}>{t('home.search')}</Typo>
+        </TouchableHighlight>
       </View>
     </View>
   );
@@ -99,7 +105,7 @@ const styles = StyleSheet.create({
   searchButton: {
     borderRadius: 500,
     backgroundColor: colorsConstant.primary,
-    flex: 1,
+    height: '100%',
     flexDirection: 'row',
     paddingHorizontal: 12,
     alignItems: 'center',

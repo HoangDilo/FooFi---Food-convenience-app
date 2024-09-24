@@ -1,16 +1,18 @@
+import {View} from 'react-native';
 import React, {useMemo} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
 import Typo from '@/components/Typo';
-import {useTranslation} from 'react-i18next';
-import {getDaySession} from '@/utils/time';
-import colorsConstant from '@/constants/colors.constant';
 import IconXML from '@/components/IconXML';
+import colorsConstant from '@/constants/colors.constant';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Morning from '@/assets/icons/Morning';
 import Noon from '@/assets/icons/Noon';
 import Afternoon from '@/assets/icons/Afternoon';
 import Evening from '@/assets/icons/Evening';
 import Night from '@/assets/icons/Night';
-import { scale, ScaledSheet } from 'react-native-size-matters/extend';
+import {useTranslation} from 'react-i18next';
+import {getDaySession} from '@/utils/time';
+import ListDishRecommendBy from '@/components/ListDishRecommendBy';
+import {IItemDish} from '@/types/dish.type';
 
 const SESSION_ICONS = {
   morning: Morning,
@@ -19,6 +21,69 @@ const SESSION_ICONS = {
   evening: Evening,
   night: Night,
 };
+
+const DISHES_BY_SESSION: IItemDish[] = [
+  {
+    id: 1,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/06/burger-with-melted-cheese.jpg',
+    name: 'Spaghetti Carbonara',
+  },
+  {
+    id: 2,
+    img_url:
+      'https://media.istockphoto.com/id/2154236681/photo/pan-fried-asparagus-with-fried-egg-and-panko-gremolata.jpg?b=1&s=612x612&w=0&k=20&c=W1accBphnuGs5i5YrvsjMtsl386neidrk7y_EAodaxQ=',
+    name: 'Grilled Salmon',
+  },
+  {
+    id: 3,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/08/crispy-spicy-chicken-wings.jpg',
+    name: 'Chicken Caesar Salad',
+  },
+  {
+    id: 4,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/06/pouring-honey-on-pancakes.jpg',
+    name: 'Margherita Pizza',
+  },
+  {
+    id: 5,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/05/freshly-prepared-beef-steak-with-vegetables.jpg',
+    name: 'Beef Stroganoff',
+  },
+  {
+    id: 6,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/08/grilled-crispy-pork-with-rice.jpg',
+    name: 'Tuna Poke Bowl',
+  },
+  {
+    id: 7,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/10/mediterranean-chickpea-salad.jpg',
+    name: 'Lamb Shawarma',
+  },
+  {
+    id: 8,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/05/pizza-cinematic.jpg',
+    name: 'Vegan Buddha Bowl',
+  },
+  {
+    id: 9,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/12/seafood-soup.jpg',
+    name: 'Eggplant Parmesan',
+  },
+  {
+    id: 10,
+    img_url:
+      'https://www.foodiesfeed.com/wp-content/uploads/2023/04/fresh-fruit-salad-with-mint.jpg',
+    name: 'Sushi Platter',
+  },
+];
 
 const DaySessionRecommend = () => {
   const {t} = useTranslation();
@@ -40,16 +105,11 @@ const DaySessionRecommend = () => {
           height={scale(48)}
         />
       </View>
-      <View>
-        <View>
-          <Typo style={styles.labelDishesList}>
-            {t('home.dishes_for')} {t(`daySession.${sessionLabel}`)}:
-          </Typo>
-          <Pressable>
-            <Typo style={styles.seeAll}>{t('see_all')}</Typo>
-          </Pressable>
-        </View>
-      </View>
+
+      <ListDishRecommendBy
+        renderData={DISHES_BY_SESSION}
+        label={`${t('home.cooking_for')} ${t(`daySession.${sessionLabel}`)}:`}
+      />
     </View>
   );
 };
@@ -57,7 +117,9 @@ const DaySessionRecommend = () => {
 export default DaySessionRecommend;
 
 const styles = ScaledSheet.create({
-  container: {},
+  container: {
+    gap: 8,
+  },
   daySessionLabel: {
     color: colorsConstant.primary,
     fontSize: '28@s',
@@ -71,11 +133,4 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  labelDishesList: {
-    fontSize: 14,
-    color: colorsConstant.black_1,
-  },
-  seeAll: {
-
-  }
 });

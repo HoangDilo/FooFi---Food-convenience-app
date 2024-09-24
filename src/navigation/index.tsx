@@ -7,6 +7,7 @@ import {STACK} from '../constants/screens.constant';
 
 import TabNavigator from './TabNavigator';
 import CookingInstruction from '@/screens/CookingInstruction';
+import SearchScreen from '@/screens/Search';
 
 declare global {
   namespace ReactNavigation {
@@ -33,6 +34,10 @@ export default function MainNavigator() {
           options={{
             animation: 'fade',
           }}
+        />
+        <Stack.Screen
+          name={STACK.SEARCH as 'search'}
+          component={SearchScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

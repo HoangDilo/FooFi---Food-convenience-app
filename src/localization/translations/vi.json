@@ -13,12 +13,20 @@
     "evening": "Buổi tối",
     "night": "Bổi đêm"
   },
+  "mealBySession": {
+    "morning": "Bữa sáng",
+    "noon": "Bữa trưa",
+    "afternoon": "Bữa xế",
+    "evening": "Bữa tối",
+    "night": "Bữa ăn đêm"
+  },
   "home": {
     "recommend_for_you": "Món ăn đề xuất cho bạn",
     "its_now": "Bây giờ là",
     "you_want_other": "Bạn muốn món ăn khác?",
     "find_your_dish": "Tìm bất kỳ món ăn nào",
     "search": "Tìm kiếm",
-    "dishes_for": "Dishes for"
-  }
+    "cooking_for": "Nấu món ăn cho"
+  },
+  "see_all": "Xem tất cả"
 }
