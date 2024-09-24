@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
 import colorsConstant from '@/constants/colors.constant';
@@ -85,7 +85,7 @@ const DISHES_BY_SESSION: IItemDish[] = [
   },
 ];
 
-const DaySessionRecommend = () => {
+const DaySessionRecommend = memo(() => {
   const {t} = useTranslation();
   const sessionLabel = useMemo(() => getDaySession(), []);
 
@@ -105,20 +105,19 @@ const DaySessionRecommend = () => {
           height={scale(48)}
         />
       </View>
-
       <ListDishRecommendBy
         renderData={DISHES_BY_SESSION}
         label={`${t('home.cooking_for')} ${t(`daySession.${sessionLabel}`)}:`}
       />
     </View>
   );
-};
+});
 
 export default DaySessionRecommend;
 
 const styles = ScaledSheet.create({
   container: {
-    gap: 8,
+    gap: 4,
   },
   daySessionLabel: {
     color: colorsConstant.primary,

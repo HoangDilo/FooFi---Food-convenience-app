@@ -11,7 +11,7 @@ const SeeAll = () => {
 
   return (
     <Pressable style={styles.seeAllWrapper}>
-      <Typo style={styles.seeAll}>{t('see_all')}</Typo>
+      <Typo style={styles.seeAll}>{t('see_more')}</Typo>
       <IconXML icon={ArrowRightGreen} width={16} height={16} />
     </Pressable>
   );

@@ -1,18 +1,21 @@
-import {Animated, Easing, Pressable, StyleSheet, View} from 'react-native';
-import React, {useCallback, useRef} from 'react';
-import {deviceWidth} from '@/constants/device.constant';
-import {useTranslation} from 'react-i18next';
-import Typo from '@/components/Typo';
-import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
-import IconXML from '@/components/IconXML';
-import ChevronRight from '@/assets/icons/ChevronRightWhite';
+import React, {memo, useCallback, useRef} from 'react';
+import {Animated, Easing, Pressable, View} from 'react-native';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import {useAppDispatch} from '@/hooks/redux';
-import {setIsBottomTabHidden} from '@/store/reducers/system.reducer';
+import {useTranslation} from 'react-i18next';
+import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
 import FastImage from 'react-native-fast-image';
 import {ScaledSheet} from 'react-native-size-matters/extend';
+import {useAppDispatch} from '@/hooks/redux';
 
-const RecommendSection = () => {
+import {deviceWidth} from '@/constants/device.constant';
+
+import {setIsBottomTabHidden} from '@/store/reducers/system.reducer';
+
+import IconXML from '@/components/IconXML';
+import ChevronRight from '@/assets/icons/ChevronRightWhite';
+import Typo from '@/components/Typo';
+
+const RecommendSection = memo(() => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
@@ -39,6 +42,8 @@ const RecommendSection = () => {
       dispatch(setIsBottomTabHidden(false));
     }, []),
   );
+
+  console.log('recommend section render');
 
   return (
     <Pressable style={styles.wrapper} onPress={handlePress}>
@@ -99,7 +104,7 @@ const RecommendSection = () => {
       </View>
     </Pressable>
   );
-};
+});
 
 export default RecommendSection;
 

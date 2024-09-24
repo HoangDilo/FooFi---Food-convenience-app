@@ -71,6 +71,7 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
+      sceneContainerStyle={{backgroundColor: '#FFF'}}
       screenOptions={({route}) => {
         return {
           tabBarIcon: ({focused}) => (

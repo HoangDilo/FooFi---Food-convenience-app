@@ -1,5 +1,5 @@
 import {StyleSheet, TextInput, TouchableHighlight, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
 import Typo from '@/components/Typo';
@@ -8,7 +8,7 @@ import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
 import {useNavigation} from '@react-navigation/native';
 
-const HomeSearch = () => {
+const HomeSearch = memo(() => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const [isFocusInput, setIsFocusInput] = useState(false);
@@ -70,7 +70,7 @@ const HomeSearch = () => {
       </View>
     </View>
   );
-};
+});
 
 export default HomeSearch;
 

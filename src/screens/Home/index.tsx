@@ -1,40 +1,66 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
+import {ScrollView} from 'react-native';
+import {ScaledSheet} from 'react-native-size-matters/extend';
+import Animated, {
+  Easing,
+  ReduceMotion,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
 import RecommendSection from './Recommend';
-import {getDaySession} from '@/utils/time';
 import HomeSearch from './HomeSearch';
 import DaySessionRecommend from './DaySessionRecommend';
 import KitchenRecommend from './KitchenRecommend';
+import {useAppSelector} from '@/hooks/redux';
 
 const HomeScreen = () => {
+  const {isBottomTabHidden} = useAppSelector(state => state.system);
+
+  const opacity = useSharedValue(1);
+
   useEffect(() => {
-    getDaySession();
-  }, []);
+    if (isBottomTabHidden) {
+      opacity.value = withTiming(0, {
+        duration: 1000,
+        easing: Easing.inOut(Easing.quad),
+      });
+    } else {
+      opacity.value = 1;
+    }
+  }, [isBottomTabHidden]);
 
   return (
     <ScrollView
       contentContainerStyle={styles.homeScreen}
-      overScrollMode="auto">
+      overScrollMode="auto"
+      showsVerticalScrollIndicator={false}>
       <RecommendSection />
-      <View style={styles.mainContainer}>
+      <Animated.View
+        style={[
+          styles.mainContainer,
+          {
+            opacity,
+          },
+        ]}>
         <HomeSearch />
         <DaySessionRecommend />
         <KitchenRecommend />
-      </View>
+      </Animated.View>
     </ScrollView>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   homeScreen: {
     backgroundColor: '#FFF',
-    gap: 20,
+    gap: '20@s',
   },
   mainContainer: {
     flex: 1,
-    paddingHorizontal: 20,
-    gap: 20,
+    paddingHorizontal: '20@s',
+    gap: '20@s',
   },
 });

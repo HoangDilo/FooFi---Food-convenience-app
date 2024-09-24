@@ -1,7 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import React, { memo } from 'react';
 import ListDishRecommendBy from '@/components/ListDishRecommendBy';
 import {IItemDish} from '@/types/dish.type';
+import {useTranslation} from 'react-i18next';
 
 const DISHES_BY_KITCHEN: IItemDish[] = [
   {
@@ -66,16 +67,17 @@ const DISHES_BY_KITCHEN: IItemDish[] = [
   },
 ];
 
-const KitchenRecommend = () => {
+const KitchenRecommend = memo(() => {
+  const {t} = useTranslation();
   return (
     <View>
       <ListDishRecommendBy
         renderData={DISHES_BY_KITCHEN}
-        label="Cooking with your ingredients"
+        label={t('home.cooking_with_your_ingredients') + ':'}
       />
     </View>
   );
-};
+});
 
 export default KitchenRecommend;
 

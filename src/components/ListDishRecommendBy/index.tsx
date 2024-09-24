@@ -19,7 +19,7 @@ const ListDishRecommendBy = ({
   label,
 }: IListDishRecommendByProps) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.labelContainer}>
         <Typo style={styles.labelDishesList}>{label}</Typo>
         <SeeAll />
@@ -40,6 +40,9 @@ const ListDishRecommendBy = ({
 export default ListDishRecommendBy;
 
 const styles = ScaledSheet.create({
+  container: {
+    marginBottom: 8,
+  },
   labelDishesList: {
     fontSize: 18,
     color: colorsConstant.black_1,
