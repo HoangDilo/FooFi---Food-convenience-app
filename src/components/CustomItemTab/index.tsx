@@ -97,7 +97,6 @@ const styles = ScaledSheet.create({
   tabItem: {
     alignItems: 'center',
     flex: 1,
-    paddingTop: '12@s',
     gap: '2@s',
   },
   labelItem: {
