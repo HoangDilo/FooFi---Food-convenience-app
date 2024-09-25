@@ -17,8 +17,7 @@ import colorsConstant from '@/constants/colors.constant';
 import MealOptions from '@/components/MealOptions';
 import {useDispatch} from 'react-redux';
 import {
-  setIsBottomSheetShowing,
-  setIsBottomTabHidden,
+  setIsBottomSheetShowing
 } from '@/store/reducers/system.reducer';
 
 const HomeScreen = () => {
