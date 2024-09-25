@@ -3,6 +3,7 @@ import {ScrollView, View} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Animated, {
   Easing,
+  ReduceMotion,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -16,9 +17,7 @@ import {useAppSelector} from '@/hooks/redux';
 import colorsConstant from '@/constants/colors.constant';
 import MealOptions from '@/components/MealOptions';
 import {useDispatch} from 'react-redux';
-import {
-  setIsBottomSheetShowing
-} from '@/store/reducers/system.reducer';
+import {setIsBottomSheetShowing} from '@/store/reducers/system.reducer';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
@@ -45,17 +44,14 @@ const HomeScreen = () => {
   );
 
   const handleChangeBS = useCallback((index: number) => {
-    dispatch(setIsBottomSheetShowing(index !== -1))
+    dispatch(setIsBottomSheetShowing(index !== -1));
     setIsBottomSheetShown(index !== -1);
   }, []);
 
   const handleChooseOtherSession = useCallback(() => {
     dispatch(setIsBottomSheetShowing(true));
     setIsBottomSheetShown(true);
-    bottomSheetSessionsRef.current?.expand({
-      duration: 300,
-      easing: Easing.inOut(Easing.quad),
-    });
+    bottomSheetSessionsRef.current?.expand();
   }, []);
 
   useEffect(() => {
@@ -96,6 +92,10 @@ const HomeScreen = () => {
             ref={bottomSheetSessionsRef}
             snapPoints={snapPoints}
             backdropComponent={renderBackdrop}
+            animationConfigs={{
+              duration: 200,
+              easing: Easing.inOut(Easing.quad),
+            }}
             handleIndicatorStyle={{backgroundColor: colorsConstant.secondary}}
             onChange={index => handleChangeBS(index)}
             style={styles.bottomSheetView}
