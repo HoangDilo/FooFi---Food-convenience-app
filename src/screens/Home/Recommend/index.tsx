@@ -43,8 +43,6 @@ const RecommendSection = memo(() => {
     }, []),
   );
 
-  console.log('recommend section render');
-
   return (
     <Pressable style={styles.wrapper} onPress={handlePress}>
       <FastImage

@@ -56,10 +56,12 @@ const HomeSearch = memo(() => {
           placeholder={isFocusInput ? '' : t('home.find_your_dish')}
           placeholderTextColor={colorsConstant.gray_1}
           cursorColor={colorsConstant.primary}
+          returnKeyType='search'
           underlineColorAndroid={colorsConstant.transparent}
           onChangeText={handleChangeText}
           onFocus={handleFocusInput}
           onBlur={handleBlurInput}
+          onSubmitEditing={handlePressSearch}
         />
         <TouchableHighlight
           style={styles.searchButton}
@@ -87,10 +89,14 @@ const styles = StyleSheet.create({
     borderRadius: 500,
     paddingHorizontal: 16,
     paddingLeft: 42,
+    paddingVertical: 0,
     height: 40,
     flex: 1,
     fontSize: 16,
+    lineHeight: 24,
     color: colorsConstant.black_1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   inputWrapper: {
     position: 'relative',

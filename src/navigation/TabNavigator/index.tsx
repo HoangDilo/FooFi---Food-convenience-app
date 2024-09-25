@@ -1,4 +1,4 @@
-import {Animated, Easing, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {TAB} from '@/constants/tabs.constant';
@@ -22,7 +22,7 @@ import MyTabActive from '@/assets/icons/MyTabActive';
 import colorsConstant from '@/constants/colors.constant';
 import {MainTabParamList} from '@/types/navigation.type';
 import {useAppSelector} from '@/hooks/redux';
-import {useEffect, useRef} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -55,19 +55,14 @@ const tabIcon = {
 };
 
 const TabNavigator = () => {
-  const {isBottomTabHidden} = useAppSelector(state => state.system);
-  const hideAnimation = useRef(new Animated.Value(1)).current;
+  const {isBottomTabHidden, isBottomSheetShowing} = useAppSelector(
+    state => state.system,
+  );
 
-  useEffect(() => {
-    if (hideAnimation) {
-      Animated.timing(hideAnimation, {
-        toValue: 0,
-        easing: Easing.linear,
-        useNativeDriver: true,
-        duration: 1000,
-      }).start();
-    }
-  }, [isBottomTabHidden]);
+  const isHideBottomTab = useMemo(
+    () => isBottomTabHidden || isBottomSheetShowing,
+    [isBottomTabHidden, isBottomSheetShowing],
+  );
 
   return (
     <Tab.Navigator
@@ -91,7 +86,7 @@ const TabNavigator = () => {
           title: tabIcon[route.name as keyof typeof tabIcon].label,
           tabBarStyle: [
             styles.tabBarStyle,
-            {display: isBottomTabHidden ? 'none' : 'flex'},
+            {display: isHideBottomTab ? 'none' : 'flex'},
           ],
           tabBarItemStyle: styles.tabBarItem,
           tabBarLabelStyle: styles.labelItem,

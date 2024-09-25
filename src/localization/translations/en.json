@@ -20,6 +20,13 @@
     "evening": "Dinner",
     "night": "Supper"
   },
+  "meals": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "linner": "Linner",
+    "dinner": "Dinner",
+    "supper": "Supper"
+  },
   "home": {
     "recommend_for_you": "Best dish recommended for you",
     "its_now": "It's now",

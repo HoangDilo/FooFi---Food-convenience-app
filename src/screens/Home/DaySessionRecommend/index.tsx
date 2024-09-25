@@ -13,6 +13,7 @@ import {useTranslation} from 'react-i18next';
 import {getDaySession} from '@/utils/time';
 import ListDishRecommendBy from '@/components/ListDishRecommendBy';
 import {IItemDish} from '@/types/dish.type';
+import {MEALS} from '@/enums/meal.enum';
 
 const SESSION_ICONS = {
   morning: Morning,
@@ -23,6 +24,7 @@ const SESSION_ICONS = {
 };
 
 interface IDaySessionRecommendProps {
+  option?: MEALS;
   onChooseOtherOptions: () => void;
 }
 

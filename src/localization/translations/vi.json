@@ -20,6 +20,13 @@
     "evening": "Bữa tối",
     "night": "Bữa ăn đêm"
   },
+  "meals": {
+    "breakfast": "Bữa sáng",
+    "lunch": "Bữa trưa",
+    "linner": "Bữa xế",
+    "dinner": "Bữa tối",
+    "supper": "Bữa ăn đêm"
+  },
   "home": {
     "recommend_for_you": "Món ăn đề xuất cho bạn",
     "its_now": "Bây giờ là",
