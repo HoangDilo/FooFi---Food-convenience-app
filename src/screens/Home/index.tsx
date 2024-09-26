@@ -18,6 +18,7 @@ import colorsConstant from '@/constants/colors.constant';
 import MealOptions from '@/components/MealOptions';
 import {useDispatch} from 'react-redux';
 import {setIsBottomSheetShowing} from '@/store/reducers/system.reducer';
+import RecommendPosts from './RecommendPosts';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
@@ -27,6 +28,8 @@ const HomeScreen = () => {
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
   const snapPoints = useMemo(() => [200], []);
+
+  const scrollViewRef = useRef<ScrollView | null>(null);
 
   const opacity = useSharedValue(1);
 
@@ -52,6 +55,7 @@ const HomeScreen = () => {
     dispatch(setIsBottomSheetShowing(true));
     setIsBottomSheetShown(true);
     bottomSheetSessionsRef.current?.expand();
+    console.log(scrollViewRef.current);
   }, []);
 
   useEffect(() => {
@@ -68,23 +72,27 @@ const HomeScreen = () => {
   return (
     <View style={{flex: 1}}>
       <ScrollView
+        ref={scrollViewRef}
         contentContainerStyle={styles.homeScreen}
         overScrollMode="auto"
         showsVerticalScrollIndicator={false}>
         <RecommendSection />
-        <Animated.View
-          style={[
-            styles.mainContainer,
-            {
-              opacity,
-            },
-          ]}>
-          <HomeSearch />
-          <DaySessionRecommend
-            onChooseOtherOptions={handleChooseOtherSession}
-          />
-          <KitchenRecommend />
-        </Animated.View>
+        <View style={styles.mainContainerWrapper}>
+          <Animated.View
+            style={[
+              styles.mainContainer,
+              {
+                opacity,
+              },
+            ]}>
+            <HomeSearch />
+            <DaySessionRecommend
+              onChooseOtherOptions={handleChooseOtherSession}
+            />
+            <KitchenRecommend />
+            <RecommendPosts />
+          </Animated.View>
+        </View>
       </ScrollView>
       {isBottomSheetShown && (
         <View style={styles.bottomSheetContainer}>
@@ -112,11 +120,21 @@ export default HomeScreen;
 
 const styles = ScaledSheet.create({
   homeScreen: {
-    backgroundColor: '#FFF',
-    gap: '20@s',
+    backgroundColor: colorsConstant.background,
+  },
+  mainContainerWrapper: {
+    backgroundColor: colorsConstant.background,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    transform: [
+      {
+        translateY: -16,
+      },
+    ],
   },
   mainContainer: {
     flex: 1,
+    paddingTop: '20@s',
     paddingHorizontal: '20@s',
     gap: '24@s',
   },

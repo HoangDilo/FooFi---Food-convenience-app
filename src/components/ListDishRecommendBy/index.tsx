@@ -44,7 +44,7 @@ const styles = ScaledSheet.create({
     marginBottom: 8,
   },
   labelDishesList: {
-    fontSize: 18,
+    fontSize: '18@s',
     color: colorsConstant.black_1,
     fontWeight: '600',
   },
@@ -55,6 +55,6 @@ const styles = ScaledSheet.create({
     marginBottom: 12,
   },
   listFoodContainer: {
-    gap: 14,
+    gap: '14@s',
   },
 });

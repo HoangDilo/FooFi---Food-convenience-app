@@ -121,8 +121,8 @@ const styles = ScaledSheet.create({
     flex: 1,
   },
   textsWrapper: {
-    paddingHorizontal: 12,
-    marginBottom: 12,
+    paddingHorizontal: '12@s',
+    marginBottom: '28@s',
     flex: 1,
     zIndex: 1,
   },
