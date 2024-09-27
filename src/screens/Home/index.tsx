@@ -69,6 +69,8 @@ const HomeScreen = () => {
     }
   }, [isBottomTabHidden]);
 
+  console.log(123);
+
   return (
     <View style={{flex: 1}}>
       <ScrollView
