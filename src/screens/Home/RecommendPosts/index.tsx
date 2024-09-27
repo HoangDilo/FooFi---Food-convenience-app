@@ -14,11 +14,14 @@ const listRecommendPosts: IRecommendPostItem[] = [
     published_time: '26-04',
     likes: 40,
     language: 'vi',
+    is_liked: false,
     user_info: {
       id: 1,
       name: 'HoangDilo',
       avt_url:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH3MW7eGaYWiRrk3AajqEiCFQBJwgSTULhyw&s',
+      followers: 204,
+      is_following: true,
     },
     dish_info: {
       id: 1,
@@ -34,11 +37,15 @@ const listRecommendPosts: IRecommendPostItem[] = [
     published_time: '27-04',
     likes: 40,
     language: 'vi',
+    is_liked: true,
     user_info: {
       id: 2,
       name: 'HoangDilo',
       avt_url:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH3MW7eGaYWiRrk3AajqEiCFQBJwgSTULhyw&s',
+      followers: 345,
+      is_following: false,
+    
     },
     dish_info: {
       id: 2,

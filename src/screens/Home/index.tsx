@@ -1,9 +1,14 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+  ScrollView,
+  View,
+} from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Animated, {
   Easing,
-  ReduceMotion,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
@@ -17,19 +22,22 @@ import {useAppSelector} from '@/hooks/redux';
 import colorsConstant from '@/constants/colors.constant';
 import MealOptions from '@/components/MealOptions';
 import {useDispatch} from 'react-redux';
-import {setIsBottomSheetShowing} from '@/store/reducers/system.reducer';
+import {
+  setIsBottomSheetShowing,
+  setIsScrolling,
+} from '@/store/reducers/system.reducer';
 import RecommendPosts from './RecommendPosts';
+import StatusBarCustom from '@/components/StatusBarCustom';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
   const dispatch = useDispatch();
 
   const [isBottomSheetShown, setIsBottomSheetShown] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
   const snapPoints = useMemo(() => [200], []);
-
-  const scrollViewRef = useRef<ScrollView | null>(null);
 
   const opacity = useSharedValue(1);
 
@@ -55,8 +63,25 @@ const HomeScreen = () => {
     dispatch(setIsBottomSheetShowing(true));
     setIsBottomSheetShown(true);
     bottomSheetSessionsRef.current?.expand();
-    console.log(scrollViewRef.current);
   }, []);
+
+  const handleRefreshHome = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  }, []);
+
+  const handleScrollHome = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (event.nativeEvent.contentOffset.y > 200) {
+        dispatch(setIsScrolling(true));
+      } else {
+        dispatch(setIsScrolling(false));
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     if (isBottomTabHidden) {
@@ -71,11 +96,20 @@ const HomeScreen = () => {
 
   return (
     <View style={{flex: 1}}>
+      <StatusBarCustom />
       <ScrollView
-        ref={scrollViewRef}
         contentContainerStyle={styles.homeScreen}
-        overScrollMode="auto"
-        showsVerticalScrollIndicator={false}>
+        scrollToOverflowEnabled={false}
+        refreshControl={
+          <RefreshControl
+            colors={[colorsConstant.primary]}
+            progressViewOffset={12}
+            refreshing={refreshing}
+            onRefresh={handleRefreshHome}
+          />
+        }
+        showsVerticalScrollIndicator={false}
+        onScroll={handleScrollHome}>
         <RecommendSection />
         <View style={styles.mainContainerWrapper}>
           <Animated.View

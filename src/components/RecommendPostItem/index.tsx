@@ -28,6 +28,7 @@ const RecommendPostItem = ({item}: IRecommendPostItemProps) => {
             style={styles.avtUser}
           />
           <Typo style={styles.userName}>{item.user_info.name}</Typo>
+          
         </View>
       </View>
     </View>
@@ -41,6 +42,12 @@ const styles = ScaledSheet.create({
     backgroundColor: 'white',
     borderRadius: '16@s',
     overflow: 'hidden',
+    elevation: 3,
+    shadowColor: '#00000030',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
   },
   postImg: {
     height: '200@s',

@@ -7,7 +7,8 @@ const StatusBarCustom = () => {
   return (
     <StatusBar
       barStyle={isScrolling ? 'dark-content' : 'light-content'}
-      backgroundColor={'#00000000'}
+      backgroundColor={isScrolling ? '#FFF' : '#00000000'}
+      animated
     />
   );
 };
