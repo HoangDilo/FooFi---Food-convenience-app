@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, {useCallback, useState} from 'react';
 import {View} from 'react-native';
 import {IRecommendPostItem} from '@/types/home.type';
 import {ScaledSheet} from 'react-native-size-matters/extend';
@@ -8,15 +8,20 @@ import colorsConstant from '@/constants/colors.constant';
 import IconXML from '../IconXML';
 import HeartWhite from '@/assets/icons/HeartWhite';
 import HeartRed from '@/assets/icons/HeartRed';
+import More from '@/assets/icons/More';
 
 interface IRecommendPostItemProps {
   item: IRecommendPostItem;
 }
 
 const RecommendPostItem = ({item}: IRecommendPostItemProps) => {
-  const handleLikePost = useCallback(() => {
+  const [isLiked, setIsLiked] = useState(item.is_liked);
 
-  }, [])
+  const handleLikePost = useCallback(() => {
+    setIsLiked(!isLiked);
+  }, [isLiked]);
+
+  const handlePressMore = useCallback(() => {}, []);
 
   return (
     <View style={styles.itemContainer}>
@@ -42,11 +47,12 @@ const RecommendPostItem = ({item}: IRecommendPostItemProps) => {
       </View>
       <View style={styles.actionButtons}>
         <IconXML
-          icon={item.is_liked ? HeartWhite : HeartRed}
+          icon={isLiked ? HeartWhite : HeartRed}
           width={24}
           height={24}
           onPress={handleLikePost}
         />
+        <IconXML icon={More} width={22} height={22} onPress={handlePressMore} />
       </View>
     </View>
   );
@@ -97,5 +103,8 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     top: '12@s',
     right: '12@s',
+    flexDirection: 'row',
+    gap: '8@s',
+    alignItems: 'center',
   },
 });
