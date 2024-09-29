@@ -91,49 +91,48 @@ const DISHES_BY_SESSION: IItemDish[] = [
   },
 ];
 
-const DaySessionRecommend = memo(
-  ({onChooseOtherOptions}: IDaySessionRecommendProps) => {
-    const {t} = useTranslation();
-    const sessionLabel = useMemo(() => getDaySession(), []);
+const DaySessionRecommend = ({
+  onChooseOtherOptions,
+}: IDaySessionRecommendProps) => {
+  const {t} = useTranslation();
+  const sessionLabel = useMemo(() => getDaySession(), []);
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.daySessionWrapper}>
+  return (
+    <View style={styles.container}>
+      <View style={styles.daySessionWrapper}>
+        <Typo style={styles.daySessionLabel}>
+          {t('home.its_now')}
           <Typo style={styles.daySessionLabel}>
-            {t('home.its_now')}
-            <Typo style={styles.daySessionLabel}>
-              {' '}
-              {t(`daySession.${sessionLabel}`)}!
-            </Typo>
+            {' '}
+            {t(`daySession.${sessionLabel}`)}!
           </Typo>
-          <IconXML
-            icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}
-            width={scale(48)}
-            height={scale(48)}
-          />
-        </View>
-        <ListDishRecommendBy
-          renderData={DISHES_BY_SESSION}
-          label={`${t('home.cooking_for')} ${t(
-            `mealBySession.${sessionLabel}`,
-          )}:`}
+        </Typo>
+        <IconXML
+          icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}
+          width={scale(48)}
+          height={scale(48)}
         />
-        <View style={styles.otherOptions}>
-          <Typo style={styles.otherOptionText}>
-            {t('home.you_dont_want_session')}{' '}
-            {t(`mealBySession.${sessionLabel}`)}
-            {'? '}
-          </Typo>
-          <Pressable onPress={onChooseOtherOptions}>
-            <Typo style={styles.otherOptionsLabel}>{t('other_options')}</Typo>
-          </Pressable>
-        </View>
       </View>
-    );
-  },
-);
+      <ListDishRecommendBy
+        renderData={DISHES_BY_SESSION}
+        label={`${t('home.cooking_for')} ${t(
+          `mealBySession.${sessionLabel}`,
+        )}:`}
+      />
+      <View style={styles.otherOptions}>
+        <Typo style={styles.otherOptionText}>
+          {t('home.you_dont_want_session')} {t(`mealBySession.${sessionLabel}`)}
+          {'? '}
+        </Typo>
+        <Pressable onPress={onChooseOtherOptions}>
+          <Typo style={styles.otherOptionsLabel}>{t('other_options')}</Typo>
+        </Pressable>
+      </View>
+    </View>
+  );
+};
 
-export default DaySessionRecommend;
+export default memo(DaySessionRecommend);
 
 const styles = ScaledSheet.create({
   container: {},

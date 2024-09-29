@@ -8,7 +8,7 @@ import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
 import {useNavigation} from '@react-navigation/native';
 
-const HomeSearch = memo(() => {
+const HomeSearch = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const [isFocusInput, setIsFocusInput] = useState(false);
@@ -31,7 +31,7 @@ const HomeSearch = memo(() => {
       query: searchValue,
       listItemsFilter: [],
     });
-  }, []);
+  }, [navigation, searchValue]);
 
   return (
     <View>
@@ -56,7 +56,7 @@ const HomeSearch = memo(() => {
           placeholder={isFocusInput ? '' : t('home.find_your_dish')}
           placeholderTextColor={colorsConstant.gray_1}
           cursorColor={colorsConstant.primary}
-          returnKeyType='search'
+          returnKeyType="search"
           underlineColorAndroid={colorsConstant.transparent}
           onChangeText={handleChangeText}
           onFocus={handleFocusInput}
@@ -72,9 +72,9 @@ const HomeSearch = memo(() => {
       </View>
     </View>
   );
-});
+};
 
-export default HomeSearch;
+export default memo(HomeSearch);
 
 const styles = StyleSheet.create({
   inputLabel: {

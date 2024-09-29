@@ -9,6 +9,7 @@ import IconXML from '../IconXML';
 import HeartWhite from '@/assets/icons/HeartWhite';
 import HeartRed from '@/assets/icons/HeartRed';
 import More from '@/assets/icons/More';
+import BlackGradientWrapper from '../BlackGradientWrapper';
 
 interface IRecommendPostItemProps {
   item: IRecommendPostItem;
@@ -25,12 +26,14 @@ const RecommendPostItem = ({item}: IRecommendPostItemProps) => {
 
   return (
     <View style={styles.itemContainer}>
-      <FastImage
-        source={{
-          uri: item.dish_info.img_url,
-        }}
-        style={styles.postImg}
-      />
+      <BlackGradientWrapper height={80}>
+        <FastImage
+          source={{
+            uri: item.dish_info.img_url,
+          }}
+          style={styles.postImg}
+        />
+      </BlackGradientWrapper>
       <View style={styles.postInfo}>
         <View style={styles.topBox}>
           <FastImage
@@ -41,6 +44,7 @@ const RecommendPostItem = ({item}: IRecommendPostItemProps) => {
           />
           <View style={styles.boxRight}>
             <Typo style={styles.userName}>{item.user_info.name}</Typo>
+            <Typo style={styles.publishTime}>{' • '}</Typo>
             <Typo style={styles.publishTime}>{item.published_time}</Typo>
           </View>
         </View>
@@ -97,6 +101,8 @@ const styles = ScaledSheet.create({
     fontSize: 12,
   },
   boxRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginLeft: '8@s',
   },
   actionButtons: {

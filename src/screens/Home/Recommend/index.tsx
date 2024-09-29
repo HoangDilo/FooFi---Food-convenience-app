@@ -15,7 +15,7 @@ import IconXML from '@/components/IconXML';
 import ChevronRight from '@/assets/icons/ChevronRightWhite';
 import Typo from '@/components/Typo';
 
-const RecommendSection = memo(() => {
+const RecommendSection = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
@@ -34,13 +34,13 @@ const RecommendSection = memo(() => {
         dish_id: 1,
       });
     });
-  }, []);
+  }, [changeDetail, dispatch, navigation]);
 
   useFocusEffect(
     useCallback(() => {
       changeDetail.setValue(1);
       dispatch(setIsBottomTabHidden(false));
-    }, []),
+    }, [changeDetail, dispatch]),
   );
 
   return (
@@ -102,9 +102,9 @@ const RecommendSection = memo(() => {
       </View>
     </Pressable>
   );
-});
+};
 
-export default RecommendSection;
+export default memo(RecommendSection);
 
 const styles = ScaledSheet.create({
   wrapper: {

@@ -26,8 +26,6 @@ export interface IRecommendPostItem {
     id: number;
     name: string;
     avt_url: string;
-    followers: number;
-    is_following: boolean;
   };
   dish_info: {
     id: number;

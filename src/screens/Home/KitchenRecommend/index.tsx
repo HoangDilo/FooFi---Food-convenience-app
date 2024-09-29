@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, { memo } from 'react';
+import React, {memo} from 'react';
 import ListDishRecommendBy from '@/components/ListDishRecommendBy';
 import {IItemDish} from '@/types/dish.type';
 import {useTranslation} from 'react-i18next';
@@ -67,7 +67,7 @@ const DISHES_BY_KITCHEN: IItemDish[] = [
   },
 ];
 
-const KitchenRecommend = memo(() => {
+const KitchenRecommend = () => {
   const {t} = useTranslation();
   return (
     <View>
@@ -77,8 +77,8 @@ const KitchenRecommend = memo(() => {
       />
     </View>
   );
-});
+};
 
-export default KitchenRecommend;
+export default memo(KitchenRecommend);
 
 const styles = StyleSheet.create({});
