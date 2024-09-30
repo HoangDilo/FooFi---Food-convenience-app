@@ -37,7 +37,7 @@ const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
-  const snapPoints = useMemo(() => [200], []);
+  const snapPoints = useMemo(() => [160], []);
 
   const opacity = useSharedValue(1);
 
