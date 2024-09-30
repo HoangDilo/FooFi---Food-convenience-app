@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 
 import {MEALS} from '@/enums/meal.enum';
 
@@ -8,7 +8,10 @@ import Lunch from '@/assets/icons/Lunch';
 import Linner from '@/assets/icons/Linner';
 import Dinner from '@/assets/icons/Dinner';
 import Supper from '@/assets/icons/Supper';
-import { SESSION } from '@/enums/session.enum';
+import {SESSION} from '@/enums/session.enum';
+import IconXML from '../IconXML';
+import {ScaledSheet} from 'react-native-size-matters/extend';
+import colorsConstant from '@/constants/colors.constant';
 
 const listMealOptions = [
   {
@@ -40,18 +43,39 @@ const listMealOptions = [
 ];
 
 interface IMealOptionsProps {
-    activeMeal?: MEALS;
-    onChangeActiveMeal?: () => void;
+  activeMeal?: MEALS;
+  onChangeActiveMeal?: () => void;
 }
 
 const MealOptions = ({}: IMealOptionsProps) => {
   return (
-    <View style={{flex: 1}}>
-      
+    <View style={styles.container}>
+      {listMealOptions.map(item => (
+        <View key={item.id}>
+          <View style={styles.circleRound}>
+            <IconXML icon={item.icon} width={52} height={52} />
+          </View>
+        </View>
+      ))}
     </View>
   );
 };
 
 export default MealOptions;
 
-const styles = StyleSheet.create({});
+const styles = ScaledSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '40@vs',
+  },
+  circleRound: {
+    padding: 2,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colorsConstant.primary,
+    overflow: 'hidden',
+  },
+});
