@@ -28,6 +28,9 @@ import {
 } from '@/store/reducers/system.reducer';
 import RecommendPosts from './RecommendPosts';
 import StatusBarCustom from '@/components/StatusBarCustom';
+import {getDaySession} from '@/utils/time';
+import {meal} from '@/constants/time.constant';
+import {MEALS} from '@/enums/meal.enum';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
@@ -35,6 +38,9 @@ const HomeScreen = () => {
 
   const [isBottomSheetShown, setIsBottomSheetShown] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [activeMeal, setActiveMeal] = useState<string>(
+    meal[getDaySession() as keyof typeof meal],
+  );
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
   const snapPoints = useMemo(() => [160], []);
@@ -45,7 +51,7 @@ const HomeScreen = () => {
     (props: any) => (
       <BottomSheetBackdrop
         {...props}
-        opacity={0.5}
+        opacity={0.4}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
         style={{backgroundColor: 'black'}}
@@ -54,16 +60,21 @@ const HomeScreen = () => {
     [],
   );
 
-  const handleChangeBS = useCallback((index: number) => {
-    dispatch(setIsBottomSheetShowing(index !== -1));
-    setIsBottomSheetShown(index !== -1);
-  }, []);
+  const handleChangeBS = useCallback(
+    (index: number) => {
+      dispatch(setIsBottomSheetShowing(index !== -1));
+      setIsBottomSheetShown(index !== -1);
+    },
+    [dispatch],
+  );
 
   const handleChooseOtherSession = useCallback(() => {
-    dispatch(setIsBottomSheetShowing(true));
-    setIsBottomSheetShown(true);
-    bottomSheetSessionsRef.current?.expand();
-  }, []);
+    if (!isBottomSheetShown) {
+      dispatch(setIsBottomSheetShowing(true));
+      setIsBottomSheetShown(true);
+      bottomSheetSessionsRef.current?.expand();
+    }
+  }, [dispatch, isBottomSheetShown]);
 
   const handleRefreshHome = useCallback(() => {
     setRefreshing(true);
@@ -80,8 +91,12 @@ const HomeScreen = () => {
         dispatch(setIsScrolling(false));
       }
     },
-    [],
+    [dispatch],
   );
+
+  const handleChangeActiveMeal = useCallback((mealParam: MEALS) => {
+    setActiveMeal(mealParam);
+  }, []);
 
   useEffect(() => {
     if (isBottomTabHidden) {
@@ -92,7 +107,7 @@ const HomeScreen = () => {
     } else {
       opacity.value = 1;
     }
-  }, [isBottomTabHidden]);
+  }, [isBottomTabHidden, opacity]);
 
   return (
     <View style={{flex: 1}}>
@@ -121,6 +136,7 @@ const HomeScreen = () => {
             ]}>
             <HomeSearch />
             <DaySessionRecommend
+              option={activeMeal}
               onChooseOtherOptions={handleChooseOtherSession}
             />
             <KitchenRecommend />
@@ -141,8 +157,12 @@ const HomeScreen = () => {
             handleIndicatorStyle={{backgroundColor: colorsConstant.secondary}}
             onChange={index => handleChangeBS(index)}
             style={styles.bottomSheetView}
+            containerHeight={160}
             enablePanDownToClose>
-            <MealOptions />
+            <MealOptions
+              activeMeal={activeMeal}
+              onChangeActiveMeal={handleChangeActiveMeal}
+            />
           </BottomSheet>
         </View>
       )}

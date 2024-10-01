@@ -2,14 +2,6 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/assets/fonts/Inter-Black.otf",
-      "sha1": "262b35e6a18aed02a23f1215616a454be48db81f"
-    },
-    {
-      "path": "src/assets/fonts/Inter-BlackItalic.otf",
-      "sha1": "001d935e0ed27cd9f17994fd0534862cff0f787c"
-    },
-    {
       "path": "src/assets/fonts/Inter-Bold.otf",
       "sha1": "6f4cbdd03575a42523e50e081224dcc8e693f52b"
     },
@@ -56,14 +48,6 @@
     {
       "path": "src/assets/fonts/Inter-SemiBoldItalic.otf",
       "sha1": "9f80ed366fd3917f000c407118753b3ae75c6ccc"
-    },
-    {
-      "path": "src/assets/fonts/Inter-Thin.otf",
-      "sha1": "f21e3178147234552c40b675e523d99facbd87d2"
-    },
-    {
-      "path": "src/assets/fonts/Inter-ThinItalic.otf",
-      "sha1": "26272736008a9d6bfcef67a952660ea6ac188068"
     }
   ]
 }

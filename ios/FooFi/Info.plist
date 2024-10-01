@@ -49,8 +49,6 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Inter-Black.otf</string>
-		<string>Inter-BlackItalic.otf</string>
 		<string>Inter-Bold.otf</string>
 		<string>Inter-BoldItalic.otf</string>
 		<string>Inter-ExtraBold.otf</string>
@@ -63,8 +61,6 @@
 		<string>Inter-Regular.otf</string>
 		<string>Inter-SemiBold.otf</string>
 		<string>Inter-SemiBoldItalic.otf</string>
-		<string>Inter-Thin.otf</string>
-		<string>Inter-ThinItalic.otf</string>
 	</array>
 </dict>
 </plist>
