@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {View} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import Animated, {
   Easing,
@@ -6,11 +7,12 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useAppSelector} from '@/hooks/redux';
 import {ScaledSheet} from 'react-native-size-matters/extend';
+
 import colorsConstant from '@/constants/colors.constant';
 import CustomItemTab from '../CustomItemTab';
-import {useAppSelector} from '@/hooks/redux';
-import {View} from 'react-native';
 
 const CustomBottomTab = ({
   state,
@@ -20,6 +22,8 @@ const CustomBottomTab = ({
   const {isBottomTabHidden, isBottomSheetShowing} = useAppSelector(
     state => state.system,
   );
+  const insets = useSafeAreaInsets();
+
   const height = useSharedValue(80);
 
   useEffect(() => {
@@ -31,7 +35,7 @@ const CustomBottomTab = ({
     } else {
       height.value = 80;
     }
-  }, [isBottomTabHidden]);
+  }, [height, isBottomTabHidden]);
 
   useEffect(() => {
     if (!isBottomSheetShowing) {
@@ -43,10 +47,11 @@ const CustomBottomTab = ({
     } else {
       height.value = 0;
     }
-  }, [isBottomSheetShowing]);
+  }, [height, isBottomSheetShowing]);
 
   return (
-    <Animated.View style={[styles.tabBarContainer, {height}]}>
+    <Animated.View
+      style={[styles.tabBarContainer, {height, paddingBottom: insets.bottom}]}>
       <View style={styles.paddingTop}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
@@ -102,7 +107,6 @@ const styles = ScaledSheet.create({
     borderTopWidth: 1,
     backgroundColor: 'white',
     borderTopColor: colorsConstant.gray_3,
-    height: 80,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: {
