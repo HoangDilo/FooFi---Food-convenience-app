@@ -22,12 +22,12 @@ export const sessionTime = {
   nightEndHour: '03:59:59',
 };
 
-export const sessions = ['morning', 'noon', 'afternoon', 'evening', 'night']
+export const sessions = ['morning', 'noon', 'afternoon', 'evening', 'night'];
 
 export const meal = {
   morning: 'breakfast',
   noon: 'lunch',
   afternoon: 'linner',
   evening: 'dinner',
-  night: 'supper'
-}
+  night: 'supper',
+};

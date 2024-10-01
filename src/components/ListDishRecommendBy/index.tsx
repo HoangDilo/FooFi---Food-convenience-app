@@ -40,9 +40,7 @@ const ListDishRecommendBy = ({
 export default ListDishRecommendBy;
 
 const styles = ScaledSheet.create({
-  container: {
-    marginBottom: 8,
-  },
+  container: {},
   labelDishesList: {
     fontSize: '18@s',
     color: colorsConstant.black_1,

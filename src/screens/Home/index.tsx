@@ -29,8 +29,6 @@ import {
 import RecommendPosts from './RecommendPosts';
 import StatusBarCustom from '@/components/StatusBarCustom';
 import {getDaySession} from '@/utils/time';
-import {meal} from '@/constants/time.constant';
-import {MEALS} from '@/enums/meal.enum';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
@@ -38,9 +36,7 @@ const HomeScreen = () => {
 
   const [isBottomSheetShown, setIsBottomSheetShown] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [activeMeal, setActiveMeal] = useState<string>(
-    meal[getDaySession() as keyof typeof meal],
-  );
+  const [activeSession, setActiveSession] = useState<string>(getDaySession());
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
   const snapPoints = useMemo(() => [160], []);
@@ -51,7 +47,7 @@ const HomeScreen = () => {
     (props: any) => (
       <BottomSheetBackdrop
         {...props}
-        opacity={0.4}
+        opacity={0.2}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
         style={{backgroundColor: 'black'}}
@@ -94,8 +90,9 @@ const HomeScreen = () => {
     [dispatch],
   );
 
-  const handleChangeActiveMeal = useCallback((mealParam: MEALS) => {
-    setActiveMeal(mealParam);
+  const handleChangeActiveMeal = useCallback((sessionName: string) => {
+    setActiveSession(sessionName);
+    bottomSheetSessionsRef.current?.close();
   }, []);
 
   useEffect(() => {
@@ -136,7 +133,7 @@ const HomeScreen = () => {
             ]}>
             <HomeSearch />
             <DaySessionRecommend
-              option={activeMeal}
+              option={activeSession}
               onChooseOtherOptions={handleChooseOtherSession}
             />
             <KitchenRecommend />
@@ -157,10 +154,10 @@ const HomeScreen = () => {
             handleIndicatorStyle={{backgroundColor: colorsConstant.secondary}}
             onChange={index => handleChangeBS(index)}
             style={styles.bottomSheetView}
-            containerHeight={160}
+            containerHeight={136}
             enablePanDownToClose>
             <MealOptions
-              activeMeal={activeMeal}
+              activeSession={activeSession}
               onChangeActiveMeal={handleChangeActiveMeal}
             />
           </BottomSheet>

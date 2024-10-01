@@ -1,5 +1,5 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {memo} from 'react';
+import {Pressable, View} from 'react-native';
 
 import {MEALS} from '@/enums/meal.enum';
 
@@ -12,56 +12,94 @@ import {SESSION} from '@/enums/session.enum';
 import IconXML from '../IconXML';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
+import CheckOrange from '@/assets/icons/CheckOrange';
+import Typo from '../Typo';
+import {useTranslation} from 'react-i18next';
 
 const listMealOptions = [
   {
     id: 1,
     label: MEALS.BREAKFAST,
-    sesion: SESSION.MORNING,
+    session: SESSION.MORNING,
     icon: Breakfast,
   },
   {
     id: 2,
     label: MEALS.LUNCH,
+    session: SESSION.NOON,
     icon: Lunch,
   },
   {
     id: 3,
     label: MEALS.LINNER,
+    session: SESSION.AFTERNOON,
     icon: Linner,
   },
   {
     id: 4,
     label: MEALS.DINNER,
+    session: SESSION.EVENING,
     icon: Dinner,
   },
   {
     id: 5,
     label: MEALS.SUPPER,
+    session: SESSION.NIGHT,
     icon: Supper,
   },
 ];
 
 interface IMealOptionsProps {
-  activeMeal?: MEALS;
-  onChangeActiveMeal?: () => void;
+  activeSession?: string;
+  onChangeActiveMeal?: (session: string) => void;
 }
 
-const MealOptions = ({}: IMealOptionsProps) => {
+const MealOptions = ({
+  activeSession,
+  onChangeActiveMeal,
+}: IMealOptionsProps) => {
+  const {t} = useTranslation();
+
   return (
     <View style={styles.container}>
       {listMealOptions.map(item => (
-        <View key={item.id}>
-          <View style={styles.circleRound}>
-            <IconXML icon={item.icon} width={52} height={52} />
+        <Pressable
+          key={item.id}
+          style={styles.itemContainer}
+          onPress={() =>
+            onChangeActiveMeal && onChangeActiveMeal(item.session)
+          }>
+          <View style={styles.itemWrapper}>
+            <View
+              style={
+                activeSession === item.session
+                  ? styles.circleActive
+                  : styles.circleRound
+              }>
+              <IconXML icon={item.icon} width={52} height={52} />
+            </View>
+            {activeSession === item.session && (
+              <View style={styles.checkWrapper}>
+                <IconXML icon={CheckOrange} width={16} height={16} />
+              </View>
+            )}
           </View>
-        </View>
+          <Typo
+            style={{
+              color:
+                activeSession === item.session
+                  ? colorsConstant.primary
+                  : colorsConstant.black_1,
+            }}>
+            {t(`mealBySession.${item.session}`)}
+          </Typo>
+        </Pressable>
       ))}
     </View>
   );
 };
 
-export default MealOptions;
+export default memo(MealOptions);
 
 const styles = ScaledSheet.create({
   container: {
@@ -71,11 +109,36 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     marginBottom: '40@vs',
   },
+  itemContainer: {
+    gap: '6@s',
+    alignItems: 'center',
+  },
   circleRound: {
+    padding: 2,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#FFF',
+    overflow: 'hidden',
+  },
+  circleActive: {
     padding: 2,
     borderRadius: 50,
     borderWidth: 2,
     borderColor: colorsConstant.primary,
     overflow: 'hidden',
+  },
+  itemWrapper: {
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkWrapper: {
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#FFF',
+    backgroundColor: '#FFF',
+    position: 'absolute',
+    top: 1,
+    right: 1,
   },
 });

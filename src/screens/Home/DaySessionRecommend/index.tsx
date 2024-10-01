@@ -1,5 +1,5 @@
 import {Pressable, View} from 'react-native';
-import React, {memo, useCallback, useMemo} from 'react';
+import React, {memo, useMemo} from 'react';
 import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
 import colorsConstant from '@/constants/colors.constant';
@@ -13,7 +13,6 @@ import {useTranslation} from 'react-i18next';
 import {getDaySession} from '@/utils/time';
 import ListDishRecommendBy from '@/components/ListDishRecommendBy';
 import {IItemDish} from '@/types/dish.type';
-import {MEALS} from '@/enums/meal.enum';
 
 const SESSION_ICONS = {
   morning: Morning,
@@ -24,7 +23,7 @@ const SESSION_ICONS = {
 };
 
 interface IDaySessionRecommendProps {
-  option?: MEALS;
+  option?: string;
   onChooseOtherOptions: () => void;
 }
 
@@ -92,10 +91,12 @@ const DISHES_BY_SESSION: IItemDish[] = [
 ];
 
 const DaySessionRecommend = ({
+  option = undefined,
   onChooseOtherOptions,
 }: IDaySessionRecommendProps) => {
   const {t} = useTranslation();
-  const sessionLabel = useMemo(() => getDaySession(), []);
+  const currentSession = useMemo(() => getDaySession(), []);
+  const sessionLabel = useMemo(() => option || getDaySession(), [option]);
 
   return (
     <View style={styles.container}>
@@ -104,11 +105,11 @@ const DaySessionRecommend = ({
           {t('home.its_now')}
           <Typo style={styles.daySessionLabel}>
             {' '}
-            {t(`daySession.${sessionLabel}`)}!
+            {t(`daySession.${currentSession}`)}!
           </Typo>
         </Typo>
         <IconXML
-          icon={SESSION_ICONS[sessionLabel as keyof typeof SESSION_ICONS]}
+          icon={SESSION_ICONS[currentSession as keyof typeof SESSION_ICONS]}
           width={scale(48)}
           height={scale(48)}
         />
@@ -154,6 +155,8 @@ const styles = ScaledSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: '2@s',
   },
   otherOptionText: {
     fontSize: '13@s',
@@ -163,5 +166,7 @@ const styles = ScaledSheet.create({
     fontSize: '13@s',
     color: colorsConstant.secondary,
     textDecorationLine: 'underline',
+    paddingTop: '3@s',
+    paddingBottom: '5@s',
   },
 });
