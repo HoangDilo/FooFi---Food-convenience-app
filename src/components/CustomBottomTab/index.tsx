@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {View} from 'react-native';
 import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import Animated, {
@@ -24,7 +24,9 @@ const CustomBottomTab = ({
   );
   const insets = useSafeAreaInsets();
 
-  const height = useSharedValue(80);
+  const bottomTabHeight = useMemo(() => 56 + insets.bottom, []);
+
+  const height = useSharedValue(bottomTabHeight);
 
   useEffect(() => {
     if (isBottomTabHidden) {
@@ -33,13 +35,13 @@ const CustomBottomTab = ({
         easing: Easing.inOut(Easing.quad),
       });
     } else {
-      height.value = 80;
+      height.value = bottomTabHeight;
     }
   }, [height, isBottomTabHidden]);
 
   useEffect(() => {
     if (!isBottomSheetShowing) {
-      height.value = withTiming(80, {
+      height.value = withTiming(bottomTabHeight, {
         duration: 300,
         easing: Easing.inOut(Easing.quad),
         reduceMotion: ReduceMotion.System,
@@ -51,7 +53,7 @@ const CustomBottomTab = ({
 
   return (
     <Animated.View
-      style={[styles.tabBarContainer, {height, paddingBottom: insets.bottom}]}>
+      style={[styles.tabBarContainer, {height}, {height: bottomTabHeight}]}>
       <View style={styles.paddingTop}>
         {state.routes.map((route, index) => {
           const {options} = descriptors[route.key];
