@@ -1,6 +1,5 @@
-import {useMemo} from 'react';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useAppSelector} from '@/hooks/redux';
 
 import {TAB} from '@/constants/tabs.constant';
 

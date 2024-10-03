@@ -21,6 +21,7 @@ import KitchenRecommend from './KitchenRecommend';
 import {useAppSelector} from '@/hooks/redux';
 import colorsConstant from '@/constants/colors.constant';
 import MealOptions from '@/components/MealOptions';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import {
   setIsBottomSheetShowing,
@@ -29,17 +30,20 @@ import {
 import RecommendPosts from './RecommendPosts';
 import StatusBarCustom from '@/components/StatusBarCustom';
 import {getDaySession} from '@/utils/time';
+import {useFocusEffect} from '@react-navigation/native';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
   const dispatch = useDispatch();
+  const insets = useSafeAreaInsets();
 
   const [isBottomSheetShown, setIsBottomSheetShown] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [activeSession, setActiveSession] = useState<string>(getDaySession());
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
-  const snapPoints = useMemo(() => [160], []);
+  const scrollViewRef = useRef<ScrollView | null>(null);
+  const snapPoints = useMemo(() => [160 + insets.bottom], [insets.bottom]);
 
   const opacity = useSharedValue(1);
 
@@ -106,10 +110,17 @@ const HomeScreen = () => {
     }
   }, [isBottomTabHidden, opacity]);
 
+  useFocusEffect(
+    useCallback(() => {
+      scrollViewRef.current?.scrollTo({y: 0, animated: true});
+    }, []),
+  );
+
   return (
     <View style={{flex: 1}}>
       <StatusBarCustom />
       <ScrollView
+        ref={scrollViewRef}
         contentContainerStyle={styles.homeScreen}
         scrollToOverflowEnabled={false}
         refreshControl={

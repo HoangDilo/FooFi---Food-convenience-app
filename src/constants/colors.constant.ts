@@ -7,5 +7,5 @@ export default {
   gray_3: '#F0F0F0',
   black_1: '#1a1a1a',
   transparent: '#00000000',
-  background: '#F5F5F5'
+  background: '#F5F5F5',
 };
