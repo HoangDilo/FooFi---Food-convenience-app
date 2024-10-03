@@ -20,8 +20,6 @@ const listRecommendPosts: IRecommendPostItem[] = [
       name: 'HoangDilo',
       avt_url:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH3MW7eGaYWiRrk3AajqEiCFQBJwgSTULhyw&s',
-      followers: 204,
-      is_following: true,
     },
     dish_info: {
       id: 1,
@@ -43,9 +41,6 @@ const listRecommendPosts: IRecommendPostItem[] = [
       name: 'HoangDilo',
       avt_url:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH3MW7eGaYWiRrk3AajqEiCFQBJwgSTULhyw&s',
-      followers: 345,
-      is_following: false,
-    
     },
     dish_info: {
       id: 2,

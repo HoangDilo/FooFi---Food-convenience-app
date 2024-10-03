@@ -39,8 +39,8 @@ const HomeSearch = () => {
       <View style={styles.inputWrapper}>
         <IconXML
           icon={isFocusInput ? SearchOrange : SearchBlack}
-          width={24}
-          height={24}
+          width={20}
+          height={20}
           style={styles.iconInput}
         />
         <TextInput
@@ -81,11 +81,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
     color: colorsConstant.black_1,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   input: {
-    borderWidth: 1.2,
-    borderColor: colorsConstant.black_1,
     borderRadius: 500,
     paddingHorizontal: 16,
     paddingLeft: 42,
@@ -97,6 +95,13 @@ const styles = StyleSheet.create({
     color: colorsConstant.black_1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFF',
+    shadowColor: '#0000030',
+    elevation: 4,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
   },
   inputWrapper: {
     position: 'relative',
@@ -107,6 +112,7 @@ const styles = StyleSheet.create({
   iconInput: {
     position: 'absolute',
     left: 12,
+    zIndex: 2,
   },
   searchButton: {
     borderRadius: 500,
@@ -115,6 +121,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 12,
     alignItems: 'center',
+    shadowColor: '#0000030',
+    elevation: 4,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
   },
   searchLabel: {
     color: '#FFF',

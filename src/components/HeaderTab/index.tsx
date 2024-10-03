@@ -24,7 +24,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '12@s',
   },
   headerTitle: {
-    fontSize: '24@s',
+    fontSize: '32@s',
     fontWeight: '700',
     color: colorsConstant.black_1,
   },

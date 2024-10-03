@@ -4,6 +4,7 @@ const systemSliceInitialState = {
   isScrolling: false,
   isBottomTabHidden: false,
   isBottomSheetShowing: false,
+  currentRoute: '',
 };
 
 export const systemSlice = createSlice({
@@ -19,9 +20,17 @@ export const systemSlice = createSlice({
     setIsBottomSheetShowing: (state, action: PayloadAction<boolean>) => {
       state.isBottomSheetShowing = action.payload;
     },
+    setCurrentRoute: (state, action: PayloadAction<string>) => {
+      state.currentRoute = action.payload;
+    },
   },
 });
 
-export const {setIsScrolling, setIsBottomTabHidden, setIsBottomSheetShowing} = systemSlice.actions;
+export const {
+  setIsScrolling,
+  setIsBottomTabHidden,
+  setIsBottomSheetShowing,
+  setCurrentRoute,
+} = systemSlice.actions;
 
 export default systemSlice.reducer;

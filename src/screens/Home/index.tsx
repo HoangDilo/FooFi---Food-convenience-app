@@ -7,30 +7,33 @@ import {
   View,
 } from 'react-native';
 import {ScaledSheet} from 'react-native-size-matters/extend';
+import {useAppSelector} from '@/hooks/redux';
 import Animated, {
   Easing,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useFocusEffect} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
 
+import {TAB} from '@/constants/tabs.constant';
+import colorsConstant from '@/constants/colors.constant';
+import MealOptions from '@/components/MealOptions';
+
+import {
+  setCurrentRoute,
+  setIsBottomSheetShowing,
+  setIsScrolling,
+} from '@/store/reducers/system.reducer';
+import {getDaySession} from '@/utils/time';
+
+import RecommendPosts from './RecommendPosts';
 import RecommendSection from './Recommend';
 import HomeSearch from './HomeSearch';
 import DaySessionRecommend from './DaySessionRecommend';
 import KitchenRecommend from './KitchenRecommend';
-import {useAppSelector} from '@/hooks/redux';
-import colorsConstant from '@/constants/colors.constant';
-import MealOptions from '@/components/MealOptions';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
-import {
-  setIsBottomSheetShowing,
-  setIsScrolling,
-} from '@/store/reducers/system.reducer';
-import RecommendPosts from './RecommendPosts';
-import StatusBarCustom from '@/components/StatusBarCustom';
-import {getDaySession} from '@/utils/time';
-import {useFocusEffect} from '@react-navigation/native';
 
 const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
@@ -113,12 +116,12 @@ const HomeScreen = () => {
   useFocusEffect(
     useCallback(() => {
       scrollViewRef.current?.scrollTo({y: 0, animated: true});
-    }, []),
+      dispatch(setCurrentRoute(TAB.HOME_TAB));
+    }, [dispatch]),
   );
 
   return (
     <View style={{flex: 1}}>
-      <StatusBarCustom />
       <ScrollView
         ref={scrollViewRef}
         contentContainerStyle={styles.homeScreen}

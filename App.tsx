@@ -13,6 +13,7 @@ const App = () => {
     <Provider store={store}>
       <I18nextProvider i18n={i18n} defaultNS={'translation'}>
         <GestureHandlerRootView style={{flex: 1}}>
+          <StatusBarCustom />
           <MainNavigator />
         </GestureHandlerRootView>
       </I18nextProvider>

@@ -24,7 +24,7 @@ const CustomBottomTab = ({
   );
   const insets = useSafeAreaInsets();
 
-  const bottomTabHeight = useMemo(() => 56 + insets.bottom, []);
+  const bottomTabHeight = useMemo(() => 56 + insets.bottom, [insets.bottom]);
 
   const height = useSharedValue(bottomTabHeight);
 
