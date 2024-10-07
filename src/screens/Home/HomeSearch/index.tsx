@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFF',
-    shadowColor: '#0000030',
+    shadowColor: colorsConstant.shadow,
     elevation: 4,
     shadowOffset: {
       width: 3,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 12,
     alignItems: 'center',
-    shadowColor: '#0000030',
+    shadowColor: colorsConstant.shadow,
     elevation: 4,
     shadowOffset: {
       width: 3,

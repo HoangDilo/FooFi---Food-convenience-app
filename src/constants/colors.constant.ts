@@ -7,5 +7,8 @@ export default {
   gray_3: '#F0F0F0',
   black_1: '#1a1a1a',
   transparent: '#00000000',
-  background: '#F5F5F5',
+  background: '#F8F8F8',
+  shadow: '#00000066',
+  error: '#fe0b0b',
+  success: '#2ebd30',
 };

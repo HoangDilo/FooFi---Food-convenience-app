@@ -3,13 +3,13 @@ import {View} from 'react-native';
 import {IRecommendPostItem} from '@/types/home.type';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import FastImage from 'react-native-fast-image';
-import Typo from '../Typo';
+import Typo from '../../../../components/Typo';
 import colorsConstant from '@/constants/colors.constant';
-import IconXML from '../IconXML';
+import IconXML from '../../../../components/IconXML';
 import HeartWhite from '@/assets/icons/HeartWhite';
 import HeartRed from '@/assets/icons/HeartRed';
 import More from '@/assets/icons/More';
-import BlackGradientWrapper from '../BlackGradientWrapper';
+import BlackGradientWrapper from '../../../../components/BlackGradientWrapper';
 
 interface IRecommendPostItemProps {
   item: IRecommendPostItem;
@@ -71,7 +71,7 @@ const styles = ScaledSheet.create({
     borderRadius: '16@s',
     overflow: 'hidden',
     elevation: 4,
-    shadowColor: '#00000030',
+    shadowColor: colorsConstant.shadow,
     shadowOffset: {
       width: 3,
       height: 3,

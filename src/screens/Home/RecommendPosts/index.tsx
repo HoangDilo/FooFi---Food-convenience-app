@@ -4,7 +4,7 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
-import RecommendPostItem from '@/components/RecommendPostItem';
+import RecommendPostItem from '@/screens/Home/RecommendPosts/RecommendPostItem';
 import {IRecommendPostItem} from '@/types/home.type';
 
 const listRecommendPosts: IRecommendPostItem[] = [

@@ -21,11 +21,14 @@ export default HeaderTab;
 
 const styles = ScaledSheet.create({
   headerContainer: {
-    paddingHorizontal: '12@s',
+    paddingHorizontal: '20@s',
+    marginBottom: '14@s',
+    backgroundColor: colorsConstant.primary,
+    paddingVertical: '12@s',
   },
   headerTitle: {
     fontSize: '32@s',
     fontWeight: '700',
-    color: colorsConstant.black_1,
+    color: '#FFF',
   },
 });
