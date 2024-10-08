@@ -5,6 +5,7 @@ import Typo from '@/components/Typo';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
+import {useTranslation} from 'react-i18next';
 
 interface IItemToolSelect {
   tool: IKitchenToolsAvailable;
@@ -17,6 +18,8 @@ const ItemToolSelect = ({
   onSelectTool,
   onUnselectTool,
 }: IItemToolSelect) => {
+  const {i18n} = useTranslation();
+
   const [isSelected, setIsSelected] = useState(false);
 
   const handlePressItem = useCallback(() => {
@@ -34,7 +37,7 @@ const ItemToolSelect = ({
       onPress={handlePressItem}>
       <FastImage source={{uri: tool.img_url}} style={styles.toolImg} />
       <Typo style={isSelected ? styles.selectedName : styles.toolName}>
-        {tool.name_en}
+        {tool[`name_${i18n.language}` as keyof typeof tool]}
       </Typo>
     </Pressable>
   );

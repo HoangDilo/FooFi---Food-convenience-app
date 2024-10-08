@@ -1,11 +1,12 @@
 import {ScrollView, TouchableHighlight, View} from 'react-native';
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, {memo, useCallback, useState} from 'react';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters/extend';
 import Typo from '../Typo';
 import ModalRemake from '../ModalRemake';
 import colorsConstant from '@/constants/colors.constant';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import ItemToolSelect from './ItemToolSelect';
+import {useTranslation} from 'react-i18next';
 
 interface IModalAddKitchenToolsProps {
   isVisible: boolean;
@@ -20,11 +21,16 @@ const ModalAddKitchenTools = ({
   onClose,
   onSubmit,
 }: IModalAddKitchenToolsProps) => {
+  const {t} = useTranslation();
+
   const [listToolsSelected, setListToolsSelected] = useState<
     IKitchenToolsAvailable[]
   >([]);
 
+  console.log(listToolsSelected.map(item => item.name_en));
+
   const handleCloseModal = useCallback(() => {
+    setListToolsSelected([]);
     onClose();
   }, [onClose]);
 
@@ -58,10 +64,10 @@ const ModalAddKitchenTools = ({
     <ModalRemake isVisible={isVisible}>
       {isVisible && (
         <View style={styles.addToolsContainer}>
-          <Typo style={styles.title}>Add tools that're in your kitchen</Typo>
+          <Typo style={styles.title}>{t('kitchen.add_tools')}</Typo>
           <ScrollView
             style={{maxHeight: verticalScale(280)}}
-            indicatorStyle={'black'}>
+            showsVerticalScrollIndicator={false}>
             <View style={styles.toolsContainer}>
               {listToolsAvailable.map(tool => (
                 <ItemToolSelect
@@ -104,13 +110,14 @@ const styles = ScaledSheet.create({
     fontSize: '16@s',
     color: colorsConstant.black_1,
     marginTop: '4@s',
-    marginBottom: '12@s',
+    marginBottom: '4@s',
   },
   toolsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     rowGap: '12@s',
     columnGap: '8@s',
+    paddingVertical: '8@s',
   },
   buttonContainer: {
     flexDirection: 'row',

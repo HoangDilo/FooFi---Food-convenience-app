@@ -1,3 +1,4 @@
+import {deviceHeight, deviceWidth} from '@/constants/device.constant';
 import React from 'react';
 import Modal from 'react-native-modal';
 
@@ -16,7 +17,9 @@ const ModalRemake = ({isVisible, children}: IModalRemakePropse) => {
       animationIn={'fadeIn'}
       animationOut={'fadeOut'}
       hideModalContentWhileAnimating={true}
-      useNativeDriver={true}>
+      useNativeDriver={true}
+      deviceHeight={deviceHeight}
+      deviceWidth={deviceWidth}>
       {children}
     </Modal>
   );

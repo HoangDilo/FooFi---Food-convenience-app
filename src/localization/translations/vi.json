@@ -39,5 +39,12 @@
     "recommend_posts": "Công thức nấu ăn từ các đầu bếp khác"
   },
   "other_options": "Lựa chọn khác",
-  "see_more": "Xem thêm"
+  "see_more": "Xem thêm",
+  "kitchen": {
+    "title": "Quản lý bếp của bạn một cách dễ dàng!",
+    "kitchen_tools": "Dụng cụ nấu ăn",
+    "empty_tools": "Bạn chưa thêm dụng cụ, hãy thêm ngay nào.",
+    "add_tools": "Thêm dụng cụ có trong bếp của bạn",
+    "kitchen_spices": "Gia vị"
+  }
 }

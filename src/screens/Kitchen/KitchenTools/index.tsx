@@ -8,6 +8,7 @@ import PlusCircle from '@/assets/icons/PlusCircle';
 import ModalAddKitchenTools from '@/components/ModalAddKitchenTools';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import ItemToolDisplay from './ItemToolDisplay';
+import {useTranslation} from 'react-i18next';
 
 const listToolsFake: IKitchenToolsAvailable[] = [
   {
@@ -81,6 +82,8 @@ const listToolsFake: IKitchenToolsAvailable[] = [
 ];
 
 const KitchenTools = () => {
+  const {t} = useTranslation();
+
   const [isOpenModalAddTools, setIsOpenModalAddTools] = useState(false);
   const [listTools, setListTools] = useState<IKitchenToolsAvailable[]>([]);
 
@@ -92,9 +95,12 @@ const KitchenTools = () => {
     setIsOpenModalAddTools(false);
   }, []);
 
-  const handleSubmit = useCallback((listAdd: IKitchenToolsAvailable[]) => {
-    setListTools(listAdd);
-  }, []);
+  const handleSubmit = useCallback(
+    (listAdd: IKitchenToolsAvailable[]) => {
+      setListTools(listTools.concat(listAdd));
+    },
+    [listTools],
+  );
 
   const handleRemoveTool = useCallback(
     (id: number) => {
@@ -104,11 +110,12 @@ const KitchenTools = () => {
     [listTools],
   );
 
+  console.log(listTools.map(item => item.name_en));
+
   return (
     <View style={styles.toolsContainer}>
-      <Typo style={styles.description}>Manage your own kitchen easily!</Typo>
       <View style={styles.toolsHeader}>
-        <Typo style={styles.headerLabel}>Kitchen tools</Typo>
+        <Typo style={styles.headerLabel}>{t('kitchen.kitchen_tools')}</Typo>
         <IconXML
           icon={PlusCircle}
           width={32}
@@ -127,9 +134,7 @@ const KitchenTools = () => {
           ))}
         </View>
       ) : (
-        <Typo style={styles.emptyTools}>
-          You haven't added any tools, add yours now.
-        </Typo>
+        <Typo style={styles.emptyTools}>{t('kitchen.empty_tools')}</Typo>
       )}
       <ModalAddKitchenTools
         isVisible={isOpenModalAddTools}
@@ -144,9 +149,7 @@ const KitchenTools = () => {
 export default KitchenTools;
 
 const styles = ScaledSheet.create({
-  toolsContainer: {
-    paddingVertical: '24@s',
-  },
+  toolsContainer: {},
   toolsHeader: {
     backgroundColor: '#FFF',
     borderRadius: '16@s',
@@ -161,12 +164,6 @@ const styles = ScaledSheet.create({
       width: 3,
       height: 3,
     },
-  },
-  description: {
-    color: colorsConstant.primary,
-    fontSize: '18@s',
-    fontWeight: '500',
-    marginBottom: '20@s',
   },
   headerLabel: {
     fontSize: '20@s',

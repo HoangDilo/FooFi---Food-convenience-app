@@ -1,4 +1,4 @@
-import {ScrollView, View} from 'react-native';
+import {View} from 'react-native';
 import React, {useCallback} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
@@ -9,9 +9,13 @@ import {setCurrentRoute} from '@/store/reducers/system.reducer';
 import {TAB} from '@/constants/tabs.constant';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import KitchenTools from './KitchenTools';
+import KitchenSpices from './KitchenSpices';
+import Typo from '@/components/Typo';
+import {useTranslation} from 'react-i18next';
 
 const KitchenScreen = () => {
   const dispatch = useDispatch();
+  const {t} = useTranslation();
 
   useFocusEffect(
     useCallback(() => {
@@ -26,7 +30,9 @@ const KitchenScreen = () => {
       <HeaderTab />
       {/* <ScrollView> */}
       <View style={styles.kitchenScreen}>
+        <Typo style={styles.description}>{t('kitchen.title')}</Typo>
         <KitchenTools />
+        <KitchenSpices />
       </View>
       {/* </ScrollView> */}
     </SafeAreaView>
@@ -39,8 +45,15 @@ const styles = ScaledSheet.create({
   kitchenScreen: {
     flex: 1,
     backgroundColor: colorsConstant.background,
-    paddingHorizontal: '24@s',
+    padding: '24@s',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+    gap: '20@s',
+  },
+  description: {
+    color: colorsConstant.primary,
+    fontSize: '18@s',
+    fontWeight: '500',
+    marginLeft: '4@s',
   },
 });

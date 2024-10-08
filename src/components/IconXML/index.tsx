@@ -1,4 +1,9 @@
-import {GestureResponderEvent, StyleProp, StyleSheet, ViewStyle} from 'react-native';
+import {
+  GestureResponderEvent,
+  StyleProp,
+  StyleSheet,
+  ViewStyle,
+} from 'react-native';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
 

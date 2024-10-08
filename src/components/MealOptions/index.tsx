@@ -10,7 +10,7 @@ import Dinner from '@/assets/icons/Dinner';
 import Supper from '@/assets/icons/Supper';
 import {SESSION} from '@/enums/session.enum';
 import IconXML from '../IconXML';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import CheckOrange from '@/assets/icons/CheckOrange';
 import Typo from '../Typo';
@@ -76,7 +76,7 @@ const MealOptions = ({
                   ? styles.circleActive
                   : styles.circleRound
               }>
-              <IconXML icon={item.icon} width={52} height={52} />
+              <IconXML icon={item.icon} width={scale(52)} height={scale(52)} />
             </View>
             {activeSession === item.session && (
               <View style={styles.checkWrapper}>
@@ -85,12 +85,15 @@ const MealOptions = ({
             )}
           </View>
           <Typo
-            style={{
-              color:
-                activeSession === item.session
-                  ? colorsConstant.primary
-                  : colorsConstant.black_1,
-            }}>
+            style={[
+              {
+                color:
+                  activeSession === item.session
+                    ? colorsConstant.primary
+                    : colorsConstant.black_1,
+              },
+              styles.sessionLabel,
+            ]}>
             {t(`mealBySession.${item.session}`)}
           </Typo>
         </Pressable>
@@ -140,5 +143,8 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     top: 1,
     right: 1,
+  },
+  sessionLabel: {
+    fontSize: '14@s',
   },
 });
