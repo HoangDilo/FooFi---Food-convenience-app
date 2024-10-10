@@ -7,12 +7,30 @@ import IconXML from '@/components/IconXML';
 import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
 import {useNavigation} from '@react-navigation/native';
+import {useAppSelector} from '@/hooks/redux';
+import {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 const HomeSearch = () => {
   const {t} = useTranslation();
   const navigation = useNavigation();
+  const {isBottomTabHidden} = useAppSelector(state => state.system);
+
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
+  const opacity = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    shadowColor: interpolateColor(
+      opacity.value,
+      [0, 1],
+      [colorsConstant.shadow, '#00000000'],
+    ),
+  }));
 
   const handleFocusInput = useCallback(() => {
     setIsFocusInput(true);

@@ -110,8 +110,6 @@ const KitchenTools = () => {
     [listTools],
   );
 
-  console.log(listTools.map(item => item.name_en));
-
   return (
     <View style={styles.toolsContainer}>
       <View style={styles.toolsHeader}>

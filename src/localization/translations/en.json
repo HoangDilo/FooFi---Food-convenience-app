@@ -45,9 +45,10 @@
     "kitchen_tools": "Kitchen tools",
     "empty_tools": "You haven't added any tools, add yours now.",
     "add_tools": "Add tools that're in your kitchen",
-    "kitchen_spices": "Spices and Seasoning"
+    "kitchen_spices": "Spices and Seasoning",
+    "empty_spice": "You haven't added any spices, add yours now."
   },
   "other_chefs": {
-    "post": "Tạo bài"
+    "post": "Post"
   }
 }
