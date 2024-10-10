@@ -76,7 +76,7 @@ const MealOptions = ({
                   ? styles.circleActive
                   : styles.circleRound
               }>
-              <IconXML icon={item.icon} width={scale(52)} height={scale(52)} />
+              <IconXML icon={item.icon} width={scale(48)} height={scale(48)} />
             </View>
             {activeSession === item.session && (
               <View style={styles.checkWrapper}>
@@ -145,6 +145,6 @@ const styles = ScaledSheet.create({
     right: 1,
   },
   sessionLabel: {
-    fontSize: '14@s',
+    fontSize: '12@s',
   },
 });

@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useCallback} from 'react';
+import React from 'react';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
 import IconXML from '@/components/IconXML';
-import X from '@/assets/icons/X';
+import XBlack2 from '@/assets/icons/XBlack2';
 
 interface IItemToolDisplayProps {
   tool: IKitchenToolsAvailable;
@@ -24,9 +24,9 @@ const ItemToolDisplay = ({tool, onRemoveTool}: IItemToolDisplayProps) => {
         {tool[`name_${i18n.language}` as keyof IKitchenToolsAvailable]}
       </Typo>
       <IconXML
-        icon={X}
-        width={scale(24)}
-        height={scale(24)}
+        icon={XBlack2}
+        width={scale(16)}
+        height={scale(16)}
         onPress={onRemoveTool}
       />
     </View>
@@ -49,18 +49,16 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     paddingVertical: '6@s',
     paddingLeft: '6@s',
-    paddingRight: '8@s',
+    paddingRight: '12@s',
     shadowColor: colorsConstant.shadow,
     elevation: 4,
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    borderWidth: '1@s',
-    borderColor: colorsConstant.primary,
   },
   toolName: {
-    color: colorsConstant.primary,
+    color: colorsConstant.black_2,
     marginRight: '4@s',
   },
 });

@@ -46,5 +46,8 @@
     "empty_tools": "Bạn chưa thêm dụng cụ, hãy thêm ngay nào.",
     "add_tools": "Thêm dụng cụ có trong bếp của bạn",
     "kitchen_spices": "Gia vị"
+  },
+  "other_chefs": {
+    "post": "Post"
   }
 }

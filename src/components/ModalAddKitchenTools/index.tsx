@@ -27,8 +27,6 @@ const ModalAddKitchenTools = ({
     IKitchenToolsAvailable[]
   >([]);
 
-  console.log(listToolsSelected.map(item => item.name_en));
-
   const handleCloseModal = useCallback(() => {
     setListToolsSelected([]);
     onClose();
