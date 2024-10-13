@@ -46,9 +46,14 @@
     "empty_tools": "You haven't added any tools, add yours now.",
     "add_tools": "Add tools that're in your kitchen",
     "kitchen_spices": "Spices and Seasoning",
-    "empty_spice": "You haven't added any spices, add yours now."
+    "empty_spice": "You haven't added any spices, add yours now.",
+    "add_spice": "Add spice and seasoning that are in your kitchen",
+    "empty_ingredient": "You haven't added any ingredients, add yours now.",
+    "kitchen_ingredient": "Ingredient"
   },
   "other_chefs": {
     "post": "Post"
-  }
+  },
+  "cancel": "Cancel",
+  "add": "Add"
 }

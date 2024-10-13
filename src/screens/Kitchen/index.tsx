@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import React, {useCallback} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
@@ -14,6 +14,7 @@ import Typo from '@/components/Typo';
 import {useTranslation} from 'react-i18next';
 import IconXML from '@/components/IconXML';
 import QuestionCircle from '@/assets/icons/QuestionCircle';
+import KitchenIngredients from './KitchenIngredients';
 
 const KitchenScreen = () => {
   const dispatch = useDispatch();
@@ -41,13 +42,17 @@ const KitchenScreen = () => {
           />
         }
       />
-      {/* <ScrollView> */}
-      <View style={styles.kitchenScreen}>
-        <Typo style={styles.description}>{t('kitchen.title')}</Typo>
-        <KitchenTools />
-        <KitchenSpices />
+      <View style={styles.scrollViewWrapper}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.kitchenScreen}
+          showsVerticalScrollIndicator={false}>
+          <Typo style={styles.description}>{t('kitchen.title')}</Typo>
+          <KitchenTools />
+          <KitchenSpices />
+          <KitchenIngredients />
+        </ScrollView>
       </View>
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
@@ -55,12 +60,19 @@ const KitchenScreen = () => {
 export default KitchenScreen;
 
 const styles = ScaledSheet.create({
-  kitchenScreen: {
-    flex: 1,
-    backgroundColor: colorsConstant.background,
-    padding: '24@s',
+  scrollViewWrapper: {
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+    flex: 1,
+    overflow: 'hidden',
+  },
+  scrollView: {
+    backgroundColor: colorsConstant.background,
+  },
+  kitchenScreen: {
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    padding: '24@s',
     gap: '20@s',
   },
   description: {

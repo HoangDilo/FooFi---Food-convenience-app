@@ -1,3 +1,5 @@
+import {EUnit} from '@/enums/kitchen.enum';
+
 export interface IKitchenToolsAvailableResponse {
   data: IKitchenToolsAvailable[];
 }
@@ -21,6 +23,6 @@ export interface IIngredient {
   name_en: string;
   name_vi: string;
   img_url: string;
-  unit: string;
+  unit: EUnit | null;
   quantity: number;
 }

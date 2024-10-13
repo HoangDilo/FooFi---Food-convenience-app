@@ -20,7 +20,7 @@ const StatusBarCustom = () => {
           : 'light-content'
       }
       backgroundColor={
-        (isScrolling && currentRoute === TAB.HOME_TAB) || isDarkContent
+        isScrolling && currentRoute === TAB.HOME_TAB
           ? colorsConstant.background
           : '#00000000'
       }

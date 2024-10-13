@@ -43,12 +43,17 @@
   "kitchen": {
     "title": "Quản lý bếp của bạn một cách dễ dàng!",
     "kitchen_tools": "Dụng cụ nấu ăn",
-    "empty_tools": "Bạn chưa thêm dụng cụ, hãy thêm ngay nào.",
+    "empty_tools": "Bạn chưa thêm dụng cụ, hãy thêm ngay nào",
     "add_tools": "Thêm dụng cụ có trong bếp của bạn",
     "kitchen_spices": "Gia vị",
-    "empty_spice": "Bạn chưa thêm gia vị, hãy thêm ngay nào"
+    "empty_spice": "Bạn chưa thêm gia vị, hãy thêm ngay nào",
+    "add_spice": "Add spice and seasoning that are in your kitchen",
+    "empty_ingredient": "Bạn chưa thêm nguyên liệu nào, hãy thêm ngay nào",
+    "kitchen_ingredient": "Nguyên liệu"
   },
   "other_chefs": {
     "post": "Tạo bài"
-  }
+  },
+  "cancel": "Hủy",
+  "add": "Thêm"
 }

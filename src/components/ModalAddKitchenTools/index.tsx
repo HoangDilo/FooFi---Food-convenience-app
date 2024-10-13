@@ -79,13 +79,13 @@ const ModalAddKitchenTools = ({
           </ScrollView>
           <View style={styles.buttonContainer}>
             <Typo onPress={handleCloseModal} style={styles.cancel}>
-              Cancel
+              {t('cancel')}
             </Typo>
             <TouchableHighlight
               onPress={handleAddAllTools}
               style={styles.addWrapper}
               underlayColor={colorsConstant.primary_press}>
-              <Typo style={styles.add}>Add</Typo>
+              <Typo style={styles.add}>{t('Add')}</Typo>
             </TouchableHighlight>
           </View>
         </View>

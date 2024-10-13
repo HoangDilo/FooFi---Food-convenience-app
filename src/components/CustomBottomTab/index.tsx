@@ -109,7 +109,7 @@ const styles = ScaledSheet.create({
     borderTopWidth: 1,
     backgroundColor: 'white',
     borderTopColor: colorsConstant.gray_3,
-    elevation: 10,
+    elevation: 4,
     shadowColor: '#000',
     shadowOffset: {
       width: 3,

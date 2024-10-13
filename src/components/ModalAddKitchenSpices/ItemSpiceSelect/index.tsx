@@ -2,22 +2,22 @@ import {Pressable} from 'react-native';
 import React, {memo, useCallback, useState} from 'react';
 import FastImage from 'react-native-fast-image';
 import Typo from '@/components/Typo';
-import {IKitchenToolsAvailable} from '@/types/kitchen.type';
+import {ISpice} from '@/types/kitchen.type';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
 
-interface IItemToolSelect {
-  tool: IKitchenToolsAvailable;
-  onSelectTool: () => void;
-  onUnselectTool: () => void;
+interface IItemSpiceSelect {
+  spice: ISpice;
+  onSelectSpice: () => void;
+  onUnselectSpice: () => void;
 }
 
-const ItemToolSelect = ({
-  tool,
-  onSelectTool,
-  onUnselectTool,
-}: IItemToolSelect) => {
+const ItemSpiceSelect = ({
+  spice,
+  onSelectSpice,
+  onUnselectSpice,
+}: IItemSpiceSelect) => {
   const {i18n} = useTranslation();
 
   const [isSelected, setIsSelected] = useState(false);
@@ -25,25 +25,25 @@ const ItemToolSelect = ({
   const handlePressItem = useCallback(() => {
     setIsSelected(!isSelected);
     if (!isSelected) {
-      onSelectTool();
+      onSelectSpice();
     } else {
-      onUnselectTool();
+      onUnselectSpice();
     }
-  }, [isSelected, onSelectTool, onUnselectTool]);
+  }, [isSelected, onSelectSpice, onUnselectSpice]);
 
   return (
     <Pressable
       style={[styles.toolItem, isSelected && styles.selected]}
       onPress={handlePressItem}>
-      <FastImage source={{uri: tool.img_url}} style={styles.toolImg} />
+      <FastImage source={{uri: spice.img_url}} style={styles.toolImg} />
       <Typo style={isSelected ? styles.selectedName : styles.toolName}>
-        {tool[`name_${i18n.language}` as keyof typeof tool]}
+        {spice[`name_${i18n.language}` as keyof ISpice]}
       </Typo>
     </Pressable>
   );
 };
 
-export default memo(ItemToolSelect);
+export default memo(ItemSpiceSelect);
 
 const styles = ScaledSheet.create({
   toolImg: {

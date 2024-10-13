@@ -9,7 +9,8 @@ export default {
   black_2: '#333333',
   transparent: '#00000000',
   background: '#FAFAFA',
-  shadow: '#00000066',
+  shadow: '#00000088',
+  shadow_2: '#00000060',
   error: '#fe0b0b',
   success: '#2ebd30',
 };

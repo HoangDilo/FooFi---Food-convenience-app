@@ -50,7 +50,7 @@ const styles = ScaledSheet.create({
     paddingVertical: '6@s',
     paddingLeft: '6@s',
     paddingRight: '12@s',
-    shadowColor: colorsConstant.shadow,
+    shadowColor: colorsConstant.shadow_2,
     elevation: 4,
     shadowOffset: {
       width: 3,

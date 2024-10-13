@@ -71,7 +71,7 @@ const styles = ScaledSheet.create({
     borderRadius: '16@s',
     overflow: 'hidden',
     elevation: 4,
-    shadowColor: colorsConstant.shadow,
+    shadowColor: colorsConstant.shadow_2,
     shadowOffset: {
       width: 3,
       height: 3,
