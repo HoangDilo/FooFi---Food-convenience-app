@@ -9,18 +9,20 @@ import {useTranslation} from 'react-i18next';
 
 interface IItemToolSelect {
   tool: IKitchenToolsAvailable;
+  isActive?: boolean;
   onSelectTool: () => void;
   onUnselectTool: () => void;
 }
 
 const ItemToolSelect = ({
   tool,
+  isActive = false,
   onSelectTool,
   onUnselectTool,
 }: IItemToolSelect) => {
   const {i18n} = useTranslation();
 
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(isActive);
 
   const handlePressItem = useCallback(() => {
     setIsSelected(!isSelected);

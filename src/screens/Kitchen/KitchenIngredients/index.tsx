@@ -95,6 +95,7 @@ const listIngredientsFake: IIngredient[] = [
 const KitchenIngredients = () => {
   const {t} = useTranslation();
   const [isShowModalAdd, setIsShowModalAdd] = useState(false);
+  const [listIngredients, setListIngredient] = useState<IIngredient[]>([]);
 
   const handleAddIngredient = useCallback(() => {
     setIsShowModalAdd(true);
@@ -113,7 +114,11 @@ const KitchenIngredients = () => {
           onPress={handleAddIngredient}
         />
       </View>
-      {}
+      {listIngredients.length ? (
+        <View style={styles.listIngredients}></View>
+      ) : (
+        <Typo style={styles.emptyLabel}>{t('kitchen.empty_ingredient')}</Typo>
+      )}
     </View>
   );
 };
@@ -141,5 +146,13 @@ const styles = ScaledSheet.create({
     fontSize: '20@s',
     fontWeight: '600',
     color: colorsConstant.black_1,
+  },
+  listIngredients: {},
+  emptyLabel: {
+    fontSize: '14@s',
+    color: colorsConstant.gray_2,
+    marginTop: '8@s',
+    textAlign: 'right',
+    paddingRight: '8@s',
   },
 });

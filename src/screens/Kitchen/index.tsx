@@ -74,7 +74,7 @@ const styles = ScaledSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     padding: '24@s',
-    gap: '20@s',
+    gap: '12@s',
   },
   description: {
     color: colorsConstant.gray_1,
@@ -82,5 +82,6 @@ const styles = ScaledSheet.create({
     fontWeight: '500',
     marginLeft: '4@s',
     fontStyle: 'italic',
+    marginBottom: '8@s',
   },
 });

@@ -1,5 +1,10 @@
-import {ScrollView, TouchableHighlight, View} from 'react-native';
-import React, {memo, useCallback, useState} from 'react';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableHighlight,
+  View,
+} from 'react-native';
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters/extend';
 import Typo from '../Typo';
 import ModalRemake from '../ModalRemake';
@@ -7,6 +12,7 @@ import colorsConstant from '@/constants/colors.constant';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import ItemToolSelect from './ItemToolSelect';
 import {useTranslation} from 'react-i18next';
+import SearchKitchen from '../SearchKitchen';
 
 interface IModalAddKitchenToolsProps {
   isVisible: boolean;
@@ -21,11 +27,23 @@ const ModalAddKitchenTools = ({
   onClose,
   onSubmit,
 }: IModalAddKitchenToolsProps) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   const [listToolsSelected, setListToolsSelected] = useState<
     IKitchenToolsAvailable[]
   >([]);
+  const [searchValue, setSearchValue] = useState('');
+
+  const listToolsSearch = useMemo(
+    () =>
+      listToolsAvailable.filter(tool =>
+        tool[`name_${i18n.language}` as keyof IKitchenToolsAvailable]
+          .toString()
+          .toLowerCase()
+          .includes(searchValue.toLowerCase()),
+      ),
+    [i18n.language, listToolsAvailable, searchValue],
+  );
 
   const handleCloseModal = useCallback(() => {
     setListToolsSelected([]);
@@ -58,37 +76,54 @@ const ModalAddKitchenTools = ({
     handleCloseModal();
   }, [handleCloseModal, listToolsSelected, onSubmit]);
 
+  const handleChangeSearchValue = useCallback((value: string) => {
+    setSearchValue(value);
+  }, []);
+
   return (
     <ModalRemake isVisible={isVisible}>
       {isVisible && (
-        <View style={styles.addToolsContainer}>
-          <Typo style={styles.title}>{t('kitchen.add_tools')}</Typo>
-          <ScrollView
-            style={{maxHeight: verticalScale(280)}}
-            showsVerticalScrollIndicator={false}>
-            <View style={styles.toolsContainer}>
-              {listToolsAvailable.map(tool => (
-                <ItemToolSelect
-                  key={tool.id}
-                  tool={tool}
-                  onSelectTool={() => handleAddTool(tool)}
-                  onUnselectTool={() => handleRemoveTool(tool.id)}
-                />
-              ))}
+        <KeyboardAvoidingView
+          behavior="padding"
+          keyboardVerticalOffset={verticalScale(32)}>
+          <View style={styles.addToolsContainer}>
+            <Typo style={styles.title}>{t('kitchen.add_tools')}</Typo>
+            <SearchKitchen
+              value={searchValue}
+              onChange={handleChangeSearchValue}
+              placeholderName={t('kitchen.kitchen_tools')}
+            />
+            <ScrollView
+              style={styles.scrollView}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled">
+              <View style={styles.toolsContainer}>
+                {listToolsSearch.map(tool => (
+                  <ItemToolSelect
+                    key={tool.id}
+                    tool={tool}
+                    isActive={
+                      !!listToolsSelected.find(item => item.id === tool.id)
+                    }
+                    onSelectTool={() => handleAddTool(tool)}
+                    onUnselectTool={() => handleRemoveTool(tool.id)}
+                  />
+                ))}
+              </View>
+            </ScrollView>
+            <View style={styles.buttonContainer}>
+              <Typo onPress={handleCloseModal} style={styles.cancel}>
+                {t('cancel')}
+              </Typo>
+              <TouchableHighlight
+                onPress={handleAddAllTools}
+                style={styles.addWrapper}
+                underlayColor={colorsConstant.primary_press}>
+                <Typo style={styles.add}>{t('Add')}</Typo>
+              </TouchableHighlight>
             </View>
-          </ScrollView>
-          <View style={styles.buttonContainer}>
-            <Typo onPress={handleCloseModal} style={styles.cancel}>
-              {t('cancel')}
-            </Typo>
-            <TouchableHighlight
-              onPress={handleAddAllTools}
-              style={styles.addWrapper}
-              underlayColor={colorsConstant.primary_press}>
-              <Typo style={styles.add}>{t('Add')}</Typo>
-            </TouchableHighlight>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       )}
     </ModalRemake>
   );
@@ -108,7 +143,11 @@ const styles = ScaledSheet.create({
     fontSize: '16@s',
     color: colorsConstant.black_1,
     marginTop: '4@s',
-    marginBottom: '4@s',
+  },
+  scrollView: {
+    maxHeight: '280@s',
+    height: '280@s',
+    marginTop: '8@s',
   },
   toolsContainer: {
     flexDirection: 'row',

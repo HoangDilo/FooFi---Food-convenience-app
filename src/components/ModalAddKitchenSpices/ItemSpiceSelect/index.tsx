@@ -9,18 +9,20 @@ import {useTranslation} from 'react-i18next';
 
 interface IItemSpiceSelect {
   spice: ISpice;
+  isActive?: boolean;
   onSelectSpice: () => void;
   onUnselectSpice: () => void;
 }
 
 const ItemSpiceSelect = ({
   spice,
+  isActive = false,
   onSelectSpice,
   onUnselectSpice,
 }: IItemSpiceSelect) => {
   const {i18n} = useTranslation();
 
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(isActive);
 
   const handlePressItem = useCallback(() => {
     setIsSelected(!isSelected);
