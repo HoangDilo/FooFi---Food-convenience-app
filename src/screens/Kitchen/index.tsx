@@ -46,7 +46,8 @@ const KitchenScreen = () => {
         <ScrollView
           style={styles.scrollView}
           contentContainerStyle={styles.kitchenScreen}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled">
           <Typo style={styles.description}>{t('kitchen.title')}</Typo>
           <KitchenTools />
           <KitchenSpices />

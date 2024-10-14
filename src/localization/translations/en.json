@@ -49,7 +49,9 @@
     "empty_spice": "You haven't added any spices, add yours now.",
     "add_spice": "Add spice and seasoning that are in your kitchen",
     "empty_ingredient": "You haven't added any ingredients, add yours now.",
-    "kitchen_ingredient": "Ingredient"
+    "kitchen_ingredient": "Ingredient",
+    "ok": "Ok",
+    "placeholder_search": "Search your {{value}} name"
   },
   "other_chefs": {
     "post": "Post"

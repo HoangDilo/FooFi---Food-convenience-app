@@ -1,5 +1,10 @@
-import {ScrollView, TouchableHighlight, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableHighlight,
+  View,
+} from 'react-native';
+import React, {useCallback, useMemo, useState} from 'react';
 import ModalRemake from '../ModalRemake';
 import Typo from '../Typo';
 import ItemSpiceSelect from './ItemSpiceSelect';
@@ -22,9 +27,21 @@ const ModalAddKitchenSpices = ({
   onClose,
   onSubmit,
 }: IModalAddKitchenSpicesProps) => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
 
   const [listSpicesAdd, setListSpicesAdd] = useState<ISpice[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+
+  const listSpicesSearch = useMemo(() => {
+    const query = searchValue.toLocaleLowerCase();
+    const listSpicesFound = listSpices.filter(spice =>
+      spice[`name_${i18n.language}` as keyof ISpice]
+        .toString()
+        .toLocaleLowerCase()
+        .includes(query),
+    );
+    return listSpicesFound;
+  }, [i18n.language, listSpices, searchValue]);
 
   const handleSelectSpice = useCallback(
     (spice: ISpice) => {
@@ -36,6 +53,7 @@ const ModalAddKitchenSpices = ({
   );
   const handleCloseModal = useCallback(() => {
     onClose();
+    setSearchValue('');
     setListSpicesAdd([]);
   }, [onClose]);
 
@@ -51,37 +69,50 @@ const ModalAddKitchenSpices = ({
     [listSpicesAdd],
   );
 
+  const handleChangeSearch = useCallback((value: string) => {
+    setSearchValue(value);
+  }, []);
+
   return (
     <ModalRemake isVisible={isVisible}>
       {isVisible && (
-        <View style={styles.modalAddSpice}>
-          <Typo style={styles.addSpiceTitle}>{t('kitchen.add_spice')}</Typo>
-          <SearchKitchen />
-          <ScrollView
-            style={{maxHeight: verticalScale(280)}}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.scrollViewContainer}>
-            {listSpices.map(spice => (
-              <ItemSpiceSelect
-                key={spice.id}
-                spice={spice}
-                onSelectSpice={() => handleSelectSpice(spice)}
-                onUnselectSpice={() => handleRemoveSpice(spice.id)}
-              />
-            ))}
-          </ScrollView>
-          <View style={styles.buttonContainer}>
-            <Typo onPress={handleCloseModal} style={styles.cancel}>
-              {t('cancel')}
-            </Typo>
-            <TouchableHighlight
-              onPress={handleAddAllSpices}
-              style={styles.addWrapper}
-              underlayColor={colorsConstant.primary_press}>
-              <Typo style={styles.add}>{t('Add')}</Typo>
-            </TouchableHighlight>
+        <KeyboardAvoidingView
+          behavior="padding"
+          keyboardVerticalOffset={verticalScale(32)}>
+          <View style={styles.modalAddSpice}>
+            <Typo style={styles.addSpiceTitle}>{t('kitchen.add_spice')}</Typo>
+            <SearchKitchen
+              value={searchValue}
+              onChange={handleChangeSearch}
+              placeholderName={t('kitchen.kitchen_spices').toLocaleLowerCase()}
+            />
+            <ScrollView
+              style={styles.scrollView}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.scrollViewContainer}
+              keyboardShouldPersistTaps="handled">
+              {listSpicesSearch.map(spice => (
+                <ItemSpiceSelect
+                  key={spice.id}
+                  spice={spice}
+                  onSelectSpice={() => handleSelectSpice(spice)}
+                  onUnselectSpice={() => handleRemoveSpice(spice.id)}
+                />
+              ))}
+            </ScrollView>
+            <View style={styles.buttonContainer}>
+              <Typo onPress={handleCloseModal} style={styles.cancel}>
+                {t('cancel')}
+              </Typo>
+              <TouchableHighlight
+                onPress={handleAddAllSpices}
+                style={styles.addWrapper}
+                underlayColor={colorsConstant.primary_press}>
+                <Typo style={styles.add}>{t('Add')}</Typo>
+              </TouchableHighlight>
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       )}
     </ModalRemake>
   );
@@ -101,14 +132,18 @@ const styles = ScaledSheet.create({
     fontSize: '16@s',
     color: colorsConstant.black_1,
     marginTop: '4@s',
-    marginBottom: '4@s',
+  },
+  scrollView: {
+    maxHeight: '280@s',
+    height: '280@s',
+    marginTop: '8@s',
   },
   scrollViewContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     rowGap: '12@s',
     columnGap: '8@s',
-    paddingVertical: '8@s',
+    paddingBottom: '8@s',
   },
   buttonContainer: {
     flexDirection: 'row',

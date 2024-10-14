@@ -47,9 +47,11 @@
     "add_tools": "Thêm dụng cụ có trong bếp của bạn",
     "kitchen_spices": "Gia vị",
     "empty_spice": "Bạn chưa thêm gia vị, hãy thêm ngay nào",
-    "add_spice": "Add spice and seasoning that are in your kitchen",
+    "add_spice": "Thêm gia vị có trong bếp của bạn",
     "empty_ingredient": "Bạn chưa thêm nguyên liệu nào, hãy thêm ngay nào",
-    "kitchen_ingredient": "Nguyên liệu"
+    "kitchen_ingredient": "Nguyên liệu",
+    "ok": "Ok",
+    "placeholder_search": "Tìm kiếm tên của {{value}}"
   },
   "other_chefs": {
     "post": "Tạo bài"

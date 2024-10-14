@@ -4,11 +4,7 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 import ModalRemake from '../ModalRemake';
 
 const ModalAddKitchenIngredient = () => {
-  return (
-    <ModalRemake>
-        
-    </ModalRemake>
-  );
+  return <ModalRemake></ModalRemake>;
 };
 
 export default ModalAddKitchenIngredient;

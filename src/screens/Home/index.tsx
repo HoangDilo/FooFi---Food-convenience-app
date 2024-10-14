@@ -135,7 +135,8 @@ const HomeScreen = () => {
           />
         }
         showsVerticalScrollIndicator={false}
-        onScroll={handleScrollHome}>
+        onScroll={handleScrollHome}
+        keyboardShouldPersistTaps="handled">
         <RecommendSection />
         <View style={styles.mainContainerWrapper}>
           <Animated.View
