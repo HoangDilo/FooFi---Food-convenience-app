@@ -1,3 +1,7 @@
+if (__DEV__) {
+  require('./ReactotronConfig');
+}
+
 import React from 'react';
 import MainNavigator from './src/navigation';
 import {Provider} from 'react-redux';

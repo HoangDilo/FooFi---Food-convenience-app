@@ -7,7 +7,7 @@ import FastImage from 'react-native-fast-image';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
 import IconXML from '@/components/IconXML';
-import XBlack2 from '@/assets/icons/XBlack2';
+import XGreen from '@/assets/icons/XGreen';
 
 interface IItemToolDisplayProps {
   tool: IKitchenToolsAvailable;
@@ -24,7 +24,7 @@ const ItemToolDisplay = ({tool, onRemoveTool}: IItemToolDisplayProps) => {
         {tool[`name_${i18n.language}` as keyof IKitchenToolsAvailable]}
       </Typo>
       <IconXML
-        icon={XBlack2}
+        icon={XGreen}
         width={scale(16)}
         height={scale(16)}
         onPress={onRemoveTool}

@@ -1,16 +1,11 @@
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import {Keyboard, TextInput, TouchableHighlight, View} from 'react-native';
 import React from 'react';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '../Typo';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
+import IconXML from '../IconXML';
+import XBlack from '@/assets/icons/XBlack';
 
 interface ISearchKitchenProps {
   value: string;
@@ -38,6 +33,15 @@ const SearchKitchen = ({
           })}
           onChangeText={onChange}
         />
+        {value && (
+          <IconXML
+            icon={XBlack}
+            width={scale(20)}
+            height={scale(20)}
+            style={styles.iconX}
+            onPress={() => onChange('')}
+          />
+        )}
       </View>
       <TouchableHighlight
         style={styles.searchButton}
@@ -62,6 +66,11 @@ const styles = ScaledSheet.create({
   inputWrapper: {
     position: 'relative',
     flex: 1,
+    justifyContent: 'center',
+  },
+  iconX: {
+    position: 'absolute',
+    right: '12@s',
   },
   input: {
     shadowColor: colorsConstant.shadow,
@@ -72,7 +81,8 @@ const styles = ScaledSheet.create({
     },
     borderRadius: 999,
     backgroundColor: '#FFF',
-    paddingHorizontal: '12@s',
+    paddingLeft: '12@s',
+    paddingRight: '36@s',
     paddingVertical: '8@s',
     color: colorsConstant.black_1,
   },

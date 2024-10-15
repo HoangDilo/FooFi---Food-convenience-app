@@ -32,8 +32,6 @@ const ModalAddKitchenSpices = ({
   const [listSpicesAdd, setListSpicesAdd] = useState<ISpice[]>([]);
   const [searchValue, setSearchValue] = useState('');
 
-  console.log(listSpicesAdd.map(item => item.name_vi));
-
   const listSpicesSearch = useMemo(() => {
     const query = searchValue.toLocaleLowerCase();
     const listSpicesFound = listSpices.filter(spice =>

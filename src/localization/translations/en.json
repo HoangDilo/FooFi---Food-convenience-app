@@ -54,7 +54,11 @@
     "placeholder_search": "Search your {{value}} name"
   },
   "other_chefs": {
-    "post": "Post"
+    "post": "Post",
+    "tabs": {
+      "recommend": "Recommend",
+      "all": "All"
+    }
   },
   "cancel": "Cancel",
   "add": "Add"

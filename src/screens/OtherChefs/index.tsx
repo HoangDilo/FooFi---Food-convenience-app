@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import Typo from '@/components/Typo';
 import HeaderTab from '@/components/HeaderTab';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -12,10 +12,36 @@ import PlusCircleLine from '@/assets/icons/PlusCircleLine';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
+import {TabView, SceneMap, TabBar, Route} from 'react-native-tab-view';
+import RecommendPostsTab from './RecommendPostsTab';
+import AllPostsTab from './AllPostsTab';
+import OtherChefItemTabBar from '@/components/OtherChefItemTabBar';
+import {deviceWidth} from '@/constants/device.constant';
+
+const renderScene = SceneMap({
+  recommend: RecommendPostsTab,
+  all: AllPostsTab,
+});
 
 const OtherChefsScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
+
+  const [index, setIndex] = useState(0);
+
+  const routes = useMemo<Route[]>(
+    () => [
+      {
+        key: 'recommend',
+        title: t('other_chefs.tabs.recommend'),
+      },
+      {
+        key: 'all',
+        title: t('other_chefs.tabs.all'),
+      },
+    ],
+    [t],
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -40,9 +66,27 @@ const OtherChefsScreen = () => {
           </View>
         }
       />
-      <View>
-        
-      </View>
+      <TabView
+        renderScene={renderScene}
+        navigationState={{index, routes}}
+        onIndexChange={setIndex}
+        initialLayout={{
+          width: deviceWidth,
+        }}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            indicatorStyle={{backgroundColor: colorsConstant.primary}}
+            pressOpacity={0}
+            // renderTabBarItem={tabItemProps => (
+            //   <OtherChefItemTabBar {...tabItemProps} />
+            // )}
+            style={styles.tabBar}
+            contentContainerStyle={styles.tabBarContainer}
+            activeColor="#f00"
+          />
+        )}
+      />
     </SafeAreaView>
   );
 };
@@ -65,5 +109,13 @@ const styles = ScaledSheet.create({
     color: colorsConstant.primary,
     fontWeight: '500',
     fontSize: '18@s',
+  },
+  tabBar: {
+    backgroundColor: colorsConstant.background,
+  },
+  tabBarContainer: {
+    padding: 12,
+    gap: 20,
+    justifyContent: 'space-around',
   },
 });

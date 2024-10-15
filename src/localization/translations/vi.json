@@ -54,7 +54,11 @@
     "placeholder_search": "Tìm kiếm tên của {{value}}"
   },
   "other_chefs": {
-    "post": "Tạo bài"
+    "post": "Tạo",
+    "tabs": {
+      "recommend": "Recommend",
+      "all": "All"
+    }
   },
   "cancel": "Hủy",
   "add": "Thêm"
