@@ -3,7 +3,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import Typo from '@/components/Typo';
 import HeaderTab from '@/components/HeaderTab';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setCurrentRoute} from '@/store/reducers/system.reducer';
 import {TAB} from '@/constants/tabs.constant';
@@ -12,11 +12,19 @@ import PlusCircleLine from '@/assets/icons/PlusCircleLine';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
-import {TabView, SceneMap, TabBar, Route} from 'react-native-tab-view';
+import {
+  TabView,
+  SceneMap,
+  TabBar,
+  Route,
+  SceneRendererProps,
+  NavigationState,
+} from 'react-native-tab-view';
 import RecommendPostsTab from './RecommendPostsTab';
 import AllPostsTab from './AllPostsTab';
 import OtherChefItemTabBar from '@/components/OtherChefItemTabBar';
 import {deviceWidth} from '@/constants/device.constant';
+import SearchBlack2 from '@/assets/icons/SearchBlack2';
 
 const renderScene = SceneMap({
   recommend: RecommendPostsTab,
@@ -26,6 +34,7 @@ const renderScene = SceneMap({
 const OtherChefsScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
+  const navigation = useNavigation();
 
   const [index, setIndex] = useState(0);
 
@@ -43,6 +52,29 @@ const OtherChefsScreen = () => {
     [t],
   );
 
+  const renderTabBar = useCallback(
+    (props: SceneRendererProps & {navigationState: NavigationState<Route>}) => {
+      const tabItemWidth = deviceWidth / props.navigationState.routes.length;
+      return (
+        <TabBar
+          {...props}
+          indicatorStyle={styles.indicatorStyle}
+          pressOpacity={0}
+          renderTabBarItem={tabItemProps => (
+            <OtherChefItemTabBar
+              {...tabItemProps}
+              initialWidth={tabItemWidth}
+              onPressTab={i => setIndex(i)}
+            />
+          )}
+          style={styles.tabBar}
+          contentContainerStyle={styles.tabBarContainer}
+        />
+      );
+    },
+    [],
+  );
+
   useFocusEffect(
     useCallback(() => {
       dispatch(setCurrentRoute(TAB.OTHER_CHEFS));
@@ -56,13 +88,21 @@ const OtherChefsScreen = () => {
       <HeaderTab
         isOrange={false}
         rightIcon={
-          <View style={styles.postButton}>
+          <View style={styles.buttonsContainer}>
             <IconXML
-              icon={PlusCircleLine}
-              width={scale(20)}
-              height={scale(20)}
+              icon={SearchBlack2}
+              width={scale(28)}
+              height={scale(28)}
+              onPress={() => navigation.navigate('search')}
             />
-            <Typo style={styles.postLabel}>{t('other_chefs.post')}</Typo>
+            <View style={styles.postButton}>
+              <IconXML
+                icon={PlusCircleLine}
+                width={scale(20)}
+                height={scale(20)}
+              />
+              <Typo style={styles.postLabel}>{t('other_chefs.post')}</Typo>
+            </View>
           </View>
         }
       />
@@ -73,19 +113,7 @@ const OtherChefsScreen = () => {
         initialLayout={{
           width: deviceWidth,
         }}
-        renderTabBar={props => (
-          <TabBar
-            {...props}
-            indicatorStyle={{backgroundColor: colorsConstant.primary}}
-            pressOpacity={0}
-            // renderTabBarItem={tabItemProps => (
-            //   <OtherChefItemTabBar {...tabItemProps} />
-            // )}
-            style={styles.tabBar}
-            contentContainerStyle={styles.tabBarContainer}
-            activeColor="#f00"
-          />
-        )}
+        renderTabBar={renderTabBar}
       />
     </SafeAreaView>
   );
@@ -94,6 +122,11 @@ const OtherChefsScreen = () => {
 export default OtherChefsScreen;
 
 const styles = ScaledSheet.create({
+  buttonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '14@s',
+  },
   postButton: {
     borderRadius: 999,
     flexDirection: 'row',
@@ -112,10 +145,14 @@ const styles = ScaledSheet.create({
   },
   tabBar: {
     backgroundColor: colorsConstant.background,
+    shadowColor: '#00000000',
   },
   tabBarContainer: {
-    padding: 12,
-    gap: 20,
-    justifyContent: 'space-around',
+    paddingBottom: '2@s',
+  },
+  indicatorStyle: {
+    backgroundColor: colorsConstant.primary,
+    height: '2@s',
+    borderRadius: 10,
   },
 });

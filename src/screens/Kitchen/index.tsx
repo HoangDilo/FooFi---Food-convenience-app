@@ -66,6 +66,7 @@ const styles = ScaledSheet.create({
     borderTopRightRadius: 16,
     flex: 1,
     overflow: 'hidden',
+    marginTop: '14@s',
   },
   scrollView: {
     backgroundColor: colorsConstant.background,

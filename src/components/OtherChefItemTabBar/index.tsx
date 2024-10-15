@@ -5,19 +5,35 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '../Typo';
 import colorsConstant from '@/constants/colors.constant';
 
+interface OtherChefItemTabBarProps extends TabBarItemProps<Route> {
+  initialWidth: number;
+  onPressTab: (index: number) => void;
+}
+
 const OtherChefItemTabBar = ({
   route,
   navigationState,
-}: TabBarItemProps<Route>) => {
+  initialWidth,
+  onPressTab,
+}: OtherChefItemTabBarProps) => {
   const isFocused = useMemo(
     () => navigationState.routes[navigationState.index].key === route.key,
     [navigationState.index, navigationState.routes, route.key],
   );
-
-  // const isFocused = useMemo(() => navigationState.)
+  const currentIndex = useMemo(
+    () => navigationState.routes.findIndex(item => item.key === route.key),
+    [navigationState.routes, route.key],
+  );
 
   return (
-    <Pressable style={styles.tabItem}>
+    <Pressable
+      style={[
+        styles.tabItem,
+        {
+          width: initialWidth,
+        },
+      ]}
+      onPress={() => onPressTab(currentIndex)}>
       <Typo
         style={[
           isFocused ? styles.titleFocused : styles.titleUnfocused,
@@ -34,10 +50,11 @@ export default OtherChefItemTabBar;
 const styles = ScaledSheet.create({
   tabItem: {
     flexGrow: 1,
-    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    paddingVertical: '12@s',
   },
   title: {
-    fontSize: '16@s',
+    fontSize: '18@s',
     fontWeight: '500',
   },
   titleFocused: {

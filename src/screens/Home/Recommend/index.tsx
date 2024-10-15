@@ -135,7 +135,7 @@ const styles = ScaledSheet.create({
   },
   dishName: {
     fontWeight: 700,
-    fontSize: '32@s',
+    fontSize: '28@s',
     lineHeight: '40@s',
     color: '#FFF',
     marginLeft: 8,

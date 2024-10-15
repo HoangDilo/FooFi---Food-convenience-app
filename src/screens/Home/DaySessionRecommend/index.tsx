@@ -110,8 +110,8 @@ const DaySessionRecommend = ({
         </Typo>
         <IconXML
           icon={SESSION_ICONS[currentSession as keyof typeof SESSION_ICONS]}
-          width={scale(48)}
-          height={scale(48)}
+          width={scale(40)}
+          height={scale(40)}
         />
       </View>
       <ListDishRecommendBy
@@ -139,7 +139,7 @@ const styles = ScaledSheet.create({
   container: {},
   daySessionLabel: {
     color: colorsConstant.primary,
-    fontSize: '28@s',
+    fontSize: '26@s',
     lineHeight: '32@s',
     fontWeight: '600',
   },
