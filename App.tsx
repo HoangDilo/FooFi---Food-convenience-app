@@ -2,7 +2,7 @@ if (__DEV__) {
   require('./ReactotronConfig');
 }
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import MainNavigator from './src/navigation';
 import {Provider} from 'react-redux';
 import {store} from '@/store';
@@ -12,8 +12,15 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import i18n from '@/localization/i18n';
 import CustomToastMessage from '@/components/CustomToastMessage';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
+  }, []);
+
   return (
     <Provider store={store}>
       <I18nextProvider i18n={i18n} defaultNS={'translation'}>

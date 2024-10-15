@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import PlusCircle from '@/assets/icons/PlusCircle';
 import {IIngredient} from '@/types/kitchen.type';
 import {EUnit} from '@/enums/kitchen.enum';
+import ModalAddKitchenIngredient from '@/components/ModalAddKitchenIngredient';
 
 const listIngredientsFake: IIngredient[] = [
   {
@@ -119,6 +120,7 @@ const KitchenIngredients = () => {
       ) : (
         <Typo style={styles.emptyLabel}>{t('kitchen.empty_ingredient')}</Typo>
       )}
+      <ModalAddKitchenIngredient isVisible={isShowModalAdd} />
     </View>
   );
 };
