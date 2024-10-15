@@ -154,5 +154,7 @@ const styles = ScaledSheet.create({
     backgroundColor: colorsConstant.primary,
     height: '2@s',
     borderRadius: 10,
+    width: '40%',
+    marginLeft: '5%',
   },
 });

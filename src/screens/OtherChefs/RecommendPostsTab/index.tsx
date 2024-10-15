@@ -15,5 +15,9 @@ const RecommendPostsTab = () => {
 export default RecommendPostsTab;
 
 const styles = ScaledSheet.create({
-  screen: {},
+  screen: {
+    flex: 1,
+    paddingTop: '20@s',
+    paddingHorizontal: '20@s',
+  },
 });
