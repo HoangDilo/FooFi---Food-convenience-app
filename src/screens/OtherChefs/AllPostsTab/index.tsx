@@ -5,8 +5,6 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 const listPostFake = [];
 
 const AllPostsTab = () => {
-  console.log('all');
-
   return (
     <View style={styles.mainScreen}>
       <Text>AllPostsTab</Text>

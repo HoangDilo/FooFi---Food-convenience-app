@@ -51,7 +51,11 @@
     "empty_ingredient": "You haven't added any ingredients, add yours now.",
     "kitchen_ingredient": "Ingredient",
     "ok": "Ok",
-    "placeholder_search": "Search your {{value}} name"
+    "placeholder_search": "Search your {{value}} name",
+    "select_ingredient": "Select an ingredient that is in your kitchen",
+    "select_amount": "Select the amount of {{ingredient}}",
+    "confirm": "Confirmation",
+    "confirm_content": "of {{food}} will be added!"
   },
   "other_chefs": {
     "post": "Post",
@@ -61,5 +65,9 @@
     }
   },
   "cancel": "Cancel",
-  "add": "Add"
+  "add": "Add",
+  "next": "Next",
+  "back": "Back",
+  "confirm": "Confirm",
+  "close": "Close"
 }

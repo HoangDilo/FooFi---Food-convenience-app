@@ -51,7 +51,11 @@
     "empty_ingredient": "Bạn chưa thêm nguyên liệu nào, hãy thêm ngay nào",
     "kitchen_ingredient": "Nguyên liệu",
     "ok": "Ok",
-    "placeholder_search": "Tìm kiếm tên của {{value}}"
+    "placeholder_search": "Tìm kiếm tên của {{value}}",
+    "select_ingredient": "Lựa chọn một nguyên liệu có trong bếp của bạn",
+    "select_amount": "Chọn số lượng của {{ingredient}}",
+    "confirm": "Xác nhận",
+    "confirm_content": "{{food}} sẽ được thêm vào!"
   },
   "other_chefs": {
     "post": "Tạo",
@@ -61,5 +65,9 @@
     }
   },
   "cancel": "Hủy",
-  "add": "Thêm"
+  "add": "Thêm",
+  "next": "Tiếp",
+  "back": "Quay lại",
+  "confirm": "Xác nhận",
+  "close": "Close"
 }

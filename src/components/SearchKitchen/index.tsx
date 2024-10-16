@@ -25,11 +25,16 @@ const SearchKitchen = ({
       <View style={styles.inputWrapper}>
         <TextInput
           value={value}
-          style={styles.input}
+          style={[
+            styles.input,
+            {
+              paddingRight: scale(value ? 36 : 12),
+            },
+          ]}
           cursorColor={colorsConstant.primary}
           placeholderTextColor={colorsConstant.gray_2}
           placeholder={t('kitchen.placeholder_search', {
-            value: placeholderName,
+            value: placeholderName.toLowerCase(),
           })}
           onChangeText={onChange}
         />
@@ -82,7 +87,6 @@ const styles = ScaledSheet.create({
     borderRadius: 999,
     backgroundColor: '#FFF',
     paddingLeft: '12@s',
-    paddingRight: '36@s',
     paddingVertical: '8@s',
     color: colorsConstant.black_1,
   },
