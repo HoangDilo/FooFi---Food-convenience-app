@@ -1,0 +1,43 @@
+{
+  "tabs_name": {
+    "home": "Trang chủ",
+    "other_chefs": "Đầu bếp khác",
+    "kitchen": "Bếp của tôi",
+    "chat_bot": "Co-Chef",
+    "my": "Cá nhân"
+  },
+  "daySession": {
+    "morning": "Buổi sáng",
+    "noon": "Buổi trưa",
+    "afternoon": "Buổi chiều",
+    "evening": "Buổi tối",
+    "night": "Bổi đêm"
+  },
+  "mealBySession": {
+    "morning": "Bữa sáng",
+    "noon": "Bữa trưa",
+    "afternoon": "Bữa xế",
+    "evening": "Bữa tối",
+    "night": "Bữa ăn đêm"
+  },
+  "meals": {
+    "breakfast": "Bữa sáng",
+    "lunch": "Bữa trưa",
+    "linner": "Bữa xế",
+    "dinner": "Bữa tối",
+    "supper": "Bữa ăn đêm"
+  },
+  "home": {
+    "recommend_for_you": "Món ăn đề xuất cho bạn",
+    "its_now": "Bây giờ là",
+    "you_want_other": "Bạn muốn món ăn khác?",
+    "find_your_dish": "Tìm bất kỳ món ăn nào",
+    "search": "Tìm kiếm",
+    "cooking_for": "Nấu món ăn cho",
+    "cooking_with_your_ingredients": "Nấu từ nguyên liệu sẵn có",
+    "you_dont_want_session": "Bạn không muốn nấu",
+    "recommend_posts": "Công thức nấu ăn từ các đầu bếp khác"
+  },
+  "other_options": "Lựa chọn khác",
+  "see_more": "Xem thêm"
+}

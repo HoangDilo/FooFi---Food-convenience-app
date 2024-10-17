@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, View} from 'react-native';
+import React from 'react';
+import Typo from '@/components/Typo';
 
 const OtherChefsScreen = () => {
   return (
     <View>
-      <Text>OtherChefsScreen</Text>
+      <Typo>OtherChefsScreen</Typo>
     </View>
-  )
-}
+  );
+};
 
-export default OtherChefsScreen
+export default OtherChefsScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

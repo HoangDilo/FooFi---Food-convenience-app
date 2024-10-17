@@ -1,0 +1,43 @@
+{
+  "tabs_name": {
+    "home": "Home",
+    "other_chefs": "Other_Chefs",
+    "kitchen": "Kitchen",
+    "chat_bot": "Co-Chef",
+    "my": "My"
+  },
+  "daySession": {
+    "morning": "Morning",
+    "noon": "Noon",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "night": "Night"
+  },
+  "mealBySession": {
+    "morning": "Breakfast",
+    "noon": "Lunch",
+    "afternoon": "Linner",
+    "evening": "Dinner",
+    "night": "Supper"
+  },
+  "meals": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "linner": "Linner",
+    "dinner": "Dinner",
+    "supper": "Supper"
+  },
+  "home": {
+    "recommend_for_you": "Best dish recommended for you",
+    "its_now": "It's now",
+    "you_want_other": "You want other dishes?",
+    "find_your_dish": "Find any dish you want",
+    "search": "Search",
+    "cooking_for": "Cooking for",
+    "cooking_with_your_ingredients": "Cooking with your ingredients",
+    "you_dont_want_session": "You don't want to cook",
+    "recommend_posts": "Cooking recipes from other chefs"
+  },
+  "other_options": "Other options",
+  "see_more": "See more"
+}
