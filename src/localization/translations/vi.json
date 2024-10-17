@@ -53,7 +53,7 @@
     "ok": "Ok",
     "placeholder_search": "Tìm kiếm tên của {{value}}",
     "select_ingredient": "Lựa chọn một nguyên liệu có trong bếp của bạn",
-    "select_amount": "Chọn số lượng của {{ingredient}}",
+    "select_amount": "Nhập số lượng của {{ingredient}}",
     "confirm": "Xác nhận",
     "confirm_content": "{{food}} sẽ được thêm vào!"
   },
@@ -69,5 +69,5 @@
   "next": "Tiếp",
   "back": "Quay lại",
   "confirm": "Xác nhận",
-  "close": "Close"
+  "close": "Đóng"
 }

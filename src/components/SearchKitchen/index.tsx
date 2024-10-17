@@ -8,7 +8,7 @@ import IconXML from '../IconXML';
 import XBlack from '@/assets/icons/XBlack';
 
 interface ISearchKitchenProps {
-  value: string;
+  value: string | null;
   onChange: (value: string) => void;
   placeholderName: string;
 }
@@ -24,11 +24,11 @@ const SearchKitchen = ({
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
         <TextInput
-          value={value}
+          value={value ?? ''}
           style={[
             styles.input,
             {
-              paddingRight: scale(value ? 36 : 12),
+              paddingRight: scale(value !== null ? 36 : 12),
             },
           ]}
           cursorColor={colorsConstant.primary}

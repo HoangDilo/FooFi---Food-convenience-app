@@ -1,6 +1,8 @@
 import {
   FlatList,
+  Keyboard,
   KeyboardAvoidingView,
+  TextInput,
   TouchableHighlight,
   View,
 } from 'react-native';
@@ -117,6 +119,7 @@ const ModalAddKitchenIngredient = ({
     useState<IIngredient | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [listIngredients, setListIngredients] = useState<IIngredient[]>([]);
+  const [amount, setAmount] = useState(0);
 
   const stepMapping = useMemo(
     () => ({
@@ -126,20 +129,26 @@ const ModalAddKitchenIngredient = ({
       },
       1: {
         title: t('kitchen.select_amount', {
-          ingredient:
-            ingredientSelected[`name_${i18n.language}` as keyof IIngredient],
+          ingredient: ingredientSelected
+            ? ingredientSelected[`name_${i18n.language}` as keyof IIngredient]
+            : '',
         }),
         description: '',
       },
       2: {
         title: t('confirm'),
-        description: t('confirm_content'),
+        description: t('kitchen.confirm_content', {
+          food: ingredientSelected
+            ? ingredientSelected[`name_${i18n.language}` as keyof IIngredient]
+            : '',
+        }),
       },
     }),
     [i18n.language, ingredientSelected, t],
   );
 
   const handleGoBack = useCallback(() => {
+    Keyboard.dismiss();
     setStep(step - 1);
   }, [step]);
 
@@ -156,9 +165,22 @@ const ModalAddKitchenIngredient = ({
     [],
   );
 
+  const handleCloseModal = useCallback(() => {
+    onClose();
+    setIngredientSelected(null);
+  }, [onClose]);
+
+  const handleChangeAmount = useCallback((value: string) => {
+    setAmount(value ? parseFloat(value) : 0);
+  }, []);
+
   useEffect(() => {
     setListIngredients(listIngredientsFake);
   }, []);
+
+  useEffect(() => {
+    setAmount(0);
+  }, [ingredientSelected]);
 
   return (
     <ModalRemake isVisible={isVisible}>
@@ -177,25 +199,50 @@ const ModalAddKitchenIngredient = ({
                 placeholderName={t('kitchen.kitchen_ingredient')}
               />
             )}
-            <FlatList
-              data={listIngredients}
-              renderItem={({item}) => (
-                <ItemIngredientSelect
-                  ingredient={item}
-                  isActive={ingredientSelected?.id === item.id}
-                  onSelectIngredient={() => handleSetIngredientSelected(item)}
-                  onUnselectIngredient={() => handleSetIngredientSelected(null)}
+            {step === 0 && (
+              <FlatList
+                data={listIngredients}
+                renderItem={({item}) => (
+                  <ItemIngredientSelect
+                    ingredient={item}
+                    isActive={ingredientSelected?.id === item.id}
+                    onSelectIngredient={() => handleSetIngredientSelected(item)}
+                    onUnselectIngredient={() =>
+                      handleSetIngredientSelected(null)
+                    }
+                  />
+                )}
+                keyExtractor={item => `${item.id}`}
+                keyboardShouldPersistTaps="handled"
+                style={styles.flatList}
+                contentContainerStyle={styles.flatListContainer}
+                numColumns={2}
+                columnWrapperStyle={{gap: 10}}
+              />
+            )}
+            {step === 1 && (
+              <View style={styles.inputNumberWrapper}>
+                <TextInput
+                  keyboardType="number-pad"
+                  style={styles.inputNumber}
+                  placeholderTextColor={colorsConstant.gray_2}
+                  placeholder="0"
+                  cursorColor={colorsConstant.primary}
+                  value={amount ? amount.toString() : ''}
+                  onChangeText={handleChangeAmount}
                 />
-              )}
-              keyExtractor={item => `${item.id}`}
-              keyboardShouldPersistTaps="handled"
-              contentContainerStyle={styles.flatListContainer}
-              numColumns={2}
-              columnWrapperStyle={{gap: 10}}
-            />
+                <Typo style={styles.unit}>{ingredientSelected?.unit}</Typo>
+              </View>
+            )}
+            {step === 2 && (
+              <Typo
+                style={
+                  styles.confirmDescription
+                }>{`${amount} ${ingredientSelected?.unit} ${stepMapping[step].description}`}</Typo>
+            )}
             <View style={styles.buttonsContainer}>
               {step <= 0 ? (
-                <Typo onPress={onClose} style={styles.cancel}>
+                <Typo onPress={handleCloseModal} style={styles.cancel}>
                   {t('close')}
                 </Typo>
               ) : (
@@ -254,6 +301,7 @@ const styles = ScaledSheet.create({
     color: colorsConstant.primary,
     fontSize: '16@s',
     fontWeight: '500',
+    paddingVertical: '6@s',
   },
   addWrapper: {
     backgroundColor: colorsConstant.primary,
@@ -266,9 +314,45 @@ const styles = ScaledSheet.create({
     fontSize: '16@s',
     fontWeight: '600',
   },
+  flatList: {
+    maxHeight: '280@s',
+    height: '280@s',
+    marginTop: '8@s',
+  },
   flatListContainer: {
     rowGap: '12@s',
     columnGap: '8@s',
     paddingBottom: '8@s',
+  },
+  inputNumber: {
+    shadowColor: colorsConstant.shadow,
+    elevation: 4,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    borderRadius: 999,
+    backgroundColor: '#FFF',
+    paddingLeft: '12@s',
+    paddingVertical: '8@s',
+    color: colorsConstant.black_1,
+    fontSize: '16@s',
+    flex: 1,
+  },
+  inputNumberWrapper: {
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  unit: {
+    position: 'absolute',
+    color: colorsConstant.black_1,
+    fontWeight: '400',
+    right: '16@s',
+    fontSize: '16@s',
+  },
+  confirmDescription: {
+    color: colorsConstant.black_2,
+    fontSize: '16@s',
   },
 });

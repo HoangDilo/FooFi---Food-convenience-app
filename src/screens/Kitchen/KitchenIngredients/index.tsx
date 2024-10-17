@@ -18,6 +18,15 @@ const KitchenIngredients = () => {
     setIsShowModalAdd(true);
   }, []);
 
+  const handleAddIngredientToList = useCallback(
+    (ingredient: IIngredient) => {
+      const listClone = JSON.parse(JSON.stringify(listIngredients));
+      listClone.push(ingredient);
+      setListIngredient(listClone);
+    },
+    [listIngredients],
+  );
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.header}>
@@ -39,7 +48,7 @@ const KitchenIngredients = () => {
       <ModalAddKitchenIngredient
         isVisible={isShowModalAdd}
         onClose={() => setIsShowModalAdd(false)}
-        onSubmit={() => {}}
+        onSubmit={handleAddIngredientToList}
       />
     </View>
   );

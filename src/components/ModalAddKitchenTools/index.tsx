@@ -32,18 +32,17 @@ const ModalAddKitchenTools = ({
   const [listToolsSelected, setListToolsSelected] = useState<
     IKitchenToolsAvailable[]
   >([]);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState<string | null>(null);
 
-  const listToolsSearch = useMemo(
-    () =>
-      listToolsAvailable.filter(tool =>
-        tool[`name_${i18n.language}` as keyof IKitchenToolsAvailable]
-          .toString()
-          .toLowerCase()
-          .includes(searchValue.toLowerCase()),
-      ),
-    [i18n.language, listToolsAvailable, searchValue],
-  );
+  const listToolsSearch = useMemo(() => {
+    const query = searchValue ?? '';
+    return listToolsAvailable.filter(tool =>
+      tool[`name_${i18n.language}` as keyof IKitchenToolsAvailable]
+        .toString()
+        .toLowerCase()
+        .includes(query.toLowerCase()),
+    );
+  }, [i18n.language, listToolsAvailable, searchValue]);
 
   const handleCloseModal = useCallback(() => {
     setListToolsSelected([]);
