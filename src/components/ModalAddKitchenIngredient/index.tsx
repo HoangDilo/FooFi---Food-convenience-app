@@ -30,7 +30,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Bột mì',
     img_url: 'https://example.com/flour.jpg',
     unit: EUnit.GRAM,
-    quantity: 500,
+    quantity: 0,
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Đường',
     img_url: 'https://example.com/sugar.jpg',
     unit: EUnit.GRAM,
-    quantity: 200,
+    quantity: 0,
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Trứng',
     img_url: 'https://example.com/egg.jpg',
     unit: null, // No specific unit for countable items like eggs
-    quantity: 3,
+    quantity: 0,
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Sữa',
     img_url: 'https://example.com/milk.jpg',
     unit: EUnit.ML,
-    quantity: 250,
+    quantity: 0,
   },
   {
     id: 5,
@@ -62,7 +62,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Bơ',
     img_url: 'https://example.com/butter.jpg',
     unit: EUnit.GRAM,
-    quantity: 100,
+    quantity: 0,
   },
   {
     id: 6,
@@ -70,7 +70,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Muối',
     img_url: 'https://example.com/salt.jpg',
     unit: EUnit.GRAM,
-    quantity: 5,
+    quantity: 0,
   },
   {
     id: 7,
@@ -78,7 +78,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Bột nở',
     img_url: 'https://example.com/baking_powder.jpg',
     unit: EUnit.GRAM,
-    quantity: 10,
+    quantity: 0,
   },
   {
     id: 8,
@@ -86,7 +86,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Tinh chất vani',
     img_url: 'https://example.com/vanilla_extract.jpg',
     unit: EUnit.ML,
-    quantity: 5,
+    quantity: 0,
   },
   {
     id: 9,
@@ -94,7 +94,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Ức gà',
     img_url: 'https://example.com/chicken_breast.jpg',
     unit: EUnit.GRAM,
-    quantity: 300,
+    quantity: 0,
   },
   {
     id: 10,
@@ -102,7 +102,7 @@ const listIngredientsFake: IIngredient[] = [
     name_vi: 'Dầu ô liu',
     img_url: 'https://example.com/olive_oil.jpg',
     unit: EUnit.ML,
-    quantity: 30,
+    quantity: 0,
   },
 ];
 
@@ -147,6 +147,25 @@ const ModalAddKitchenIngredient = ({
     [i18n.language, ingredientSelected, t],
   );
 
+  const listIngredientsFilter = useMemo(
+    () =>
+      listIngredients.filter(ingre =>
+        ingre[`name_${i18n.language}` as keyof IIngredient]
+          ?.toString()
+          .toLocaleLowerCase()
+          .includes(searchValue.toLocaleLowerCase()),
+      ),
+    [i18n.language, listIngredients, searchValue],
+  );
+
+  const isAllowGoNext = useMemo(() => {
+    if (step === 0) {
+      return !!ingredientSelected;
+    } else if (step === 1) {
+      return !!amount;
+    }
+  }, [amount, ingredientSelected, step]);
+
   const handleGoBack = useCallback(() => {
     Keyboard.dismiss();
     setStep(step - 1);
@@ -156,7 +175,20 @@ const ModalAddKitchenIngredient = ({
     setStep(step + 1);
   }, [step]);
 
-  const handleConfirm = useCallback(() => {}, []);
+  const handleCloseModal = useCallback(() => {
+    onClose();
+    setIngredientSelected(null);
+  }, [onClose]);
+
+  const handleConfirm = useCallback(() => {
+    ingredientSelected &&
+      amount &&
+      onSubmit({
+        ...ingredientSelected,
+        quantity: amount,
+      });
+    handleCloseModal();
+  }, [amount, handleCloseModal, ingredientSelected, onSubmit]);
 
   const handleSetIngredientSelected = useCallback(
     (ingredient: IIngredient | null) => {
@@ -164,11 +196,6 @@ const ModalAddKitchenIngredient = ({
     },
     [],
   );
-
-  const handleCloseModal = useCallback(() => {
-    onClose();
-    setIngredientSelected(null);
-  }, [onClose]);
 
   const handleChangeAmount = useCallback((value: string) => {
     setAmount(value ? parseFloat(value) : 0);
@@ -201,7 +228,7 @@ const ModalAddKitchenIngredient = ({
             )}
             {step === 0 && (
               <FlatList
-                data={listIngredients}
+                data={listIngredientsFilter}
                 renderItem={({item}) => (
                   <ItemIngredientSelect
                     ingredient={item}
@@ -230,6 +257,7 @@ const ModalAddKitchenIngredient = ({
                   cursorColor={colorsConstant.primary}
                   value={amount ? amount.toString() : ''}
                   onChangeText={handleChangeAmount}
+                  onSubmitEditing={handleGoNext}
                 />
                 <Typo style={styles.unit}>{ingredientSelected?.unit}</Typo>
               </View>
@@ -251,7 +279,7 @@ const ModalAddKitchenIngredient = ({
                 </Typo>
               )}
               {step < 2 ? (
-                ingredientSelected && (
+                isAllowGoNext && (
                   <TouchableHighlight
                     onPress={handleGoNext}
                     style={styles.addWrapper}

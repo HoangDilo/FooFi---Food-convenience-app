@@ -69,5 +69,6 @@
   "next": "Tiếp",
   "back": "Quay lại",
   "confirm": "Xác nhận",
-  "close": "Đóng"
+  "close": "Đóng",
+  "pagination": "Hiển thị {{start}}~{{end}} {{name}} trên tổng số {{total}}"
 }

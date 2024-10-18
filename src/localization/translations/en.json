@@ -69,5 +69,6 @@
   "next": "Next",
   "back": "Back",
   "confirm": "Confirm",
-  "close": "Close"
+  "close": "Close",
+  "pagination": "Displaying {{start}}~{{end}} {{name}} out of {{total}}"
 }

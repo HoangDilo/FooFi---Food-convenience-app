@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import PlusCircle from '@/assets/icons/PlusCircle';
 import {IIngredient} from '@/types/kitchen.type';
 import ModalAddKitchenIngredient from '@/components/ModalAddKitchenIngredient';
+import ItemIngredientDisplay from './ItemIngredientDisplay';
 
 const KitchenIngredients = () => {
   const {t} = useTranslation();
@@ -22,6 +23,8 @@ const KitchenIngredients = () => {
     (ingredient: IIngredient) => {
       const listClone = JSON.parse(JSON.stringify(listIngredients));
       listClone.push(ingredient);
+      console.log(listClone);
+
       setListIngredient(listClone);
     },
     [listIngredients],
@@ -41,7 +44,14 @@ const KitchenIngredients = () => {
         />
       </View>
       {listIngredients.length ? (
-        <View style={styles.listIngredients}></View>
+        <View style={styles.listIngredients}>
+          {listIngredients.map(ingredient => (
+            <ItemIngredientDisplay
+              ingredient={ingredient}
+              key={ingredient.id}
+            />
+          ))}
+        </View>
       ) : (
         <Typo style={styles.emptyLabel}>{t('kitchen.empty_ingredient')}</Typo>
       )}
@@ -78,7 +88,11 @@ const styles = ScaledSheet.create({
     fontWeight: '600',
     color: colorsConstant.black_1,
   },
-  listIngredients: {},
+  listIngredients: {
+    gap: '8@s',
+    paddingHorizontal: '8@s',
+    paddingVertical: '12@s',
+  },
   emptyLabel: {
     fontSize: '14@s',
     color: colorsConstant.gray_2,
