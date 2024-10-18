@@ -28,7 +28,7 @@ const listIngredientsFake: IIngredient[] = [
     id: 1,
     name_en: 'Flour',
     name_vi: 'Bột mì',
-    img_url: 'https://example.com/flour.jpg',
+    img_url: 'https://ezcloud.vn/wp-content/uploads/2024/02/flour-la-gi.webp',
     unit: EUnit.GRAM,
     quantity: 0,
   },
@@ -36,7 +36,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 2,
     name_en: 'Sugar',
     name_vi: 'Đường',
-    img_url: 'https://example.com/sugar.jpg',
+    img_url:
+      'https://www.tasteofhome.com/wp-content/uploads/2019/11/sugar-shutterstock_615908132.jpg',
     unit: EUnit.GRAM,
     quantity: 0,
   },
@@ -44,7 +45,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 3,
     name_en: 'Egg',
     name_vi: 'Trứng',
-    img_url: 'https://example.com/egg.jpg',
+    img_url:
+      'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/health-benefits-of-eggs-1296x728-feature.jpg?w=1155&h=1528',
     unit: null, // No specific unit for countable items like eggs
     quantity: 0,
   },
@@ -52,7 +54,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 4,
     name_en: 'Milk',
     name_vi: 'Sữa',
-    img_url: 'https://example.com/milk.jpg',
+    img_url:
+      'https://hips.hearstapps.com/hmg-prod/images/filling-of-a-glass-of-milk-in-a-glass-glass-with-royalty-free-image-1707769552.jpg',
     unit: EUnit.ML,
     quantity: 0,
   },
@@ -60,7 +63,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 5,
     name_en: 'Butter',
     name_vi: 'Bơ',
-    img_url: 'https://example.com/butter.jpg',
+    img_url:
+      'https://cdn.tgdd.vn/2020/07/CookProduct/cach-lam-bo-butter-bang-kem-tuoi-heavy-cream-1-1200x676.jpg',
     unit: EUnit.GRAM,
     quantity: 0,
   },
@@ -68,7 +72,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 6,
     name_en: 'Salt',
     name_vi: 'Muối',
-    img_url: 'https://example.com/salt.jpg',
+    img_url:
+      'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322745/salt-shaker.jpg',
     unit: EUnit.GRAM,
     quantity: 0,
   },
@@ -76,7 +81,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 7,
     name_en: 'Baking Powder',
     name_vi: 'Bột nở',
-    img_url: 'https://example.com/baking_powder.jpg',
+    img_url:
+      'https://www.seriouseats.com/thmb/eMPfsLI7D9h1UxnuoDWTmd_K7tM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__images__2015__12__20151201-baking-powder-vicky-wasik-2-bc534b7950894f70844dd914295d5951.jpg',
     unit: EUnit.GRAM,
     quantity: 0,
   },
@@ -84,7 +90,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 8,
     name_en: 'Vanilla Extract',
     name_vi: 'Tinh chất vani',
-    img_url: 'https://example.com/vanilla_extract.jpg',
+    img_url:
+      'https://www.clubhouse.ca/-/media/project/oneweb/clubhouseca/products/00066200004637_a1c1.png?rev=dce770297c5e439b9ba51ad0e946340b&vd=20220428T152526Z&extension=webp&hash=FE74673E0B47B5C3AE1A57688C989134',
     unit: EUnit.ML,
     quantity: 0,
   },
@@ -92,7 +99,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 9,
     name_en: 'Chicken Breast',
     name_vi: 'Ức gà',
-    img_url: 'https://example.com/chicken_breast.jpg',
+    img_url:
+      'https://rastellis.com/cdn/shop/products/Organic-Chicken-Beasts-2.jpg?v=1701718077&width=1946',
     unit: EUnit.GRAM,
     quantity: 0,
   },
@@ -100,7 +108,8 @@ const listIngredientsFake: IIngredient[] = [
     id: 10,
     name_en: 'Olive Oil',
     name_vi: 'Dầu ô liu',
-    img_url: 'https://example.com/olive_oil.jpg',
+    img_url:
+      'https://cdn-prod.medicalnewstoday.com/content/images/articles/321/321246/olive-oil-in-a-bottle-which-may-be-used-on-the-face.jpg',
     unit: EUnit.ML,
     quantity: 0,
   },
@@ -178,6 +187,8 @@ const ModalAddKitchenIngredient = ({
   const handleCloseModal = useCallback(() => {
     onClose();
     setIngredientSelected(null);
+    setAmount(0);
+    setStep(0);
   }, [onClose]);
 
   const handleConfirm = useCallback(() => {
@@ -263,10 +274,9 @@ const ModalAddKitchenIngredient = ({
               </View>
             )}
             {step === 2 && (
-              <Typo
-                style={
-                  styles.confirmDescription
-                }>{`${amount} ${ingredientSelected?.unit} ${stepMapping[step].description}`}</Typo>
+              <Typo style={styles.confirmDescription}>{`${amount} ${
+                ingredientSelected?.unit ? ingredientSelected.unit + ' ' : ''
+              }${stepMapping[step].description}`}</Typo>
             )}
             <View style={styles.buttonsContainer}>
               {step <= 0 ? (

@@ -55,7 +55,8 @@
     "select_ingredient": "Select an ingredient that is in your kitchen",
     "select_amount": "Select the amount of {{ingredient}}",
     "confirm": "Confirmation",
-    "confirm_content": "of {{food}} will be added!"
+    "confirm_content": "of {{food}} will be added!",
+    "quantity": "Quantity"
   },
   "other_chefs": {
     "post": "Post",
@@ -66,9 +67,12 @@
   },
   "cancel": "Cancel",
   "add": "Add",
+  "delete": "Delete",
   "next": "Next",
   "back": "Back",
   "confirm": "Confirm",
   "close": "Close",
-  "pagination": "Displaying {{start}}~{{end}} {{name}} out of {{total}}"
+  "pagination": "Displaying {{start}}~{{end}} {{name}} out of {{total}}",
+  "confirm_delete_title": "Confirm delete",
+  "confirm_delete_desc": "{{value}} will be deleted, are you sure?"
 }

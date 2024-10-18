@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
@@ -9,11 +9,26 @@ import PlusCircle from '@/assets/icons/PlusCircle';
 import {IIngredient} from '@/types/kitchen.type';
 import ModalAddKitchenIngredient from '@/components/ModalAddKitchenIngredient';
 import ItemIngredientDisplay from './ItemIngredientDisplay';
+import ModalConfirm from '@/components/ModalConfirm';
 
 const KitchenIngredients = () => {
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const [isShowModalAdd, setIsShowModalAdd] = useState(false);
   const [listIngredients, setListIngredient] = useState<IIngredient[]>([]);
+  const [ingredientActing, setIngredientActing] = useState<IIngredient | null>(
+    null,
+  );
+  const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
+
+  const ingredientInfoDisplay = useMemo(
+    () =>
+      `${ingredientActing?.quantity} ${ingredientActing?.unit} ${
+        ingredientActing
+          ? ingredientActing[`name_${i18n.language}` as keyof IIngredient]
+          : ''
+      }`,
+    [i18n.language, ingredientActing],
+  );
 
   const handleAddIngredient = useCallback(() => {
     setIsShowModalAdd(true);
@@ -23,12 +38,25 @@ const KitchenIngredients = () => {
     (ingredient: IIngredient) => {
       const listClone = JSON.parse(JSON.stringify(listIngredients));
       listClone.push(ingredient);
-      console.log(listClone);
-
       setListIngredient(listClone);
     },
     [listIngredients],
   );
+
+  const handleChooseEdit = useCallback(() => {}, []);
+
+  const handleChooseDelete = useCallback((ingredient: IIngredient) => {
+    setIngredientActing(ingredient);
+    setIsShowModalConfirm(true);
+  }, []);
+
+  const handleConfirmDelete = useCallback(() => {
+    const listDeleted = listIngredients.filter(
+      item => item.id !== ingredientActing?.id,
+    );
+    setListIngredient(listDeleted);
+    setIsShowModalConfirm(false);
+  }, [ingredientActing?.id, listIngredients]);
 
   return (
     <View style={styles.mainContainer}>
@@ -49,6 +77,8 @@ const KitchenIngredients = () => {
             <ItemIngredientDisplay
               ingredient={ingredient}
               key={ingredient.id}
+              onChooseEdit={handleChooseEdit}
+              onChooseDelete={() => handleChooseDelete(ingredient)}
             />
           ))}
         </View>
@@ -59,6 +89,15 @@ const KitchenIngredients = () => {
         isVisible={isShowModalAdd}
         onClose={() => setIsShowModalAdd(false)}
         onSubmit={handleAddIngredientToList}
+      />
+      <ModalConfirm
+        title={t('confirm_delete_title')}
+        description={t('confirm_delete_desc', {
+          value: ingredientInfoDisplay,
+        })}
+        isVisible={isShowModalConfirm}
+        onClose={() => setIsShowModalConfirm(false)}
+        onConfirm={handleConfirmDelete}
       />
     </View>
   );

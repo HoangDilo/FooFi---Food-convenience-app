@@ -55,7 +55,8 @@
     "select_ingredient": "Lựa chọn một nguyên liệu có trong bếp của bạn",
     "select_amount": "Nhập số lượng của {{ingredient}}",
     "confirm": "Xác nhận",
-    "confirm_content": "{{food}} sẽ được thêm vào!"
+    "confirm_content": "{{food}} sẽ được thêm vào!",
+    "quantity": "Số lượng"
   },
   "other_chefs": {
     "post": "Tạo",
@@ -65,10 +66,13 @@
     }
   },
   "cancel": "Hủy",
+  "delete": "Xoá",
   "add": "Thêm",
   "next": "Tiếp",
   "back": "Quay lại",
   "confirm": "Xác nhận",
   "close": "Đóng",
-  "pagination": "Hiển thị {{start}}~{{end}} {{name}} trên tổng số {{total}}"
+  "pagination": "Hiển thị {{start}}~{{end}} {{name}} trên tổng số {{total}}",
+  "confirm_delete_title": "Xác nhận xóa bỏ",
+  "confirm_delete_desc": "{{value}} sẽ bị xoá bỏ, bạn chắc chứ?"
 }
