@@ -10,6 +10,10 @@ import {IIngredient} from '@/types/kitchen.type';
 import ModalAddKitchenIngredient from '@/components/ModalAddKitchenIngredient';
 import ItemIngredientDisplay from './ItemIngredientDisplay';
 import ModalConfirm from '@/components/ModalConfirm';
+import ModalEditIngredient from '@/components/ModalEditIngredient';
+import Pagination from '@/components/Pagination';
+
+const PAGE_LIMIT = 5;
 
 const KitchenIngredients = () => {
   const {t, i18n} = useTranslation();
@@ -19,6 +23,9 @@ const KitchenIngredients = () => {
     null,
   );
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
+  const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+  const [currentPage, setCurentPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(10);
 
   const ingredientInfoDisplay = useMemo(
     () =>
@@ -43,7 +50,10 @@ const KitchenIngredients = () => {
     [listIngredients],
   );
 
-  const handleChooseEdit = useCallback(() => {}, []);
+  const handleChooseEdit = useCallback((ingredient: IIngredient) => {
+    setIngredientActing(ingredient);
+    setIsShowModalEdit(true);
+  }, []);
 
   const handleChooseDelete = useCallback((ingredient: IIngredient) => {
     setIngredientActing(ingredient);
@@ -57,6 +67,23 @@ const KitchenIngredients = () => {
     setListIngredient(listDeleted);
     setIsShowModalConfirm(false);
   }, [ingredientActing?.id, listIngredients]);
+
+  const handleEditIngredient = useCallback(
+    (value: string) => {
+      const listClone = JSON.parse(
+        JSON.stringify(listIngredients),
+      ) as IIngredient[];
+      const ingredientEdit = listClone.find(
+        item => item.id === ingredientActing?.id,
+      );
+      if (ingredientEdit) {
+        ingredientEdit.quantity = parseFloat(value);
+      }
+      setListIngredient(listClone);
+      setIsShowModalEdit(false);
+    },
+    [ingredientActing?.id, listIngredients],
+  );
 
   return (
     <View style={styles.mainContainer}>
@@ -77,10 +104,19 @@ const KitchenIngredients = () => {
             <ItemIngredientDisplay
               ingredient={ingredient}
               key={ingredient.id}
-              onChooseEdit={handleChooseEdit}
+              onChooseEdit={() => handleChooseEdit(ingredient)}
               onChooseDelete={() => handleChooseDelete(ingredient)}
             />
           ))}
+          <Pagination
+            limit={PAGE_LIMIT}
+            currentPage={currentPage}
+            totalCount={totalCount}
+            currentPageItemCount={listIngredients.length}
+            nameItem={t('kitchen.kitchen_ingredient').toLocaleLowerCase()}
+            onGoNext={() => setCurentPage(currentPage + 1)}
+            onGoPrevious={() => setCurentPage(currentPage - 1)}
+          />
         </View>
       ) : (
         <Typo style={styles.emptyLabel}>{t('kitchen.empty_ingredient')}</Typo>
@@ -98,6 +134,11 @@ const KitchenIngredients = () => {
         isVisible={isShowModalConfirm}
         onClose={() => setIsShowModalConfirm(false)}
         onConfirm={handleConfirmDelete}
+      />
+      <ModalEditIngredient
+        isVisible={isShowModalEdit}
+        onClose={() => setIsShowModalEdit(false)}
+        onConfirm={handleEditIngredient}
       />
     </View>
   );

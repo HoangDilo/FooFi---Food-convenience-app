@@ -56,7 +56,9 @@
     "select_amount": "Nhập số lượng của {{ingredient}}",
     "confirm": "Xác nhận",
     "confirm_content": "{{food}} sẽ được thêm vào!",
-    "quantity": "Số lượng"
+    "quantity": "Số lượng",
+    "edit_modal_title": "Chỉnh sửa số lượng",
+    "placeholder_modal_edit": "Nhập số lượng mới"
   },
   "other_chefs": {
     "post": "Tạo",

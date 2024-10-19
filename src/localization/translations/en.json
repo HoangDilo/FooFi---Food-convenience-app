@@ -56,7 +56,9 @@
     "select_amount": "Select the amount of {{ingredient}}",
     "confirm": "Confirmation",
     "confirm_content": "of {{food}} will be added!",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "edit_modal_title": "Edit ingredient",
+    "placeholder_modal_edit": "Nhập số lượng mới"
   },
   "other_chefs": {
     "post": "Post",

@@ -13,4 +13,5 @@ export default {
   shadow_2: '#00000060',
   error: '#fe0b0b',
   success: '#2ebd30',
+  disabel: '#dcdcdc',
 };
