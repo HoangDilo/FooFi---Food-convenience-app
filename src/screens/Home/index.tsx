@@ -115,6 +115,7 @@ const HomeScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
+      dispatch(setIsScrolling(false));
       scrollViewRef.current?.scrollTo({y: 0, animated: true});
       dispatch(setCurrentRoute(TAB.HOME_TAB));
     }, [dispatch]),

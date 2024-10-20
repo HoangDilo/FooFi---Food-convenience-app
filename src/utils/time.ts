@@ -39,3 +39,13 @@ export const getDaySession = () => {
   });
   return result;
 };
+
+export const getPostMinDiff = (time: string) => {
+  const current = moment();
+  const timeMoment = moment(time).format();
+  return current.diff(timeMoment, 'minutes');
+};
+
+export const formatPostTime = (time: string) => {
+  return moment(time).format('DD-MM-YYYY');
+};

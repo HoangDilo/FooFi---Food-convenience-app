@@ -14,4 +14,6 @@ export default {
   error: '#fe0b0b',
   success: '#2ebd30',
   disabel: '#dcdcdc',
+  skeleton_1: '#AAA',
+  skeleton_2: '#dcdcdc',
 };

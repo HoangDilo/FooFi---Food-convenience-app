@@ -14,7 +14,6 @@ interface IBlackGardientWrapper {
   children: React.ReactNode;
   width?: DimensionValue;
   height?: DimensionValue;
-  onPress?: () => void;
 }
 
 const BlackGradientWrapper = ({
@@ -22,10 +21,9 @@ const BlackGradientWrapper = ({
   children,
   width = '100%',
   height,
-  onPress,
 }: IBlackGardientWrapper) => {
   return (
-    <Pressable style={[style, styles.gradientContainer]} onPress={onPress}>
+    <View style={[style, styles.gradientContainer]}>
       {children}
       <View style={[styles.gradientWrapper, {width, height}]}>
         <Svg height={height?.toString()} style={{flex: 1}}>
@@ -38,7 +36,7 @@ const BlackGradientWrapper = ({
           <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
         </Svg>
       </View>
-    </Pressable>
+    </View>
   );
 };
 

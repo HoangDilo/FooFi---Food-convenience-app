@@ -1,11 +1,16 @@
-import {ScrollView, View} from 'react-native';
-import React, {useCallback} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  View,
+} from 'react-native';
+import React, {useCallback, useRef} from 'react';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import colorsConstant from '@/constants/colors.constant';
 import HeaderTab from '@/components/HeaderTab';
-import {setCurrentRoute} from '@/store/reducers/system.reducer';
+import {setCurrentRoute, setIsScrolling} from '@/store/reducers/system.reducer';
 import {TAB} from '@/constants/tabs.constant';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import KitchenTools from './KitchenTools';
@@ -19,20 +24,40 @@ import KitchenIngredients from './KitchenIngredients';
 const KitchenScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
+  const insets = useSafeAreaInsets();
+
+  const contentOffsetY = useRef<number>(0);
 
   const handlePressQuestionMark = useCallback(() => {}, []);
 
+  const handleScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      contentOffsetY.current = event.nativeEvent.contentOffset.y;
+      if (event.nativeEvent.contentOffset.y > 120) {
+        dispatch(setIsScrolling(true));
+      } else {
+        dispatch(setIsScrolling(false));
+      }
+    },
+    [dispatch],
+  );
+
   useFocusEffect(
     useCallback(() => {
+      dispatch(setIsScrolling(contentOffsetY.current > 120));
       dispatch(setCurrentRoute(TAB.KITCHEN));
     }, [dispatch]),
   );
 
   return (
-    <SafeAreaView
-      edges={['top']}
-      style={{flex: 1, backgroundColor: colorsConstant.primary}}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.kitchenScreen}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+      onScroll={event => handleScroll(event)}>
       <HeaderTab
+        stylesCustom={{paddingTop: insets.top + scale(16)}}
         rightIcon={
           <IconXML
             icon={QuestionCircle}
@@ -43,18 +68,12 @@ const KitchenScreen = () => {
         }
       />
       <View style={styles.scrollViewWrapper}>
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.kitchenScreen}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled">
-          <Typo style={styles.description}>{t('kitchen.title')}</Typo>
-          <KitchenTools />
-          <KitchenSpices />
-          <KitchenIngredients />
-        </ScrollView>
+        <Typo style={styles.description}>{t('kitchen.title')}</Typo>
+        <KitchenTools />
+        <KitchenSpices />
+        <KitchenIngredients />
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -66,16 +85,15 @@ const styles = ScaledSheet.create({
     borderTopRightRadius: 16,
     flex: 1,
     overflow: 'hidden',
-    marginTop: '14@s',
+    backgroundColor: colorsConstant.background,
+    marginTop: '12@s',
+    padding: '24@s',
   },
   scrollView: {
     backgroundColor: colorsConstant.background,
   },
   kitchenScreen: {
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    padding: '24@s',
-    gap: '12@s',
+    backgroundColor: colorsConstant.primary,
   },
   description: {
     color: colorsConstant.gray_1,

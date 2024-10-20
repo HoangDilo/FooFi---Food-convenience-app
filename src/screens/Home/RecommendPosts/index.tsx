@@ -10,6 +10,7 @@ import {IRecommendPostItem} from '@/types/home.type';
 const listRecommendPosts: IRecommendPostItem[] = [
   {
     id: 1,
+    is_standard: false,
     description: 'This dish is so good',
     published_time: '26-04',
     likes: 40,
@@ -31,6 +32,7 @@ const listRecommendPosts: IRecommendPostItem[] = [
   },
   {
     id: 2,
+    is_standard: false,
     description: 'This dish is easy to make',
     published_time: '27-04',
     likes: 40,

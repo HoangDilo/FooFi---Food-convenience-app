@@ -17,6 +17,7 @@ export interface IRecommendForYouResponse {
 
 export interface IRecommendPostItem {
   id: number;
+  is_standard: boolean;
   description: string;
   published_time: string;
   likes: number;

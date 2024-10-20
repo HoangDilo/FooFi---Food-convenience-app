@@ -14,16 +14,8 @@ const StatusBarCustom = () => {
 
   return (
     <StatusBar
-      barStyle={
-        (isScrolling && currentRoute === TAB.HOME_TAB) || isDarkContent
-          ? 'dark-content'
-          : 'light-content'
-      }
-      backgroundColor={
-        isScrolling && currentRoute === TAB.HOME_TAB
-          ? colorsConstant.background
-          : '#00000000'
-      }
+      barStyle={isScrolling || isDarkContent ? 'dark-content' : 'light-content'}
+      backgroundColor={isScrolling ? colorsConstant.background : '#00000000'}
       animated={currentRoute === TAB.HOME_TAB}
     />
   );

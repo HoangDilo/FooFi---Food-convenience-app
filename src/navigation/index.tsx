@@ -9,6 +9,8 @@ import {STACK} from '../constants/screens.constant';
 import TabNavigator from './TabNavigator';
 import CookingInstruction from '@/screens/CookingInstruction';
 import SearchScreen from '@/screens/Search';
+import AddPost from '@/screens/AddPost';
+import DishDetails from '@/screens/DishDetails';
 
 declare global {
   namespace ReactNavigation {
@@ -39,6 +41,11 @@ export default function MainNavigator() {
         <Stack.Screen
           name={STACK.SEARCH as 'search'}
           component={SearchScreen}
+        />
+        <Stack.Screen name={STACK.ADD_POST as 'add_post'} component={AddPost} />
+        <Stack.Screen
+          name={STACK.DISH_DETAILS as 'dish_details'}
+          component={DishDetails}
         />
       </Stack.Navigator>
     </NavigationContainer>

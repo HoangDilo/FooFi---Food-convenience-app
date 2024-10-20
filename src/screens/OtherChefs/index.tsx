@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import React, {useCallback, useMemo, useState} from 'react';
 import Typo from '@/components/Typo';
 import HeaderTab from '@/components/HeaderTab';
@@ -95,14 +95,16 @@ const OtherChefsScreen = () => {
               height={scale(28)}
               onPress={() => navigation.navigate('search')}
             />
-            <View style={styles.postButton}>
+            <Pressable
+              style={styles.postButton}
+              onPress={() => navigation.navigate('add_post')}>
               <IconXML
                 icon={PlusCircleLine}
                 width={scale(20)}
                 height={scale(20)}
               />
               <Typo style={styles.postLabel}>{t('other_chefs.post')}</Typo>
-            </View>
+            </Pressable>
           </View>
         }
       />
@@ -114,6 +116,7 @@ const OtherChefsScreen = () => {
           width: deviceWidth,
         }}
         renderTabBar={renderTabBar}
+        overScrollMode={'never'}
       />
     </SafeAreaView>
   );
@@ -145,7 +148,7 @@ const styles = ScaledSheet.create({
   },
   tabBar: {
     backgroundColor: colorsConstant.background,
-    shadowColor: '#00000000',
+    shadowColor: colorsConstant.shadow,
   },
   tabBarContainer: {
     paddingBottom: '2@s',

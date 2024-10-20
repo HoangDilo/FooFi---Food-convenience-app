@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import {View} from 'react-native';
+import {StyleProp, View, ViewStyle} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {ScaledSheet} from 'react-native-size-matters/extend';
@@ -9,9 +9,14 @@ import colorsConstant from '@/constants/colors.constant';
 interface IHeaderTabProps {
   isOrange?: boolean;
   rightIcon?: ReactElement;
+  stylesCustom: StyleProp<ViewStyle>;
 }
 
-const HeaderTab = ({isOrange = true, rightIcon}: IHeaderTabProps) => {
+const HeaderTab = ({
+  isOrange = true,
+  rightIcon,
+  stylesCustom,
+}: IHeaderTabProps) => {
   const route = useRoute();
   const {t} = useTranslation();
 
@@ -24,6 +29,7 @@ const HeaderTab = ({isOrange = true, rightIcon}: IHeaderTabProps) => {
             ? colorsConstant.primary
             : colorsConstant.background,
         },
+        stylesCustom,
       ]}>
       <Typo
         style={[

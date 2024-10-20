@@ -76,5 +76,11 @@
   "close": "Đóng",
   "pagination": "Hiển thị {{start}}~{{end}} {{name}} trên tổng số {{total}}",
   "confirm_delete_title": "Xác nhận xóa bỏ",
-  "confirm_delete_desc": "{{value}} sẽ bị xoá bỏ, bạn chắc chứ?"
+  "confirm_delete_desc": "{{value}} sẽ bị xoá bỏ, bạn chắc chứ?",
+  "time": {
+    "minute": "phút",
+    "hour": "giờ",
+    "just_now": "Vừa xong",
+    "ago": "trước"
+  }
 }

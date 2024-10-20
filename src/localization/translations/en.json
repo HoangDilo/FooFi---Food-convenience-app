@@ -1,7 +1,7 @@
 {
   "tabs_name": {
     "home": "Home",
-    "other_chefs": "Other_Chefs",
+    "other_chefs": "Other Chefs",
     "kitchen": "Kitchen",
     "chat_bot": "Co-Chef",
     "my": "My"
@@ -76,5 +76,11 @@
   "close": "Close",
   "pagination": "Displaying {{start}}~{{end}} {{name}} out of {{total}}",
   "confirm_delete_title": "Confirm delete",
-  "confirm_delete_desc": "{{value}} will be deleted, are you sure?"
+  "confirm_delete_desc": "{{value}} will be deleted, are you sure?",
+  "time": {
+    "minute": "minute{{s}}",
+    "hour": "hour{{s}}",
+    "just_now": "Just now",
+    "ago": "ago"
+  }
 }
