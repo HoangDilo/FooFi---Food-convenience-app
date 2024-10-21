@@ -11,9 +11,9 @@ export type RootStackParamList = {
   dish_details: {
     post_id: number;
     is_standard: boolean;
-    description: string;
-    published_time: string;
-    user_info: {
+    description?: string;
+    published_time?: string;
+    user_info?: {
       name: string;
       avt_url: string;
     };

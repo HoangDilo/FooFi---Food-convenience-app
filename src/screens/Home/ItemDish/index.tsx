@@ -1,25 +1,40 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Pressable, View} from 'react-native';
+import React, {useCallback} from 'react';
 import {IDishesBySession} from '@/types/home.type';
 import FastImage from 'react-native-fast-image';
 import Typo from '@/components/Typo';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Svg, {Defs, LinearGradient, Rect, Stop} from 'react-native-svg';
+import {useNavigation} from '@react-navigation/native';
 
 interface IItemDishProps {
   item: IDishesBySession;
 }
 
 const ItemDish = ({item}: IItemDishProps) => {
+  const navigation = useNavigation();
+
+  const handlePressItem = useCallback(() => {
+    navigation.navigate('dish_details', {
+      post_id: item.id,
+      is_standard: true,
+      dish_info: {
+        name: item.dish_info.name,
+        duration: item.dish_info.duration,
+        img_url: item.dish_info.img_url,
+      },
+    });
+  }, [navigation, item]);
+
   return (
-    <View style={styles.itemWrapper}>
-      <FastImage source={{uri: item.img_url}} style={styles.img} />
+    <Pressable style={styles.itemWrapper} onPress={handlePressItem}>
+      <FastImage source={{uri: item.dish_info.img_url}} style={styles.img} />
       <View style={styles.itemContents}>
         <Typo
           style={styles.itemName}
           numberOfLines={1}
           textBreakStrategy="highQuality">
-          {item.name}
+          {item.dish_info.name}
         </Typo>
       </View>
       <Svg height="40" width="100%" style={styles.blackOverlay}>
@@ -31,7 +46,7 @@ const ItemDish = ({item}: IItemDishProps) => {
         </Defs>
         <Rect x="0" y="0" width="100%" height="100%" fill="url(#grad)" />
       </Svg>
-    </View>
+    </Pressable>
   );
 };
 

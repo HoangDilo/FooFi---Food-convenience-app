@@ -10,7 +10,7 @@ interface IBlackGardientWrapper {
   height?: DimensionValue;
 }
 
-const BlackGradientWrapper = ({
+const BlackGradientWrapperTop = ({
   style,
   children,
   width = '100%',
@@ -22,7 +22,7 @@ const BlackGradientWrapper = ({
       <View style={[styles.gradientWrapper, {width, height}]}>
         <Svg height={height?.toString()} style={{flex: 1}}>
           <Defs>
-            <LinearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <LinearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
               <Stop offset="0%" stopColor="#000" stopOpacity="0" />
               <Stop offset="100%" stopColor="#000" stopOpacity="1" />
             </LinearGradient>
@@ -34,7 +34,7 @@ const BlackGradientWrapper = ({
   );
 };
 
-export default BlackGradientWrapper;
+export default BlackGradientWrapperTop;
 
 const styles = ScaledSheet.create({
   gradientContainer: {
@@ -42,7 +42,7 @@ const styles = ScaledSheet.create({
   },
   gradientWrapper: {
     position: 'absolute',
-    bottom: 0,
+    top: 0,
     left: 0,
     zIndex: 1,
   },

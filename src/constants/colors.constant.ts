@@ -1,7 +1,7 @@
 export default {
   primary: '#ff6200',
   primary_press: '#e35700',
-  secondary: '#269113',
+  secondary: '#38c41f',
   gray_1: '#666666',
   gray_2: '#8a8a8a',
   gray_3: '#F0F0F0',
@@ -16,4 +16,5 @@ export default {
   disabel: '#dcdcdc',
   skeleton_1: '#AAA',
   skeleton_2: '#dcdcdc',
+  approved: '#38c41f',
 };

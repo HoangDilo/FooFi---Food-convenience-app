@@ -30,7 +30,7 @@ const posts: IPost[] = [
   },
   {
     id: 1,
-    is_standard: true,
+    is_standard: false,
     description: 'A delicious Italian pasta recipe.',
     published_time: '2024-10-18T14:30:00',
     likes: 120,
@@ -52,7 +52,7 @@ const posts: IPost[] = [
   },
   {
     id: 3,
-    is_standard: true,
+    is_standard: false,
     description: 'Quick and easy vegan salad recipe.',
     published_time: '2024-10-16T12:00:00',
     likes: 75,
@@ -95,7 +95,7 @@ const posts: IPost[] = [
   },
   {
     id: 5,
-    is_standard: true,
+    is_standard: false,
     description: 'Sweet and refreshing tropical smoothie.',
     published_time: '2024-10-14T08:00:00',
     likes: 95,
@@ -181,7 +181,7 @@ const posts: IPost[] = [
   },
   {
     id: 7,
-    is_standard: true,
+    is_standard: false,
     description: 'Classic American cheeseburger recipe.',
     published_time: '2024-10-12T14:00:00',
     likes: 210,
@@ -202,7 +202,7 @@ const posts: IPost[] = [
   },
   {
     id: 9,
-    is_standard: true,
+    is_standard: false,
     description: 'Easy-to-make Mexican taco recipe.',
     published_time: '2024-10-10T13:00:00',
     likes: 180,

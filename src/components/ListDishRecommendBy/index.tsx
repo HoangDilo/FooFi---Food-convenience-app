@@ -7,10 +7,10 @@ import colorsConstant from '@/constants/colors.constant';
 import Typo from '@/components/Typo';
 import ItemDish from '../../screens/Home/ItemDish';
 import SeeAll from '@/components/SeeAll';
-import {IItemDish} from '@/types/dish.type';
+import {IDishesBySession} from '@/types/home.type';
 
 interface IListDishRecommendByProps {
-  renderData: IItemDish[];
+  renderData: IDishesBySession[];
   label: string;
 }
 

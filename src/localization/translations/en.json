@@ -82,5 +82,7 @@
     "hour": "hour{{s}}",
     "just_now": "Just now",
     "ago": "ago"
-  }
+  },
+  "approved": "APPROVED",
+  "required": "required"
 }
