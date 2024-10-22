@@ -46,22 +46,16 @@ export default ItemIngredientRequired;
 
 const styles = ScaledSheet.create({
   container: {
-    width: scale((deviceWidth - 80) / 2),
+    width: scale(deviceWidth - 60),
   },
   item: {
     flexDirection: 'row',
-    gap: '12@s',
+    gap: '8@s',
     alignItems: 'center',
     shadowColor: colorsConstant.shadow_2,
-    elevation: 4,
-    shadowOffset: {
-      width: 3,
-      height: 3,
-    },
     borderRadius: 999,
     paddingHorizontal: '12@s',
     paddingVertical: '6@s',
-    backgroundColor: '#FFF',
   },
   info: {
     flexDirection: 'row',

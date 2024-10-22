@@ -21,9 +21,21 @@ export interface IPost {
   };
 }
 
+export interface IIngredientCheck extends IIngredient {
+  is_available: boolean;
+}
+
+export interface ISpiceCheck extends ISpice {
+  is_available: boolean;
+}
+
+export interface IKitchenToolsAvailableCheck extends IKitchenToolsAvailable {
+  is_available: boolean;
+}
+
 export interface IDishDetailsInfo {
   post: IPost;
-  list_ingredient: IIngredient[];
-  list_spices: ISpice[];
-  list_tools: IKitchenToolsAvailable[];
+  list_ingredient: IIngredientCheck[];
+  list_spices: ISpiceCheck[];
+  list_tools: IKitchenToolsAvailableCheck[];
 }

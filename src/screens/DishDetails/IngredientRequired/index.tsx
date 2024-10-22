@@ -2,13 +2,13 @@ import {View} from 'react-native';
 import React, {memo} from 'react';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
-import {IIngredient} from '@/types/kitchen.type';
 import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
 import ItemIngredientRequired from './ItemIngredientRequired';
+import {IIngredientCheck} from '@/types/otherchefs.type';
 
 interface IIngredientRequiredProps {
-  listIngredients: IIngredient[];
+  listIngredients: IIngredientCheck[];
 }
 
 const IngredientRequired = ({listIngredients}: IIngredientRequiredProps) => {
@@ -20,10 +20,7 @@ const IngredientRequired = ({listIngredients}: IIngredientRequiredProps) => {
       </Typo>
       <View style={styles.listIngredient}>
         {listIngredients.map(item => (
-          <ItemIngredientRequired
-            ingredient={{...item, is_available: true}}
-            key={item.id}
-          />
+          <ItemIngredientRequired ingredient={item} key={item.id} />
         ))}
       </View>
     </View>
@@ -34,18 +31,16 @@ export default memo(IngredientRequired);
 
 const styles = ScaledSheet.create({
   container: {
-    marginTop: '24@s',
+    marginTop: '20@s',
   },
   title: {
     color: colorsConstant.black_1,
     fontWeight: '700',
     fontSize: '24@s',
-    marginBottom: '12@s',
+    marginBottom: '8@s',
   },
   listIngredient: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    columnGap: '24@s',
-    rowGap: '8@s',
   },
 });

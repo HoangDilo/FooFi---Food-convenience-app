@@ -30,7 +30,7 @@ import ApproveMarker from '@/components/ApproveMarker';
 import IngredientRequired from './IngredientRequired';
 import {IDishDetailsInfo} from '@/types/otherchefs.type';
 import SpicesRequired from './SpicesRequired';
-import { EUnit } from '@/enums/kitchen.enum';
+import {EUnit} from '@/enums/kitchen.enum';
 
 const FAKE_INFO: IDishDetailsInfo = {
   post: {
@@ -54,6 +54,7 @@ const FAKE_INFO: IDishDetailsInfo = {
       img_url: 'https://ezcloud.vn/wp-content/uploads/2024/02/flour-la-gi.webp',
       unit: EUnit.GRAM,
       quantity: 0,
+      is_available: true,
     },
     {
       id: 2,
@@ -63,6 +64,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://www.tasteofhome.com/wp-content/uploads/2019/11/sugar-shutterstock_615908132.jpg',
       unit: EUnit.GRAM,
       quantity: 0,
+      is_available: false,
     },
     {
       id: 3,
@@ -72,6 +74,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/health-benefits-of-eggs-1296x728-feature.jpg?w=1155&h=1528',
       unit: null, // No specific unit for countable items like eggs
       quantity: 0,
+      is_available: true,
     },
     {
       id: 4,
@@ -81,6 +84,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://hips.hearstapps.com/hmg-prod/images/filling-of-a-glass-of-milk-in-a-glass-glass-with-royalty-free-image-1707769552.jpg',
       unit: EUnit.ML,
       quantity: 0,
+      is_available: true,
     },
     {
       id: 5,
@@ -90,6 +94,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://cdn.tgdd.vn/2020/07/CookProduct/cach-lam-bo-butter-bang-kem-tuoi-heavy-cream-1-1200x676.jpg',
       unit: EUnit.GRAM,
       quantity: 0,
+      is_available: true,
     },
     {
       id: 6,
@@ -99,6 +104,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322745/salt-shaker.jpg',
       unit: EUnit.GRAM,
       quantity: 0,
+      is_available: false,
     },
     {
       id: 7,
@@ -108,6 +114,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://www.seriouseats.com/thmb/eMPfsLI7D9h1UxnuoDWTmd_K7tM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__images__2015__12__20151201-baking-powder-vicky-wasik-2-bc534b7950894f70844dd914295d5951.jpg',
       unit: EUnit.GRAM,
       quantity: 0,
+      is_available: true,
     },
     {
       id: 8,
@@ -117,6 +124,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://www.clubhouse.ca/-/media/project/oneweb/clubhouseca/products/00066200004637_a1c1.png?rev=dce770297c5e439b9ba51ad0e946340b&vd=20220428T152526Z&extension=webp&hash=FE74673E0B47B5C3AE1A57688C989134',
       unit: EUnit.ML,
       quantity: 0,
+      is_available: true,
     },
     {
       id: 9,
@@ -126,6 +134,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://rastellis.com/cdn/shop/products/Organic-Chicken-Beasts-2.jpg?v=1701718077&width=1946',
       unit: EUnit.GRAM,
       quantity: 0,
+      is_available: true,
     },
     {
       id: 10,
@@ -135,6 +144,7 @@ const FAKE_INFO: IDishDetailsInfo = {
         'https://cdn-prod.medicalnewstoday.com/content/images/articles/321/321246/olive-oil-in-a-bottle-which-may-be-used-on-the-face.jpg',
       unit: EUnit.ML,
       quantity: 0,
+      is_available: true,
     },
   ],
   list_spices: [
@@ -143,6 +153,7 @@ const FAKE_INFO: IDishDetailsInfo = {
       name_en: 'def',
       name_vi: 'def',
       img_url: 'abc',
+      is_available: true,
     },
   ],
   list_tools: [
@@ -151,6 +162,7 @@ const FAKE_INFO: IDishDetailsInfo = {
       name_en: 'def',
       name_vi: 'def',
       img_url: 'abc',
+      is_available: false,
     },
   ],
 };
@@ -238,7 +250,7 @@ const DishDetails = () => {
         {data && (
           <>
             <IngredientRequired listIngredients={data.list_ingredient} />
-            <SpicesRequired />
+            <SpicesRequired listSpices={data.list_spices} />
           </>
         )}
       </View>

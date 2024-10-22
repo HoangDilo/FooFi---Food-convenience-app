@@ -4,7 +4,7 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 
 const ToolsRequired = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>ToolsRequired</Text>
     </View>
   );
@@ -12,4 +12,8 @@ const ToolsRequired = () => {
 
 export default ToolsRequired;
 
-const styles = ScaledSheet.create({});
+const styles = ScaledSheet.create({
+  container: {
+    
+  }
+});
