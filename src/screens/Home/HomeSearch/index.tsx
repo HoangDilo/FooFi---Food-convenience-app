@@ -1,5 +1,5 @@
 import {StyleSheet, TextInput, TouchableHighlight, View} from 'react-native';
-import React, {memo, useCallback, useState} from 'react';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
 import Typo from '@/components/Typo';
@@ -8,10 +8,13 @@ import SearchBlack from '@/assets/icons/SearchBlack';
 import SearchOrange from '@/assets/icons/SearchOrange';
 import {useNavigation} from '@react-navigation/native';
 import {useAppSelector} from '@/hooks/redux';
-import {
+import Animated, {
+  Easing,
+  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
 
 const HomeSearch = () => {
@@ -22,14 +25,15 @@ const HomeSearch = () => {
   const [isFocusInput, setIsFocusInput] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
-  const opacity = useSharedValue(0);
+  const opacity = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => ({
     shadowColor: interpolateColor(
       opacity.value,
       [0, 1],
-      [colorsConstant.shadow, '#00000000'],
+      ['#00000000', colorsConstant.shadow],
     ),
+    elevation: interpolate(opacity.value, [0, 1], [0, 4]),
   }));
 
   const handleFocusInput = useCallback(() => {
@@ -51,6 +55,17 @@ const HomeSearch = () => {
     });
   }, [navigation, searchValue]);
 
+  useEffect(() => {
+    if (isBottomTabHidden) {
+      opacity.value = withTiming(0, {
+        duration: 1000,
+        easing: Easing.inOut(Easing.quad),
+      });
+    } else {
+      opacity.value = 1;
+    }
+  }, [isBottomTabHidden, opacity]);
+
   return (
     <View>
       <Typo style={styles.inputLabel}>{t('home.you_want_other')}</Typo>
@@ -61,32 +76,37 @@ const HomeSearch = () => {
           height={20}
           style={styles.iconInput}
         />
-        <TextInput
-          style={[
-            styles.input,
-            {
-              borderColor: isFocusInput
-                ? colorsConstant.primary
-                : colorsConstant.black_1,
-            },
-          ]}
-          value={searchValue}
-          placeholder={isFocusInput ? '' : t('home.find_your_dish')}
-          placeholderTextColor={colorsConstant.gray_1}
-          cursorColor={colorsConstant.primary}
-          returnKeyType="search"
-          underlineColorAndroid={colorsConstant.transparent}
-          onChangeText={handleChangeText}
-          onFocus={handleFocusInput}
-          onBlur={handleBlurInput}
-          onSubmitEditing={handlePressSearch}
-        />
-        <TouchableHighlight
-          style={styles.searchButton}
-          underlayColor={colorsConstant.primary_press}
-          onPress={handlePressSearch}>
-          <Typo style={styles.searchLabel}>{t('home.search')}</Typo>
-        </TouchableHighlight>
+        <Animated.View style={[animatedStyle, styles.inputWrapperAnimated]}>
+          <TextInput
+            style={[
+              styles.input,
+              {
+                borderColor: isFocusInput
+                  ? colorsConstant.primary
+                  : colorsConstant.black_1,
+              },
+            ]}
+            value={searchValue}
+            placeholder={isFocusInput ? '' : t('home.find_your_dish')}
+            placeholderTextColor={colorsConstant.gray_1}
+            cursorColor={colorsConstant.primary}
+            returnKeyType="search"
+            underlineColorAndroid={colorsConstant.transparent}
+            onChangeText={handleChangeText}
+            onFocus={handleFocusInput}
+            onBlur={handleBlurInput}
+            onSubmitEditing={handlePressSearch}
+          />
+        </Animated.View>
+        <Animated.View
+          style={[animatedStyle, {borderRadius: 999, maxHeight: '100%'}]}>
+          <TouchableHighlight
+            style={styles.searchButton}
+            underlayColor={colorsConstant.primary_press}
+            onPress={handlePressSearch}>
+            <Typo style={styles.searchLabel}>{t('home.search')}</Typo>
+          </TouchableHighlight>
+        </Animated.View>
       </View>
     </View>
   );
@@ -101,21 +121,22 @@ const styles = StyleSheet.create({
     color: colorsConstant.black_1,
     marginBottom: 6,
   },
+  inputWrapperAnimated: {
+    borderRadius: 999,
+    flex: 1,
+  },
   input: {
     borderRadius: 500,
     paddingHorizontal: 16,
     paddingLeft: 42,
     paddingVertical: 0,
     height: 40,
-    flex: 1,
     fontSize: 16,
     lineHeight: 24,
     color: colorsConstant.black_1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FFF',
-    shadowColor: colorsConstant.shadow,
-    elevation: 4,
     shadowOffset: {
       width: 3,
       height: 3,
@@ -133,14 +154,13 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   searchButton: {
+    flex: 1,
+    height: 'auto',
     borderRadius: 500,
     backgroundColor: colorsConstant.primary,
-    height: '100%',
     flexDirection: 'row',
     paddingHorizontal: 12,
     alignItems: 'center',
-    shadowColor: colorsConstant.shadow,
-    elevation: 4,
     shadowOffset: {
       width: 3,
       height: 3,

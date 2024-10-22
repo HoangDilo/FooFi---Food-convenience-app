@@ -43,6 +43,7 @@ import Animated, {
   useSharedValue,
   withTiming,
   Easing,
+  withDelay,
 } from 'react-native-reanimated';
 
 const FAKE_INFO: IDishDetailsInfo = {
@@ -189,9 +190,13 @@ const DishDetails = () => {
 
   const animation = useSharedValue(0);
 
-  const opacity = useAnimatedStyle(() => {
+  const translateX = useAnimatedStyle(() => {
     return {
-      opacity: animation.value,
+      transform: [
+        {
+          translateX: interpolate(animation.value, [0, 1], [-40, 0]),
+        },
+      ],
     };
   });
 
@@ -209,11 +214,14 @@ const DishDetails = () => {
   );
 
   const animationEffect = useCallback(() => {
-    animation.value = withTiming(0.5, {
-      duration: 1000,
-      reduceMotion: ReduceMotion.System,
-      easing: Easing.linear,
-    });
+    animation.value = withDelay(
+      300,
+      withTiming(1, {
+        duration: 500,
+        reduceMotion: ReduceMotion.System,
+        easing: Easing.inOut(Easing.cubic),
+      }),
+    );
   }, [animation]);
 
   useFocusEffect(
@@ -248,22 +256,23 @@ const DishDetails = () => {
             />
           </BlackGradientWrapperTop>
         </BlackGradientWrapper>
-        {/* <Animated.View style={{opacity: animation}}> */}
+        <Animated.View
+          style={[{opacity: animation}, styles.backButton, translateX]}>
           <IconXML
             icon={BackWhite}
             width={scale(42)}
             height={scale(42)}
             style={[
-              styles.backButton,
               {
                 top: insets.top + verticalScale(8),
               },
             ]}
             onPress={() => navigation.goBack()}
           />
-        {/* </Animated.View> */}
+        </Animated.View>
 
-        <View style={styles.dishContainer}>
+        <Animated.View
+          style={[styles.dishContainer, translateX, {opacity: animation}]}>
           <View style={styles.textDish}>
             <View style={styles.durationWrapper}>
               <IconXML icon={DotWhite} width={scale(6)} height={scale(6)} />
@@ -279,7 +288,7 @@ const DishDetails = () => {
             </Typo>
           </View>
           <View style={styles.whiteLine} />
-        </View>
+        </Animated.View>
         {params.is_standard && <ApproveMarker />}
       </View>
       <View style={styles.mainContainer}>

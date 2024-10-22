@@ -4,14 +4,22 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import Typo from '../Typo';
 import {useTranslation} from 'react-i18next';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 const ApproveMarker = () => {
   const {t} = useTranslation();
 
+  const animation = useSharedValue(0);
+
+  // const animatedStyle = useAnimatedStyle();
+
   return (
-    <View style={styles.approve}>
+    <Animated.View style={styles.approve}>
       <Typo style={styles.label}>{t('approved')}</Typo>
-    </View>
+    </Animated.View>
   );
 };
 

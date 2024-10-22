@@ -63,7 +63,7 @@ const RecommendSection = () => {
       />
       <View style={styles.floatingView}>
         <View style={styles.gradientWrapper}>
-          <Svg height="140" width="100%" style={{flex: 1}}>
+          <Svg height={scale(120)} width="100%" style={{flex: 1}}>
             <Defs>
               <LinearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
                 <Stop offset="0%" stopColor="#000" stopOpacity="0" />
@@ -172,7 +172,7 @@ const styles = ScaledSheet.create({
   },
   gradientWrapper: {
     width: deviceWidth,
-    height: 140,
+    height: '120@s',
     position: 'absolute',
     bottom: 0,
     zIndex: 0,
