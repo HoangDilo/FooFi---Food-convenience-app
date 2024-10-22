@@ -47,6 +47,13 @@ export default function MainNavigator() {
           name={STACK.DISH_DETAILS as 'dish_details'}
           component={DishDetails}
         />
+        <Stack.Screen
+          name={STACK.DISH_DETAILS_2 as 'dish_details_2'}
+          component={DishDetails}
+          options={{
+            animation: 'none',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

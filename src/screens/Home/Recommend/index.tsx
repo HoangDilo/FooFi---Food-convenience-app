@@ -31,7 +31,7 @@ const RecommendSection = () => {
       easing: Easing.bezier(0.65, 0, 0.35, 1),
       useNativeDriver: true,
     }).start(() => {
-      navigation.navigate('dish_details', {
+      navigation.navigate('dish_details_2', {
         post_id: 1,
         is_standard: true,
         dish_info: {
@@ -56,6 +56,8 @@ const RecommendSection = () => {
       <FastImage
         source={{
           uri: 'https://i-giadinh.vnecdn.net/2023/04/16/Buoc-11-Thanh-pham-11-7068-1681636164.jpg',
+          priority: 'high',
+          cache: 'immutable',
         }}
         style={styles.recommendFoodImage}
       />

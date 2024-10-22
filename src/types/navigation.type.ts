@@ -23,6 +23,21 @@ export type RootStackParamList = {
       duration: number;
     };
   };
+  dish_details_2: {
+    post_id: number;
+    is_standard: boolean;
+    description?: string;
+    published_time?: string;
+    user_info?: {
+      name: string;
+      avt_url: string;
+    };
+    dish_info: {
+      name: string;
+      img_url: string;
+      duration: number;
+    };
+  };
 };
 
 export type MainTabParamList = {

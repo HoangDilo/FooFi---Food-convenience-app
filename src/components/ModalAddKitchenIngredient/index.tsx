@@ -256,6 +256,7 @@ const ModalAddKitchenIngredient = ({
                 contentContainerStyle={styles.flatListContainer}
                 numColumns={2}
                 columnWrapperStyle={{gap: 10}}
+                showsVerticalScrollIndicator={false}
               />
             )}
             {step === 1 && (

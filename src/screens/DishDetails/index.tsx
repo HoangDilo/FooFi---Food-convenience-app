@@ -1,4 +1,9 @@
-import {ScrollView, View} from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  ScrollView,
+  View,
+} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {
   scale,
@@ -31,6 +36,14 @@ import IngredientRequired from './IngredientRequired';
 import {IDishDetailsInfo} from '@/types/otherchefs.type';
 import SpicesRequired from './SpicesRequired';
 import {EUnit} from '@/enums/kitchen.enum';
+import Animated, {
+  interpolate,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  Easing,
+} from 'react-native-reanimated';
 
 const FAKE_INFO: IDishDetailsInfo = {
   post: {
@@ -174,7 +187,34 @@ const DishDetails = () => {
   const insets = useSafeAreaInsets();
   const {t} = useTranslation();
 
+  const animation = useSharedValue(0);
+
+  const opacity = useAnimatedStyle(() => {
+    return {
+      opacity: animation.value,
+    };
+  });
+
   const [data, setData] = useState<IDishDetailsInfo>();
+
+  const handleScroll = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      if (event.nativeEvent.contentOffset.y > insets.top + verticalScale(48)) {
+        dispatch(setIsScrolling(true));
+      } else {
+        dispatch(setIsScrolling(false));
+      }
+    },
+    [dispatch, insets.top],
+  );
+
+  const animationEffect = useCallback(() => {
+    animation.value = withTiming(0.5, {
+      duration: 1000,
+      reduceMotion: ReduceMotion.System,
+      easing: Easing.linear,
+    });
+  }, [animation]);
 
   useFocusEffect(
     useCallback(() => {
@@ -185,33 +225,44 @@ const DishDetails = () => {
 
   useEffect(() => {
     setData(FAKE_INFO);
-  }, []);
+    animationEffect();
+  }, [animationEffect]);
 
   return (
-    <ScrollView contentContainerStyle={styles.screen} style={styles.scrollView}>
+    <ScrollView
+      contentContainerStyle={styles.screen}
+      style={styles.scrollView}
+      onScroll={handleScroll}>
       <View style={styles.banner}>
         <BlackGradientWrapper width={deviceWidth} height={scale(120)}>
           <BlackGradientWrapperTop
             width={deviceWidth}
-            height={verticalScale(80)}>
+            height={insets.top + verticalScale(48)}>
             <FastImage
-              source={{uri: params.dish_info.img_url}}
+              source={{
+                uri: params.dish_info.img_url,
+                priority: 'high',
+                cache: 'immutable',
+              }}
               style={styles.dishImage}
             />
           </BlackGradientWrapperTop>
         </BlackGradientWrapper>
-        <IconXML
-          icon={BackWhite}
-          width={scale(42)}
-          height={scale(42)}
-          style={[
-            styles.backButton,
-            {
-              top: insets.top + verticalScale(12),
-            },
-          ]}
-          onPress={() => navigation.goBack()}
-        />
+        {/* <Animated.View style={{opacity: animation}}> */}
+          <IconXML
+            icon={BackWhite}
+            width={scale(42)}
+            height={scale(42)}
+            style={[
+              styles.backButton,
+              {
+                top: insets.top + verticalScale(8),
+              },
+            ]}
+            onPress={() => navigation.goBack()}
+          />
+        {/* </Animated.View> */}
+
         <View style={styles.dishContainer}>
           <View style={styles.textDish}>
             <View style={styles.durationWrapper}>
@@ -273,7 +324,7 @@ const styles = ScaledSheet.create({
   },
   dishImage: {
     width: deviceWidth,
-    height: '360@vs',
+    height: '320@s',
   },
   backButton: {
     position: 'absolute',
@@ -282,7 +333,7 @@ const styles = ScaledSheet.create({
   },
   dishContainer: {
     position: 'absolute',
-    bottom: '20@s',
+    bottom: '36@s',
     zIndex: 2,
     maxWidth: '90%',
   },
@@ -344,5 +395,14 @@ const styles = ScaledSheet.create({
   mainContainer: {
     paddingHorizontal: '20@s',
     paddingVertical: '12@s',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    backgroundColor: colorsConstant.background,
+    transform: [
+      {
+        translateY: -16,
+      },
+    ],
+    zIndex: 2,
   },
 });
