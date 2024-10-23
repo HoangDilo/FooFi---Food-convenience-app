@@ -45,6 +45,7 @@ import Animated, {
   Easing,
   withDelay,
 } from 'react-native-reanimated';
+import ToolsRequired from './ToolsRequired';
 
 const FAKE_INFO: IDishDetailsInfo = {
   post: {
@@ -311,6 +312,7 @@ const DishDetails = () => {
           <>
             <IngredientRequired listIngredients={data.list_ingredient} />
             <SpicesRequired listSpices={data.list_spices} />
+            <ToolsRequired listTools={data.list_tools} />
           </>
         )}
       </View>
