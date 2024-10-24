@@ -48,7 +48,9 @@ const ToolsRequired = ({listTools}: IToolsRequired) => {
 export default ToolsRequired;
 
 const styles = ScaledSheet.create({
-  container: {},
+  container: {
+    marginTop: '12@s',
+  },
   title: {
     color: colorsConstant.black_1,
     fontWeight: '700',
@@ -63,7 +65,7 @@ const styles = ScaledSheet.create({
     shadowColor: colorsConstant.shadow_2,
     borderRadius: 999,
     paddingHorizontal: '12@s',
-    paddingVertical: '6@s',
+    marginBottom: '6@s',
   },
   info: {
     flexDirection: 'row',

@@ -8,7 +8,7 @@ export interface IPost {
   likes?: number;
   is_liked?: boolean;
   language: string;
-  user_info?: {
+  user_info: {
     id: number;
     name: string;
     avt_url: string;

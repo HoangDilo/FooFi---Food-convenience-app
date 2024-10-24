@@ -30,9 +30,7 @@ const IngredientRequired = ({listIngredients}: IIngredientRequiredProps) => {
 export default memo(IngredientRequired);
 
 const styles = ScaledSheet.create({
-  container: {
-    marginTop: '20@s',
-  },
+  container: {},
   title: {
     color: colorsConstant.black_1,
     fontWeight: '700',

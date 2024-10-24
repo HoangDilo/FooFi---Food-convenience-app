@@ -84,5 +84,11 @@
     "ago": "ago"
   },
   "approved": "APPROVED",
-  "required": "required"
+  "required": "required",
+  "start_cooking": "Start cooking",
+  "my": {
+    "sign_in": "Sign in",
+    "sign_up": "Sign up",
+    "sign_in_description": "Please sign in to use FooFi's features"
+  }
 }

@@ -46,6 +46,7 @@ import Animated, {
   withDelay,
 } from 'react-native-reanimated';
 import ToolsRequired from './ToolsRequired';
+import {TouchableHighlight} from 'react-native-gesture-handler';
 
 const FAKE_INFO: IDishDetailsInfo = {
   post: {
@@ -225,6 +226,12 @@ const DishDetails = () => {
     );
   }, [animation]);
 
+  const handleStartCooking = useCallback(() => {
+    navigation.navigate('instruction', {
+      post_id: params.post_id,
+    });
+  }, [navigation, params.post_id]);
+
   useFocusEffect(
     useCallback(() => {
       dispatch(setCurrentRoute(STACK.DISH_DETAILS));
@@ -241,7 +248,8 @@ const DishDetails = () => {
     <ScrollView
       contentContainerStyle={styles.screen}
       style={styles.scrollView}
-      onScroll={handleScroll}>
+      onScroll={handleScroll}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.banner}>
         <BlackGradientWrapper width={deviceWidth} height={scale(120)}>
           <BlackGradientWrapperTop
@@ -271,7 +279,6 @@ const DishDetails = () => {
             onPress={() => navigation.goBack()}
           />
         </Animated.View>
-
         <Animated.View
           style={[styles.dishContainer, translateX, {opacity: animation}]}>
           <View style={styles.textDish}>
@@ -315,6 +322,20 @@ const DishDetails = () => {
             <ToolsRequired listTools={data.list_tools} />
           </>
         )}
+        <TouchableHighlight
+          style={styles.buttonStart}
+          underlayColor={colorsConstant.primary_press}
+          onPress={handleStartCooking}>
+          <View style={styles.buttonWrapper}>
+            <Typo style={styles.startLabel}>{t('start_cooking')}</Typo>
+            <IconXML
+              icon={BackWhite}
+              width={scale(28)}
+              height={scale(28)}
+              style={styles.arrowStart}
+            />
+          </View>
+        </TouchableHighlight>
       </View>
     </ScrollView>
   );
@@ -398,14 +419,14 @@ const styles = ScaledSheet.create({
   postInfoTexts: {},
   postInfo: {
     gap: '8@s',
+    marginBottom: '12@s',
   },
   description: {
     fontSize: '16@s',
     color: colorsConstant.black_2,
   },
   mainContainer: {
-    paddingHorizontal: '20@s',
-    paddingVertical: '12@s',
+    padding: '20@s',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     backgroundColor: colorsConstant.background,
@@ -415,5 +436,32 @@ const styles = ScaledSheet.create({
       },
     ],
     zIndex: 2,
+  },
+  startLabel: {
+    color: '#FFF',
+    fontWeight: '600',
+    fontSize: '18@s',
+  },
+  buttonStart: {
+    marginBottom: '12@s',
+    marginTop: '16@s',
+    backgroundColor: colorsConstant.primary,
+    borderRadius: 999,
+    paddingVertical: '10@s',
+    paddingLeft: '14@s',
+    paddingRight: '10@s',
+    alignSelf: 'center',
+  },
+  buttonWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '4@s',
+  },
+  arrowStart: {
+    transform: [
+      {
+        rotate: '180deg',
+      },
+    ],
   },
 });

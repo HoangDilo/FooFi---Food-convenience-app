@@ -9,7 +9,7 @@ import colorsConstant from '@/constants/colors.constant';
 interface IHeaderTabProps {
   isOrange?: boolean;
   rightIcon?: ReactElement;
-  stylesCustom: StyleProp<ViewStyle>;
+  stylesCustom?: StyleProp<ViewStyle>;
 }
 
 const HeaderTab = ({

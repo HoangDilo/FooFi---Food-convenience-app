@@ -11,10 +11,13 @@ import KitchenScreen from '@/screens/Kitchen';
 import ChatBotScreen from '@/screens/ChatBot';
 import {MainTabParamList} from '@/types/navigation.type';
 import CustomBottomTab from '@/components/CustomBottomTab';
+import {useAppSelector} from '@/hooks/redux';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const TabNavigator = () => {
+  const {access_token} = useAppSelector(state => state.my);
+
   return (
     <Tab.Navigator
       tabBar={props => <CustomBottomTab {...props} />}
@@ -22,7 +25,8 @@ const TabNavigator = () => {
         return {
           headerShown: false,
         };
-      }}>
+      }}
+      initialRouteName={access_token ? 'home_tab' : 'my'}>
       <Tab.Screen name={TAB.HOME_TAB as 'home_tab'} component={HomeScreen} />
       <Tab.Screen name={TAB.KITCHEN as 'kitchen'} component={KitchenScreen} />
       <Tab.Screen

@@ -239,6 +239,7 @@ const RecommendPostsTab = () => {
       data={posts}
       keyExtractor={item => `${item.id}`}
       renderItem={({item}) => <ItemPostOtherChefs post={item} />}
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
           colors={[colorsConstant.primary]}

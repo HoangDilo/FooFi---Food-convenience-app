@@ -2,9 +2,9 @@ if (__DEV__) {
   require('./ReactotronConfig');
 }
 
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import MainNavigator from './src/navigation';
-import {Provider} from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 import {store} from '@/store';
 import {I18nextProvider} from 'react-i18next';
 import StatusBarCustom from '@/components/StatusBarCustom';
@@ -15,11 +15,13 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
+
   useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 3000);
   }, []);
+
 
   return (
     <Provider store={store}>

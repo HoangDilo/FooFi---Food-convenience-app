@@ -55,7 +55,7 @@ const styles = ScaledSheet.create({
     shadowColor: colorsConstant.shadow_2,
     borderRadius: 999,
     paddingHorizontal: '12@s',
-    paddingVertical: '6@s',
+    marginBottom: '6@s',
   },
   info: {
     flexDirection: 'row',

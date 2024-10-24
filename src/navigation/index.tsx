@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -11,6 +11,9 @@ import CookingInstruction from '@/screens/CookingInstruction';
 import SearchScreen from '@/screens/Search';
 import AddPost from '@/screens/AddPost';
 import DishDetails from '@/screens/DishDetails';
+import {useDispatch} from 'react-redux';
+import {getAccessToken} from '@/utils/storage';
+import {setAccessToken} from '@/store/reducers/my.reducer';
 
 declare global {
   namespace ReactNavigation {
@@ -21,6 +24,17 @@ declare global {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function MainNavigator() {
+  const dispatch = useDispatch();
+
+  const handleCheckToken = useCallback(async () => {
+    const access_token = await getAccessToken();
+    dispatch(setAccessToken(access_token ?? ''));
+  }, [dispatch]);
+
+  useEffect(() => {
+    handleCheckToken();
+  }, [handleCheckToken]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -34,9 +48,6 @@ export default function MainNavigator() {
         <Stack.Screen
           name={STACK.INSTRUCTION as 'instruction'}
           component={CookingInstruction}
-          options={{
-            animation: 'fade',
-          }}
         />
         <Stack.Screen
           name={STACK.SEARCH as 'search'}

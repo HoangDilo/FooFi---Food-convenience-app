@@ -248,6 +248,7 @@ const AllPostsTab = () => {
           onRefresh={handleRefresh}
         />
       }
+      showsVerticalScrollIndicator={false}
       onEndReached={handleLoadMore}
     />
   );

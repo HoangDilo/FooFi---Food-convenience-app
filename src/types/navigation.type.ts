@@ -1,7 +1,7 @@
 export type RootStackParamList = {
   main_tab: undefined;
   instruction: {
-    dish_id: number;
+    post_id: number;
   };
   search?: {
     query?: string;

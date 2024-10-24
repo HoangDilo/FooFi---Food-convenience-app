@@ -161,6 +161,8 @@ const styles = ScaledSheet.create({
   },
   skeletonAvatar: {
     borderRadius: 999,
+    width: '40@s',
+    height: '40@s',
   },
   dishContainer: {
     position: 'absolute',
