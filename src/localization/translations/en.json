@@ -89,6 +89,18 @@
   "my": {
     "sign_in": "Sign in",
     "sign_up": "Sign up",
-    "sign_in_description": "Please sign in to use FooFi's features"
+    "sign_in_description": "Please sign in to use FooFi's features",
+    "sign_up_description": "Create a brand new FooFi already_have_account",
+    "email_placeholder": "Enter your email address",
+    "password_placeholder": "Enter your password",
+    "name_placeholder": "Enter your full name",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "or": "Or",
+    "sign_in_google": "Sign in with Google",
+    "dont_have_account": "Chưa có tài khoản?",
+    "already_have_account": "Bạn có tài khoản rồi?",
+    "create_account": "Tạo tài khoản mới"
   }
 }

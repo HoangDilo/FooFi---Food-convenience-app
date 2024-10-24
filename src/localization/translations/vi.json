@@ -84,5 +84,23 @@
     "ago": "trước"
   },
   "approved": "TIÊU CHUẨN",
-  "required": "yêu cầu"
+  "required": "yêu cầu",
+  "start_cooking": "Bắt đầu nấu",
+  "my": {
+    "sign_in": "Đăng nhập",
+    "sign_up": "Đăng ký",
+    "sign_in_description": "Đăng nhập để sử dụng các chức năng của FooFi",
+    "sign_up_description": "Tạo một tài khoản FooFi mới",
+    "email_placeholder": "Nhập địa chỉ email của bạn",
+    "password_placeholder": "Nhập mật khẩu",
+    "name_placeholder": "Nhập tên đầy đủ của bạn",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "name": "Họ và tên",
+    "or": "Hoặc",
+    "sign_in_google": "Đăng nhập bằng Google",
+    "dont_have_account": "Chưa có tài khoản?",
+    "already_have_account": "Bạn có tài khoản rồi?",
+    "create_account": "Tạo tài khoản mới"
+  }
 }
