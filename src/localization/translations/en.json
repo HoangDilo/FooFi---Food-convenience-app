@@ -74,6 +74,7 @@
   "back": "Back",
   "confirm": "Confirm",
   "close": "Close",
+  "save": "Save",
   "pagination": "Displaying {{start}}~{{end}} {{name}} out of {{total}}",
   "confirm_delete_title": "Confirm delete",
   "confirm_delete_desc": "{{value}} will be deleted, are you sure?",

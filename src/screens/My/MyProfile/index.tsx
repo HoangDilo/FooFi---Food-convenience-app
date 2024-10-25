@@ -8,6 +8,7 @@ import Typo from '@/components/Typo';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import IconXML from '@/components/IconXML';
 import Edit from '@/assets/icons/Edit';
+import ModalEditProfile from '@/components/ModalEditProfile';
 
 const MyProfile = () => {
   const insets = useSafeAreaInsets();
@@ -18,6 +19,8 @@ const MyProfile = () => {
   const handleEditProfile = useCallback(() => {
     setIsOpenModal(true);
   }, []);
+
+  const handleConfirmEdit = useCallback(() => {}, []);
 
   return (
     <View style={styles.screen}>
@@ -37,6 +40,11 @@ const MyProfile = () => {
         onPress={handleEditProfile}
       />
       <View style={styles.listOptions}></View>
+      <ModalEditProfile
+        isVisible={isOpenModal}
+        onClose={() => setIsOpenModal(false)}
+        onConfirm={handleConfirmEdit}
+      />
     </View>
   );
 };
