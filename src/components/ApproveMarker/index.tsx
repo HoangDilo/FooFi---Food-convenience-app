@@ -66,6 +66,7 @@ const styles = ScaledSheet.create({
   approve: {
     borderWidth: '4@s',
     borderColor: colorsConstant.approved,
+    backgroundColor: colorsConstant.approved_fade,
     paddingHorizontal: '6@s',
     paddingVertical: '4@s',
     position: 'absolute',

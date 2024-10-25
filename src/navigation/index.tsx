@@ -13,7 +13,8 @@ import AddPost from '@/screens/AddPost';
 import DishDetails from '@/screens/DishDetails';
 import {useDispatch} from 'react-redux';
 import {getAccessToken} from '@/utils/storage';
-import {setAccessToken} from '@/store/reducers/my.reducer';
+import FastImage from 'react-native-fast-image';
+import { setUserInfo } from '@/store/reducers/my.reducer';
 
 declare global {
   namespace ReactNavigation {
@@ -26,14 +27,26 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function MainNavigator() {
   const dispatch = useDispatch();
 
-  const handleCheckToken = useCallback(async () => {
+  const handleGetUserInfo = useCallback(async () => {
     const access_token = await getAccessToken();
-    dispatch(setAccessToken(access_token ?? ''));
+    dispatch(
+      setUserInfo({
+        name: 'Hoàng deal đô',
+        email: 'abc@abc.gmail.com',
+        avatar_url:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDIh3uj5vwgrKZs1qNx5y7JK_KyR0dTcXp3g&s',
+      }),
+    );
+    FastImage.preload([
+      {
+        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDIh3uj5vwgrKZs1qNx5y7JK_KyR0dTcXp3g&s',
+      },
+    ]);
   }, [dispatch]);
 
   useEffect(() => {
-    handleCheckToken();
-  }, [handleCheckToken]);
+    handleGetUserInfo();
+  }, [handleGetUserInfo]);
 
   return (
     <NavigationContainer>

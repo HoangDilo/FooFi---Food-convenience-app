@@ -102,5 +102,8 @@
     "dont_have_account": "Chưa có tài khoản?",
     "already_have_account": "Bạn có tài khoản rồi?",
     "create_account": "Tạo tài khoản mới"
+  },
+  "toast": {
+    "login": "Vui lòng đăng nhập để tiếp tục"
   }
 }

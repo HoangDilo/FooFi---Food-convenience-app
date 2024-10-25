@@ -45,7 +45,5 @@ export type MainTabParamList = {
   other_chefs: undefined;
   kitchen: undefined;
   chat_bot: undefined;
-  my: {
-    id: number;
-  };
+  my: undefined
 };
