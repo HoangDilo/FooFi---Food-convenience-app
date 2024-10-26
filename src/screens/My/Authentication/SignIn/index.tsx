@@ -14,7 +14,7 @@ const INPUTS = [
   },
   {
     key: 'password',
-    content_type: 'emailAddress',
+    content_type: 'password',
     placeholder_key: 'password_placeholder',
     secureTextEntry: true,
   },
@@ -29,6 +29,8 @@ const SignIn = () => {
 
   const handleSignIn = useCallback(() => {}, []);
 
+  const handleChange = useCallback(() => {}, []);
+
   return (
     <View style={styles.loginForm}>
       {INPUTS.map(input => (
@@ -41,6 +43,7 @@ const SignIn = () => {
             cursorColor={colorsConstant.primary}
             secureTextEntry={input.secureTextEntry}
             textContentType={input.content_type as any}
+            onChangeText={() => handleChange}
           />
         </View>
       ))}
@@ -80,6 +83,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '16@s',
     fontSize: '14@s',
     fontWeight: '500',
+    color: colorsConstant.black_1,
   },
   label: {
     color: colorsConstant.black_1,

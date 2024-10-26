@@ -14,13 +14,19 @@ const INPUTS = [
   },
   {
     key: 'name',
-    content_type: 'emailAddress',
+    content_type: 'name',
     placeholder_key: 'name_placeholder',
     secureTextEntry: false,
   },
   {
     key: 'password',
-    content_type: 'emailAddress',
+    content_type: 'password',
+    placeholder_key: 'password_placeholder',
+    secureTextEntry: true,
+  },
+  {
+    key: 'repeat_password',
+    content_type: 'password',
     placeholder_key: 'password_placeholder',
     secureTextEntry: true,
   },
@@ -65,7 +71,7 @@ export default SignIn;
 const styles = ScaledSheet.create({
   loginForm: {
     paddingHorizontal: '24@s',
-    paddingVertical: '36@s',
+    paddingVertical: '24@s',
     borderRadius: '16@s',
     shadowColor: colorsConstant.shadow,
     backgroundColor: '#fff',
@@ -76,7 +82,7 @@ const styles = ScaledSheet.create({
       height: 3,
     },
     alignSelf: 'center',
-    gap: '20@s',
+    gap: '12@s',
   },
   input: {
     borderWidth: '1@s',
@@ -86,6 +92,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '16@s',
     fontSize: '14@s',
     fontWeight: '500',
+    color: colorsConstant.black_1,
   },
   label: {
     color: colorsConstant.black_1,

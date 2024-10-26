@@ -96,6 +96,7 @@
     "name_placeholder": "Nhập tên đầy đủ của bạn",
     "email": "Email",
     "password": "Mật khẩu",
+    "repeat_password": "Nhập lại mật khẩu",
     "name": "Họ và tên",
     "or": "Hoặc",
     "sign_in_google": "Đăng nhập bằng Google",

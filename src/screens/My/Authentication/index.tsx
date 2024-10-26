@@ -19,7 +19,10 @@ const Authentication = () => {
   }, [isLogin]);
 
   return (
-    <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView
+      style={styles.container}
+      scrollEnabled={false}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.titleBox}>
         <Typo style={styles.title}>
           {t(isLogin ? 'my.sign_in' : 'my.sign_up')}
