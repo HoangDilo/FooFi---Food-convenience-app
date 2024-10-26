@@ -4,6 +4,10 @@ import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
+import {setAccessTokenStorage} from '@/utils/storage';
+import {useDispatch} from 'react-redux';
+import {setAccessToken} from '@/store/reducers/my.reducer';
+import {useNavigation} from '@react-navigation/native';
 
 const INPUTS = [
   {
@@ -22,14 +26,28 @@ const INPUTS = [
 
 const SignIn = () => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
 
-  const handleSignIn = useCallback(() => {}, []);
+  const handleSignIn = useCallback(() => {
+    navigation.navigate('home_tab');
+    dispatch(setAccessToken('abc'));
+    setAccessTokenStorage('abc');
+  }, [dispatch, navigation]);
 
-  const handleChange = useCallback(() => {}, []);
+  const handleChangeText = useCallback(
+    (key: string, value: string) => {
+      const formClone = JSON.parse(JSON.stringify(form));
+      formClone[key] = value;
+      setForm(formClone);
+    },
+    [form],
+  );
 
   return (
     <View style={styles.loginForm}>
@@ -43,7 +61,7 @@ const SignIn = () => {
             cursorColor={colorsConstant.primary}
             secureTextEntry={input.secureTextEntry}
             textContentType={input.content_type as any}
-            onChangeText={() => handleChange}
+            onChangeText={(value: string) => handleChangeText(input.key, value)}
           />
         </View>
       ))}

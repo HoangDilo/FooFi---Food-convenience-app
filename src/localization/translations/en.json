@@ -74,6 +74,7 @@
   "back": "Back",
   "confirm": "Confirm",
   "close": "Close",
+  "save": "Save",
   "pagination": "Displaying {{start}}~{{end}} {{name}} out of {{total}}",
   "confirm_delete_title": "Confirm delete",
   "confirm_delete_desc": "{{value}} will be deleted, are you sure?",
@@ -102,5 +103,8 @@
     "dont_have_account": "Chưa có tài khoản?",
     "already_have_account": "Bạn có tài khoản rồi?",
     "create_account": "Tạo tài khoản mới"
+  },
+  "toast": {
+    "login": "Please login to continue"
   }
 }

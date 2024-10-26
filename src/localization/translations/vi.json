@@ -74,6 +74,7 @@
   "back": "Quay lại",
   "confirm": "Xác nhận",
   "close": "Đóng",
+  "save": "Lưu",
   "pagination": "Hiển thị {{start}}~{{end}} {{name}} trên tổng số {{total}}",
   "confirm_delete_title": "Xác nhận xóa bỏ",
   "confirm_delete_desc": "{{value}} sẽ bị xoá bỏ, bạn chắc chứ?",
@@ -103,5 +104,8 @@
     "dont_have_account": "Chưa có tài khoản?",
     "already_have_account": "Bạn có tài khoản rồi?",
     "create_account": "Tạo tài khoản mới"
+  },
+  "toast": {
+    "login": "Vui lòng đăng nhập để tiếp tục"
   }
 }
