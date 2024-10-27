@@ -14,7 +14,8 @@ import DishDetails from '@/screens/DishDetails';
 import {useDispatch} from 'react-redux';
 import {getAccessToken} from '@/utils/storage';
 import FastImage from 'react-native-fast-image';
-import { setUserInfo } from '@/store/reducers/my.reducer';
+import {setUserInfo} from '@/store/reducers/my.reducer';
+import HistoryScreen from '@/screens/History';
 
 declare global {
   namespace ReactNavigation {
@@ -77,6 +78,10 @@ export default function MainNavigator() {
           options={{
             animation: 'none',
           }}
+        />
+        <Stack.Screen
+          name={STACK.HISTORY as 'history'}
+          component={HistoryScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

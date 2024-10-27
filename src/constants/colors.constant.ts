@@ -19,5 +19,5 @@ export default {
   skeleton_1: '#AAA',
   skeleton_2: '#dcdcdc',
   approved: '#38c41f',
-  approved_fade: '#bff0b6EE',
+  approved_fade: '#38c41fAA',
 };

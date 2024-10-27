@@ -103,7 +103,15 @@
     "sign_in_google": "Đăng nhập bằng Google",
     "dont_have_account": "Chưa có tài khoản?",
     "already_have_account": "Bạn có tài khoản rồi?",
-    "create_account": "Tạo tài khoản mới"
+    "create_account": "Tạo tài khoản mới",
+    "placeholder_name": "Nhập tên mới của bạn",
+    "placeholder_email": "Nhập email mới của bạn",
+    "history": "Lịch sử",
+    "settings": "Cài đặt",
+    "privacy": "Bảo mật",
+    "like_history": "Bài đăng bạn đã thích",
+    "post_history": "Bài đăng của bạn",
+    "language": "Ngôn ngữ"
   },
   "toast": {
     "login": "Vui lòng đăng nhập để tiếp tục"

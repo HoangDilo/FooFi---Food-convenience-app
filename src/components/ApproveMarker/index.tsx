@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import Typo from '../Typo';
 import {useTranslation} from 'react-i18next';
@@ -12,6 +12,8 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
+import IconXML from '../IconXML';
+import CheckWhite from '@/assets/icons/CheckWhite';
 
 const ApproveMarker = () => {
   const {t} = useTranslation();
@@ -56,6 +58,7 @@ const ApproveMarker = () => {
   return (
     <Animated.View style={[styles.approve, animatedStyle, {opacity}]}>
       <Typo style={styles.label}>{t('approved')}</Typo>
+      <IconXML icon={CheckWhite} width={scale(24)} height={scale(24)} />
     </Animated.View>
   );
 };
@@ -64,19 +67,22 @@ export default ApproveMarker;
 
 const styles = ScaledSheet.create({
   approve: {
-    borderWidth: '4@s',
+    borderWidth: '3@s',
     borderColor: colorsConstant.approved,
     backgroundColor: colorsConstant.approved_fade,
     paddingHorizontal: '6@s',
-    paddingVertical: '4@s',
+    paddingVertical: '2@s',
     position: 'absolute',
     top: '48@vs',
     right: '12@s',
     zIndex: 3,
+    borderRadius: '8@s',
+    flexDirection: 'row',
+    gap: '6@s',
   },
   label: {
     fontWeight: '700',
     fontSize: '16@s',
-    color: colorsConstant.approved,
+    color: '#FFF',
   },
 });

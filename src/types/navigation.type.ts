@@ -38,6 +38,9 @@ export type RootStackParamList = {
       duration: number;
     };
   };
+  history: {
+    type: 'like' | 'post';
+  };
 };
 
 export type MainTabParamList = {
@@ -45,5 +48,5 @@ export type MainTabParamList = {
   other_chefs: undefined;
   kitchen: undefined;
   chat_bot: undefined;
-  my: undefined
+  my: undefined;
 };

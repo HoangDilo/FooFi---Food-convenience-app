@@ -97,12 +97,21 @@
     "name_placeholder": "Enter your full name",
     "email": "Email",
     "password": "Password",
+    "repeat_password": "Repeat password",
     "name": "Full name",
     "or": "Or",
     "sign_in_google": "Sign in with Google",
-    "dont_have_account": "Chưa có tài khoản?",
-    "already_have_account": "Bạn có tài khoản rồi?",
-    "create_account": "Tạo tài khoản mới"
+    "dont_have_account": "Doesn't have an account?",
+    "already_have_account": "Already have an account?",
+    "create_account": "Create new account",
+    "placeholder_name": "Enter your new name",
+    "placeholder_email": "Enter your new email",
+    "history": "History",
+    "settings": "Settings",
+    "privacy": "Privacy",
+    "like_history": "Liked posts",
+    "post_history": "Your posts",
+    "change_password": "Change password"
   },
   "toast": {
     "login": "Please login to continue"
