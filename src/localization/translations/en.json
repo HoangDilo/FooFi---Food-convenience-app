@@ -111,9 +111,18 @@
     "privacy": "Privacy",
     "like_history": "Liked posts",
     "post_history": "Your posts",
+    "language": "Language",
     "change_password": "Change password"
   },
   "toast": {
     "login": "Please login to continue"
+  },
+  "languages": {
+    "vi": "Vietnamese",
+    "en": "English"
+  },
+  "history": {
+    "like": "Liked posts",
+    "post": "Your posts"
   }
 }

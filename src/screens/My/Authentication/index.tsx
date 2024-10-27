@@ -58,7 +58,9 @@ const Authentication = () => {
 export default Authentication;
 
 const styles = ScaledSheet.create({
-  container: {},
+  container: {
+    backgroundColor: colorsConstant.background,
+  },
   titleBox: {
     backgroundColor: colorsConstant.primary,
     borderBottomRightRadius: '20@s',

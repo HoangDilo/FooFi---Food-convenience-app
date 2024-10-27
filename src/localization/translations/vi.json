@@ -1,7 +1,7 @@
 {
   "tabs_name": {
     "home": "Trang chủ",
-    "other_chefs": "Đầu bếp khác",
+    "other_chefs": "Chef khác",
     "kitchen": "Bếp của tôi",
     "chat_bot": "Co-Chef",
     "my": "Cá nhân"
@@ -111,9 +111,19 @@
     "privacy": "Bảo mật",
     "like_history": "Bài đăng bạn đã thích",
     "post_history": "Bài đăng của bạn",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "change_password": "Đổi mật khẩu",
+    "log_out": "Đăng xuất"
   },
   "toast": {
     "login": "Vui lòng đăng nhập để tiếp tục"
+  },
+  "languages": {
+    "vi": "Tiếng Việt",
+    "en": "Tiếng Anh"
+  },
+  "history": {
+    "like": "Bài đăng đã thích",
+    "post": "Bài đăng của bạn"
   }
 }

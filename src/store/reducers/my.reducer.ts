@@ -8,6 +8,7 @@ const initState = {
     name: '',
     avatar_url: '',
   },
+  language: '',
 };
 
 export const mySlice = createSlice({
@@ -20,9 +21,12 @@ export const mySlice = createSlice({
     setUserInfo: (state, action: PayloadAction<IUserInfo>) => {
       state.user_info = action.payload;
     },
+    setUserLanguage: (state, action: PayloadAction<string>) => {
+      state.language = action.payload;
+    },
   },
 });
 
-export const {setAccessToken, setUserInfo} = mySlice.actions;
+export const {setAccessToken, setUserInfo, setUserLanguage} = mySlice.actions;
 
 export default mySlice.reducer;

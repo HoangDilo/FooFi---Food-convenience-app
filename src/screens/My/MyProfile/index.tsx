@@ -1,5 +1,5 @@
-import {Pressable, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {Pressable, ScrollView, View} from 'react-native';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import FastImage from 'react-native-fast-image';
@@ -16,6 +16,16 @@ import Post from '@/assets/icons/Post';
 import {useNavigation} from '@react-navigation/native';
 import Language from '@/assets/icons/Language';
 import {LANGUAGE} from '@/constants/language.constant';
+import Password from '@/assets/icons/Password';
+import Logout from '@/assets/icons/Logout';
+import {useDispatch} from 'react-redux';
+import {setAccessToken} from '@/store/reducers/my.reducer';
+import {setAccessTokenStorage} from '@/utils/storage';
+import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
+import {Easing} from 'react-native-reanimated';
+import {setIsBottomSheetShowing} from '@/store/reducers/system.reducer';
+import {deviceHeight} from '@/constants/device.constant';
+import CheckOrange from '@/assets/icons/CheckOrange';
 
 const HISTORIES = [
   {
@@ -35,9 +45,37 @@ const MyProfile = () => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const {user_info} = useAppSelector(state => state.my);
+  const dispatch = useDispatch();
 
-  const [imgURI, setImgURI] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isShowBottomSheet, setIsShowBottomSheet] = useState(false);
+
+  const bottomSheetRef = useRef<BottomSheet | null>(null);
+
+  const snapPoints = useMemo(() => [120 + insets.bottom], [insets.bottom]);
+
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        {...props}
+        opacity={0.2}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        style={{backgroundColor: 'black'}}
+      />
+    ),
+    [],
+  );
+
+  const handleChangeBS = useCallback(
+    (index: number) => {
+      dispatch(setIsBottomSheetShowing(index !== -1));
+      setTimeout(() => {
+        setIsShowBottomSheet(index !== -1);
+      }, 200);
+    },
+    [dispatch],
+  );
 
   const handleEditProfile = useCallback(() => {
     setIsOpenModal(true);
@@ -50,15 +88,31 @@ const MyProfile = () => {
     [navigation],
   );
 
-  const handlePressLanguage = useCallback(() => {}, []);
+  const handlePressLanguage = useCallback(() => {
+    dispatch(setIsBottomSheetShowing(true));
+    setIsShowBottomSheet(true);
+  }, [dispatch]);
+
+  const handleLogout = useCallback(() => {
+    dispatch(setAccessToken(''));
+    setAccessTokenStorage('');
+  }, [dispatch]);
+
+  const handleChangeLanguage = useCallback(
+    (language: string) => {
+      i18n.changeLanguage(language);
+      bottomSheetRef?.current?.close();
+    },
+    [i18n],
+  );
 
   return (
-    <View style={styles.screen}>
+    <ScrollView
+      contentContainerStyle={styles.screen}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled">
       <View style={[styles.header, {paddingTop: insets.top + scale(20)}]}>
-        <FastImage
-          source={{uri: imgURI ? imgURI : user_info.avatar_url}}
-          style={styles.avatar}
-        />
+        <FastImage source={{uri: user_info.avatar_url}} style={styles.avatar} />
         <Typo style={styles.name}>{user_info.name}</Typo>
         <Typo style={styles.email}>{user_info.email}</Typo>
       </View>
@@ -101,7 +155,7 @@ const MyProfile = () => {
           />
           <Typo style={styles.labelOption}>{t('my.language')}</Typo>
           <IconXML
-            icon={LANGUAGE[i18n.language as keyof typeof LANGUAGE]}
+            icon={LANGUAGE.find(lang => lang.key === i18n.language)?.icon}
             width={scale(28)}
             height={scale(28)}
             style={styles.iconCaret}
@@ -110,19 +164,72 @@ const MyProfile = () => {
         <Typo style={styles.titleOptions}>{t('my.privacy')}</Typo>
         <Pressable style={styles.itemOptions} onPress={handlePressLanguage}>
           <IconXML
-            icon={Language}
+            icon={Password}
             width={scale(28)}
             height={scale(28)}
             style={styles.optionIcon}
           />
-          <Typo style={styles.labelOption}>{t('my.language')}</Typo>
+          <Typo style={styles.labelOption}>{t('my.change_password')}</Typo>
+        </Pressable>
+        <Pressable
+          style={[styles.itemOptions, {marginTop: scale(24)}]}
+          onPress={handleLogout}>
+          <IconXML
+            icon={Logout}
+            width={scale(28)}
+            height={scale(28)}
+            style={styles.optionIcon}
+          />
+          <Typo style={[styles.labelOption, {color: colorsConstant.error}]}>
+            {t('my.log_out')}
+          </Typo>
         </Pressable>
       </View>
+      {isShowBottomSheet && (
+        <View style={styles.bottomSheetContainer}>
+          <BottomSheet
+            ref={bottomSheetRef}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            animationConfigs={{
+              duration: 200,
+              easing: Easing.inOut(Easing.quad),
+            }}
+            handleIndicatorStyle={{backgroundColor: colorsConstant.secondary}}
+            onChange={index => handleChangeBS(index)}
+            style={styles.bottomSheetView}
+            containerHeight={136}
+            enablePanDownToClose>
+            {LANGUAGE.map(lang => (
+              <Pressable
+                key={lang.key}
+                style={styles.language}
+                onPress={() => handleChangeLanguage(lang.key)}>
+                <IconXML
+                  icon={lang.icon}
+                  width={scale(36)}
+                  height={scale(36)}
+                />
+                <Typo style={styles.langLabel}>
+                  {t(`languages.${lang.key}`)}
+                </Typo>
+                {i18n.language === lang.key && (
+                  <IconXML
+                    icon={CheckOrange}
+                    width={scale(32)}
+                    height={scale(32)}
+                  />
+                )}
+              </Pressable>
+            ))}
+          </BottomSheet>
+        </View>
+      )}
       <ModalEditProfile
         isVisible={isOpenModal}
         onClose={() => setIsOpenModal(false)}
       />
-    </View>
+    </ScrollView>
   );
 };
 
@@ -130,8 +237,7 @@ export default MyProfile;
 
 const styles = ScaledSheet.create({
   screen: {
-    backgroundColor: colorsConstant.background,
-    flex: 1,
+    backgroundColor: '#FFF',
     position: 'relative',
     alignItems: 'center',
     paddingTop: '260@vs',
@@ -195,7 +301,7 @@ const styles = ScaledSheet.create({
   labelOption: {
     fontSize: '18@s',
     fontWeight: '500',
-    color: colorsConstant.black_1,
+    color: colorsConstant.black_2,
   },
   iconCaret: {
     marginLeft: 'auto',
@@ -204,5 +310,38 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     right: '16@s',
     zIndex: 3,
+  },
+  logout: {
+    marginTop: '20@s',
+    flexDirection: 'row',
+    padding: '16@s',
+    borderWidth: '1@s',
+    borderColor: colorsConstant.error,
+    borderRadius: '8@s',
+  },
+  bottomSheetContainer: {
+    position: 'absolute',
+    zIndex: 3,
+    flex: 1,
+    width: '100%',
+    height: deviceHeight,
+    bottom: 0,
+  },
+  bottomSheetView: {
+    paddingHorizontal: '24@s',
+    borderRadius: '20@s',
+    overflow: 'hidden',
+  },
+  language: {
+    flexDirection: 'row',
+    padding: '12@s',
+    alignItems: 'center',
+  },
+  langLabel: {
+    color: colorsConstant.black_2,
+    fontWeight: '500',
+    fontSize: '16@s',
+    marginLeft: '12@s',
+    marginRight: 'auto',
   },
 });

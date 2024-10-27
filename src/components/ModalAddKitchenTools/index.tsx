@@ -46,6 +46,7 @@ const ModalAddKitchenTools = ({
 
   const handleCloseModal = useCallback(() => {
     setListToolsSelected([]);
+    setSearchValue('');
     onClose();
   }, [onClose]);
 

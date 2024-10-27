@@ -46,6 +46,13 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
     onClose();
   }, [avatarUrl, dispatch, email, name, onClose]);
 
+  const handleCancel = useCallback(() => {
+    onClose();
+    setName(user_info.name);
+    setEmail(user_info.email);
+    setAvatarUrl(user_info.avatar_url);
+  }, [onClose, user_info.avatar_url, user_info.email, user_info.name]);
+
   const handleChangeName = useCallback((value: string) => {
     setName(value);
   }, []);
@@ -78,6 +85,7 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
           <Pressable onPress={handlePressAvatar} style={styles.avatarWrapper}>
             <FastImage source={{uri: avatarUrl}} style={styles.avatar} />
           </Pressable>
+          <Typo style={styles.label}>{t('my.name')}</Typo>
           <TextInput
             style={styles.input}
             placeholder={t('my.placeholder_name')}
@@ -87,6 +95,7 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
             value={name}
             onChangeText={handleChangeName}
           />
+          <Typo style={styles.label}>{t('my.email')}</Typo>
           <TextInput
             style={styles.input}
             placeholder={t('my.placeholder_email')}
@@ -97,7 +106,7 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
             onChangeText={handleChangeEmail}
           />
           <View style={styles.buttonContainer}>
-            <Typo onPress={onClose} style={styles.cancel}>
+            <Typo onPress={handleCancel} style={styles.cancel}>
               {t('cancel')}
             </Typo>
             <TouchableHighlight
@@ -120,11 +129,9 @@ const styles = ScaledSheet.create({
     borderRadius: '16@s',
     padding: '20@s',
     backgroundColor: colorsConstant.background,
-    gap: '20@s',
   },
   avatarWrapper: {
     width: '72@s',
-    backgroundColor: 'red',
     borderRadius: 999,
     alignSelf: 'center',
   },
@@ -138,7 +145,7 @@ const styles = ScaledSheet.create({
     gap: '16@s',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    marginTop: '12@s',
+    marginTop: '16@s',
     alignSelf: 'flex-end',
   },
   cancel: {
@@ -166,5 +173,13 @@ const styles = ScaledSheet.create({
     fontSize: '14@s',
     fontWeight: '500',
     color: colorsConstant.black_1,
+  },
+  label: {
+    fontSize: '16@s',
+    fontWeight: '500',
+    color: colorsConstant.black_1,
+    marginLeft: '8@s',
+    marginTop: '16@s',
+    marginBottom: '4@s',
   },
 });

@@ -187,6 +187,7 @@ const ModalAddKitchenIngredient = ({
   const handleCloseModal = useCallback(() => {
     onClose();
     setIngredientSelected(null);
+    setSearchValue('');
     setAmount(0);
     setStep(0);
   }, [onClose]);

@@ -16,6 +16,7 @@ import MyTab from '@/assets/icons/MyTab';
 import MyTabActive from '@/assets/icons/MyTabActive';
 import IconXML from '../IconXML';
 import {ScaledSheet} from 'react-native-size-matters/extend';
+import {useTranslation} from 'react-i18next';
 
 interface ICustomItemTab {
   isFocused: boolean;
@@ -29,27 +30,27 @@ const tabIcon = {
   home_tab: {
     default: HomeTab,
     active: HomeTabActive,
-    label: 'Home',
+    key: 'home',
   },
   other_chefs: {
     default: OtherChefsTab,
     active: OtherChefsTabActive,
-    label: 'Others',
+    key: 'other_chefs',
   },
   kitchen: {
     default: KitchenTab,
     active: KitchenActive,
-    label: 'Kitchen',
+    key: 'kitchen',
   },
   chat_bot: {
     default: ChatBotTab,
     active: ChatBotActive,
-    label: 'Co-Chef',
+    key: 'chat_bot',
   },
   my: {
     default: MyTab,
     active: MyTabActive,
-    label: 'My',
+    key: 'my',
   },
 };
 
@@ -60,6 +61,8 @@ const CustomItemTab = ({
   onPress,
   onLongPress,
 }: ICustomItemTab) => {
+  const {t} = useTranslation();
+
   return (
     <Pressable
       accessibilityRole="button"
@@ -85,7 +88,7 @@ const CustomItemTab = ({
             color: isFocused ? colorsConstant.primary : colorsConstant.gray_1,
           },
         ]}>
-        {tabIcon[label as keyof typeof tabIcon].label}
+        {t(`tabs_name.${tabIcon[label as keyof typeof tabIcon].key}`)}
       </Typo>
     </Pressable>
   );
