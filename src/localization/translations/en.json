@@ -112,7 +112,8 @@
     "like_history": "Liked posts",
     "post_history": "Your posts",
     "language": "Language",
-    "change_password": "Change password"
+    "change_password": "Change password",
+    "log_out": "Log out"
   },
   "toast": {
     "login": "Please login to continue"

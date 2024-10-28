@@ -52,7 +52,7 @@ const MyProfile = () => {
 
   const bottomSheetRef = useRef<BottomSheet | null>(null);
 
-  const snapPoints = useMemo(() => [120 + insets.bottom], [insets.bottom]);
+  const snapPoints = useMemo(() => [160 + insets.bottom], [insets.bottom]);
 
   const renderBackdrop = useCallback(
     (props: any) => (
@@ -106,85 +106,98 @@ const MyProfile = () => {
     [i18n],
   );
 
+  const handlePressChangePassword = useCallback(() => {}, []);
+
   return (
-    <ScrollView
-      contentContainerStyle={styles.screen}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled">
-      <View style={[styles.header, {paddingTop: insets.top + scale(20)}]}>
-        <FastImage source={{uri: user_info.avatar_url}} style={styles.avatar} />
-        <Typo style={styles.name}>{user_info.name}</Typo>
-        <Typo style={styles.email}>{user_info.email}</Typo>
-      </View>
-      <IconXML
-        icon={Edit}
-        width={scale(36)}
-        height={scale(36)}
-        style={[styles.editProfile, {top: insets.top + scale(20)}]}
-        onPress={handleEditProfile}
-      />
-      <View style={styles.listOptions}>
-        <Typo style={styles.titleOptions}>{t('my.history')}</Typo>
-        {HISTORIES.map((item, index) => (
-          <Pressable
-            style={styles.itemOptions}
-            key={index}
-            onPress={() => handlePressHistory(item.type as any)}>
+    <View style={{flex: 1, position: 'relative'}}>
+      <ScrollView
+        contentContainerStyle={styles.screen}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled">
+        <View style={[styles.header, {paddingTop: insets.top + scale(20)}]}>
+          <FastImage
+            source={{uri: user_info.avatar_url}}
+            style={styles.avatar}
+          />
+          <Typo style={styles.name}>{user_info.name}</Typo>
+          <Typo style={styles.email}>{user_info.email}</Typo>
+        </View>
+        <IconXML
+          icon={Edit}
+          width={scale(36)}
+          height={scale(36)}
+          style={[styles.editProfile, {top: insets.top + scale(20)}]}
+          onPress={handleEditProfile}
+        />
+        <View style={styles.listOptions}>
+          <Typo style={styles.titleOptions}>{t('my.history')}</Typo>
+          {HISTORIES.map((item, index) => (
+            <Pressable
+              style={styles.itemOptions}
+              key={index}
+              onPress={() => handlePressHistory(item.type as any)}>
+              <IconXML
+                icon={item.icon}
+                width={scale(28)}
+                height={scale(28)}
+                style={styles.optionIcon}
+              />
+              <Typo style={styles.labelOption}>{t(`my.${item.label}`)}</Typo>
+              <IconXML
+                icon={CaretRightBlack}
+                width={scale(28)}
+                height={scale(28)}
+                style={styles.iconCaret}
+              />
+            </Pressable>
+          ))}
+          <Typo style={styles.titleOptions}>{t('my.settings')}</Typo>
+          <Pressable style={styles.itemOptions} onPress={handlePressLanguage}>
             <IconXML
-              icon={item.icon}
+              icon={Language}
               width={scale(28)}
               height={scale(28)}
               style={styles.optionIcon}
             />
-            <Typo style={styles.labelOption}>{t(`my.${item.label}`)}</Typo>
+            <Typo style={styles.labelOption}>{t('my.language')}</Typo>
             <IconXML
-              icon={CaretRightBlack}
+              icon={LANGUAGE.find(lang => lang.key === i18n.language)?.icon}
               width={scale(28)}
               height={scale(28)}
               style={styles.iconCaret}
             />
           </Pressable>
-        ))}
-        <Typo style={styles.titleOptions}>{t('my.settings')}</Typo>
-        <Pressable style={styles.itemOptions} onPress={handlePressLanguage}>
-          <IconXML
-            icon={Language}
-            width={scale(28)}
-            height={scale(28)}
-            style={styles.optionIcon}
-          />
-          <Typo style={styles.labelOption}>{t('my.language')}</Typo>
-          <IconXML
-            icon={LANGUAGE.find(lang => lang.key === i18n.language)?.icon}
-            width={scale(28)}
-            height={scale(28)}
-            style={styles.iconCaret}
-          />
-        </Pressable>
-        <Typo style={styles.titleOptions}>{t('my.privacy')}</Typo>
-        <Pressable style={styles.itemOptions} onPress={handlePressLanguage}>
-          <IconXML
-            icon={Password}
-            width={scale(28)}
-            height={scale(28)}
-            style={styles.optionIcon}
-          />
-          <Typo style={styles.labelOption}>{t('my.change_password')}</Typo>
-        </Pressable>
-        <Pressable
-          style={[styles.itemOptions, {marginTop: scale(24)}]}
-          onPress={handleLogout}>
-          <IconXML
-            icon={Logout}
-            width={scale(28)}
-            height={scale(28)}
-            style={styles.optionIcon}
-          />
-          <Typo style={[styles.labelOption, {color: colorsConstant.error}]}>
-            {t('my.log_out')}
-          </Typo>
-        </Pressable>
-      </View>
+          <Typo style={styles.titleOptions}>{t('my.privacy')}</Typo>
+          <Pressable
+            style={styles.itemOptions}
+            onPress={handlePressChangePassword}>
+            <IconXML
+              icon={Password}
+              width={scale(28)}
+              height={scale(28)}
+              style={styles.optionIcon}
+            />
+            <Typo style={styles.labelOption}>{t('my.change_password')}</Typo>
+          </Pressable>
+          <Pressable
+            style={[styles.itemOptions, {marginTop: scale(12)}]}
+            onPress={handleLogout}>
+            <IconXML
+              icon={Logout}
+              width={scale(28)}
+              height={scale(28)}
+              style={styles.optionIcon}
+            />
+            <Typo style={[styles.labelOption, {color: colorsConstant.error}]}>
+              {t('my.log_out')}
+            </Typo>
+          </Pressable>
+        </View>
+        <ModalEditProfile
+          isVisible={isOpenModal}
+          onClose={() => setIsOpenModal(false)}
+        />
+      </ScrollView>
       {isShowBottomSheet && (
         <View style={styles.bottomSheetContainer}>
           <BottomSheet
@@ -225,11 +238,7 @@ const MyProfile = () => {
           </BottomSheet>
         </View>
       )}
-      <ModalEditProfile
-        isVisible={isOpenModal}
-        onClose={() => setIsOpenModal(false)}
-      />
-    </ScrollView>
+    </View>
   );
 };
 

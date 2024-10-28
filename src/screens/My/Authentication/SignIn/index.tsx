@@ -61,6 +61,7 @@ const SignIn = () => {
             cursorColor={colorsConstant.primary}
             secureTextEntry={input.secureTextEntry}
             textContentType={input.content_type as any}
+            autoCapitalize="none"
             onChangeText={(value: string) => handleChangeText(input.key, value)}
           />
         </View>

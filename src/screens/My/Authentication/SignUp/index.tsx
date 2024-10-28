@@ -53,6 +53,7 @@ const SignIn = () => {
             cursorColor={colorsConstant.primary}
             secureTextEntry={input.secureTextEntry}
             textContentType={input.content_type as any}
+            autoCapitalize="none"
           />
         </View>
       ))}

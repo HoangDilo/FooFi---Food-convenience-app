@@ -50,6 +50,7 @@ const styles = ScaledSheet.create({
     color: colorsConstant.black_1,
   },
   invisible: {
-    width: '28@s',
+    width: '48@s',
+    height: '48@s',
   },
 });

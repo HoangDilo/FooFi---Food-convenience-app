@@ -17,7 +17,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-const HomeSearch = () => {
+interface IHomeSearchProps {
+  isShowLabel?: boolean;
+}
+
+const HomeSearch = ({isShowLabel = true}: IHomeSearchProps) => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const {isBottomTabHidden} = useAppSelector(state => state.system);
@@ -68,7 +72,9 @@ const HomeSearch = () => {
 
   return (
     <View>
-      <Typo style={styles.inputLabel}>{t('home.you_want_other')}</Typo>
+      {isShowLabel && (
+        <Typo style={styles.inputLabel}>{t('home.you_want_other')}</Typo>
+      )}
       <View style={styles.inputWrapper}>
         <IconXML
           icon={isFocusInput ? SearchOrange : SearchBlack}
