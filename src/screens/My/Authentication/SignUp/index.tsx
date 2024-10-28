@@ -61,7 +61,7 @@ const SignIn = () => {
         style={styles.button}
         underlayColor={colorsConstant.primary_press}
         onPress={handleSignIn}>
-        <Typo style={styles.buttonLabel}>{t('my.sign_in')}</Typo>
+        <Typo style={styles.buttonLabel}>{t('my.sign_up')}</Typo>
       </TouchableHighlight>
     </View>
   );

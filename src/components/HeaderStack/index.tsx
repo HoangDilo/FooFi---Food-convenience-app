@@ -40,9 +40,10 @@ const styles = ScaledSheet.create({
   container: {
     paddingHorizontal: '16@s',
     flexDirection: 'row',
-    paddingVertical: '14@s',
+    paddingVertical: '4@s',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: '16@s',
   },
   title: {
     fontSize: '24@s',

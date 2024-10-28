@@ -233,7 +233,9 @@ const AllPostsTab = () => {
     }, 3000);
   }, []);
 
-  const handleLoadMore = useCallback(() => {}, []);
+  const handleLoadMore = useCallback(() => {
+    
+  }, []);
 
   return (
     <FlatList

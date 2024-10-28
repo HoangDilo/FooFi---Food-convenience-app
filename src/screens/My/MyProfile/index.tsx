@@ -111,6 +111,7 @@ const MyProfile = () => {
   return (
     <View style={{flex: 1, position: 'relative'}}>
       <ScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.screen}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled">
@@ -245,8 +246,11 @@ const MyProfile = () => {
 export default MyProfile;
 
 const styles = ScaledSheet.create({
+  scrollView: {
+    backgroundColor: colorsConstant.background,
+  },
   screen: {
-    backgroundColor: '#FFF',
+    backgroundColor: colorsConstant.background,
     position: 'relative',
     alignItems: 'center',
     paddingTop: '260@vs',

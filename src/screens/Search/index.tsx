@@ -1,12 +1,17 @@
-import {FlatList, View} from 'react-native';
-import React, {useCallback} from 'react';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {FlatList, Pressable, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import HeaderStack from '@/components/HeaderStack';
 import {useTranslation} from 'react-i18next';
 import HomeSearch from '../Home/HomeSearch';
 import {IPost} from '@/types/otherchefs.type';
 import ItemPostOtherChefs from '@/components/ItemPostOtherChefs';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import {RootStackParamList} from '@/types/navigation.type';
+import BottomSheet from '@gorhom/bottom-sheet';
+import IconXML from '@/components/IconXML';
+import Filter from '@/assets/icons/Filter';
 
 const posts: IPost[] = [
   {
@@ -228,15 +233,44 @@ const posts: IPost[] = [
 
 const SearchScreen = () => {
   const {t} = useTranslation();
+  const {params} = useRoute<RouteProp<RootStackParamList, 'search'>>();
+
+  const [searchValue, setSearchValue] = useState(params?.query || '');
 
   const handleLoadMore = useCallback(() => {}, []);
+
+  const handleSearch = useCallback(() => {}, []);
+
+  const handleOpenFilter = useCallback(() => {}, []);
 
   return (
     <View style={styles.screen}>
       <HeaderStack title={t('home.search')} />
       <View style={styles.container}>
         <View style={styles.searchWrapper}>
-          <HomeSearch isShowLabel={false} />
+          <View style={styles.top}>
+            <HomeSearch
+              isShowLabel={false}
+              isShowButtonSearch={false}
+              searchIconPosition="right"
+              value={searchValue}
+              onChange={setSearchValue}
+              onSearch={handleSearch}
+            />
+            <Pressable
+              style={styles.iconFilterWrapper}
+              onPress={handleOpenFilter}>
+              <IconXML
+                icon={Filter}
+                width={scale(28)}
+                height={scale(28)}
+                style={styles.iconFilter}
+              />
+            </Pressable>
+          </View>
+          <View style={styles.filter}>
+            <View style={styles.itemFilter}></View>
+          </View>
         </View>
         <FlatList
           contentContainerStyle={styles.flatListContainer}
@@ -247,6 +281,7 @@ const SearchScreen = () => {
           onEndReached={handleLoadMore}
         />
       </View>
+      <View style={styles.bottomSheetWrapper}></View>
     </View>
   );
 };
@@ -257,17 +292,39 @@ const styles = ScaledSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colorsConstant.background,
+    position: 'relative',
   },
   container: {
     flex: 1,
   },
   searchWrapper: {
-    paddingHorizontal: '24@s',
+    paddingHorizontal: '12@s',
     marginBottom: '24@s',
+  },
+  top: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: '12@s',
   },
   flatListContainer: {
     gap: '36@s',
-    paddingVertical: '32@s',
+    paddingBottom: '32@s',
+    paddingTop: '12@s',
     backgroundColor: colorsConstant.background,
+  },
+  filter: {
+    flexDirection: 'row',
+  },
+  iconFilter: {},
+  iconFilterWrapper: {
+    borderRadius: 999,
+    shadowColor: colorsConstant.shadow,
+    backgroundColor: '#FFF',
+    padding: '6@s',
+    elevation: 4,
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
   },
 });

@@ -19,15 +19,26 @@ import Animated, {
 
 interface IHomeSearchProps {
   isShowLabel?: boolean;
+  isShowButtonSearch?: boolean;
+  searchIconPosition?: 'left' | 'right';
+  value: string;
+  onChange: (value: string) => void;
+  onSearch: () => void;
 }
 
-const HomeSearch = ({isShowLabel = true}: IHomeSearchProps) => {
+const HomeSearch = ({
+  isShowLabel = true,
+  isShowButtonSearch = true,
+  searchIconPosition = 'left',
+  value,
+  onChange,
+  onSearch,
+}: IHomeSearchProps) => {
   const {t} = useTranslation();
   const navigation = useNavigation();
   const {isBottomTabHidden} = useAppSelector(state => state.system);
 
   const [isFocusInput, setIsFocusInput] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
 
   const opacity = useSharedValue(1);
 
@@ -48,16 +59,16 @@ const HomeSearch = ({isShowLabel = true}: IHomeSearchProps) => {
     setIsFocusInput(false);
   }, []);
 
-  const handleChangeText = useCallback((value: string) => {
-    setSearchValue(value);
-  }, []);
+  const handleChangeText = useCallback(
+    (value: string) => {
+      onChange(value);
+    },
+    [onChange],
+  );
 
   const handlePressSearch = useCallback(() => {
-    navigation.navigate('search', {
-      query: searchValue,
-      listItemsFilter: [],
-    });
-  }, [navigation, searchValue]);
+    onSearch();
+  }, [onSearch]);
 
   useEffect(() => {
     if (isBottomTabHidden) {
@@ -71,16 +82,22 @@ const HomeSearch = ({isShowLabel = true}: IHomeSearchProps) => {
   }, [isBottomTabHidden, opacity]);
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       {isShowLabel && (
         <Typo style={styles.inputLabel}>{t('home.you_want_other')}</Typo>
       )}
-      <View style={styles.inputWrapper}>
+      <View style={[styles.inputWrapper]}>
         <IconXML
           icon={isFocusInput ? SearchOrange : SearchBlack}
           width={20}
           height={20}
-          style={styles.iconInput}
+          style={[
+            styles.iconInput,
+            {
+              left: searchIconPosition === 'left' ? 12 : undefined,
+              right: searchIconPosition === 'right' ? 12 : undefined,
+            },
+          ]}
         />
         <Animated.View style={[animatedStyle, styles.inputWrapperAnimated]}>
           <TextInput
@@ -91,8 +108,12 @@ const HomeSearch = ({isShowLabel = true}: IHomeSearchProps) => {
                   ? colorsConstant.primary
                   : colorsConstant.black_1,
               },
+              {
+                paddingLeft: searchIconPosition === 'left' ? 42 : undefined,
+                paddingRight: searchIconPosition === 'right' ? 42 : undefined,
+              },
             ]}
-            value={searchValue}
+            value={value}
             placeholder={isFocusInput ? '' : t('home.find_your_dish')}
             placeholderTextColor={colorsConstant.gray_1}
             cursorColor={colorsConstant.primary}
@@ -104,15 +125,17 @@ const HomeSearch = ({isShowLabel = true}: IHomeSearchProps) => {
             onSubmitEditing={handlePressSearch}
           />
         </Animated.View>
-        <Animated.View
-          style={[animatedStyle, {borderRadius: 999, maxHeight: '100%'}]}>
-          <TouchableHighlight
-            style={styles.searchButton}
-            underlayColor={colorsConstant.primary_press}
-            onPress={handlePressSearch}>
-            <Typo style={styles.searchLabel}>{t('home.search')}</Typo>
-          </TouchableHighlight>
-        </Animated.View>
+        {isShowButtonSearch && (
+          <Animated.View
+            style={[animatedStyle, {borderRadius: 999, maxHeight: '100%'}]}>
+            <TouchableHighlight
+              style={styles.searchButton}
+              underlayColor={colorsConstant.primary_press}
+              onPress={handlePressSearch}>
+              <Typo style={styles.searchLabel}>{t('home.search')}</Typo>
+            </TouchableHighlight>
+          </Animated.View>
+        )}
       </View>
     </View>
   );
@@ -134,7 +157,6 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 500,
     paddingHorizontal: 16,
-    paddingLeft: 42,
     paddingVertical: 0,
     height: 40,
     fontSize: 16,
@@ -156,7 +178,6 @@ const styles = StyleSheet.create({
   },
   iconInput: {
     position: 'absolute',
-    left: 12,
     zIndex: 2,
   },
   searchButton: {

@@ -269,6 +269,6 @@ const styles = ScaledSheet.create({
   flatListContainer: {
     gap: '36@s',
     paddingVertical: '32@s',
-    backgroundColor: '#fff',
+    backgroundColor: colorsConstant.background,
   },
 });

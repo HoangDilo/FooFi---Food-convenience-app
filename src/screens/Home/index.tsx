@@ -13,7 +13,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomSheet, {BottomSheetBackdrop} from '@gorhom/bottom-sheet';
@@ -39,10 +39,12 @@ const HomeScreen = () => {
   const {isBottomTabHidden} = useAppSelector(state => state.system);
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
 
   const [isBottomSheetShown, setIsBottomSheetShown] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [activeSession, setActiveSession] = useState<string>(getDaySession());
+  const [searchValue, setSearchValue] = useState('');
 
   const bottomSheetSessionsRef = useRef<BottomSheet | null>(null);
   const scrollViewRef = useRef<ScrollView | null>(null);
@@ -102,6 +104,14 @@ const HomeScreen = () => {
     bottomSheetSessionsRef.current?.close();
   }, []);
 
+  const handleSearch = useCallback(() => {
+    if (searchValue) {
+      navigation.navigate('search', {
+        query: searchValue,
+      });
+    }
+  }, [navigation, searchValue]);
+
   useEffect(() => {
     if (isBottomTabHidden) {
       opacity.value = withTiming(0, {
@@ -115,6 +125,7 @@ const HomeScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
+      setSearchValue('');
       dispatch(setIsScrolling(false));
       scrollViewRef.current?.scrollTo({y: 0, animated: true});
       dispatch(setCurrentRoute(TAB.HOME_TAB));
@@ -147,7 +158,11 @@ const HomeScreen = () => {
                 opacity,
               },
             ]}>
-            <HomeSearch />
+            <HomeSearch
+              value={searchValue}
+              onChange={setSearchValue}
+              onSearch={handleSearch}
+            />
             <DaySessionRecommend
               option={activeSession}
               onChooseOtherOptions={handleChooseOtherSession}
