@@ -13,7 +13,6 @@ import ItemPostOtherChefs from '@/components/ItemPostOtherChefs';
 import {IPost} from '@/types/otherchefs.type';
 import ModalConfirm from '@/components/ModalConfirm';
 import SkeletonItemPost from '@/components/SkeletonItemPost';
-import {deviceHeight, deviceWidth} from '@/constants/device.constant';
 
 const posts: IPost[] = [
   {

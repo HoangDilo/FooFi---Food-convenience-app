@@ -43,7 +43,7 @@ const styles = ScaledSheet.create({
     paddingVertical: '4@s',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: '16@s',
+    marginBottom: '4@s',
   },
   title: {
     fontSize: '24@s',
