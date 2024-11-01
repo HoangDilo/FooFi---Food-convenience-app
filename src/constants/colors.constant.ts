@@ -18,6 +18,7 @@ export default {
   disable: '#dcdcdc',
   skeleton_1: '#AAA',
   skeleton_2: '#dcdcdc',
+  skeleton_3: '#b0b0b0',
   approved: '#38c41f',
   approved_fade: '#38c41fAA',
 };

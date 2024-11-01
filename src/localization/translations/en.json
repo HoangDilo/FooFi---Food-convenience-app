@@ -65,7 +65,8 @@
     "tabs": {
       "recommend": "Recommended",
       "all": "All"
-    }
+    },
+    "likes": "likes"
   },
   "cancel": "Cancel",
   "add": "Add",
@@ -124,6 +125,8 @@
   },
   "history": {
     "like": "Liked posts",
-    "post": "Your posts"
+    "post": "Your posts",
+    "delete_post": "Delete post",
+    "delete_post_description": "Are you sure you want to delete this post? After deleted, it can not be recovered"
   }
 }

@@ -58,7 +58,7 @@ const ApproveMarker = () => {
   return (
     <Animated.View style={[styles.approve, animatedStyle, {opacity}]}>
       <Typo style={styles.label}>{t('approved')}</Typo>
-      <IconXML icon={CheckWhite} width={scale(24)} height={scale(24)} />
+      <IconXML icon={CheckWhite} width={scale(20)} height={scale(20)} />
     </Animated.View>
   );
 };

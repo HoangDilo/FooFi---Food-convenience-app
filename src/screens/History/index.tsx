@@ -1,5 +1,5 @@
 import {FlatList, View} from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import colorsConstant from '@/constants/colors.constant';
 import HeaderStack from '@/components/HeaderStack';
 import {RouteProp, useFocusEffect, useRoute} from '@react-navigation/native';
@@ -11,6 +11,9 @@ import {STACK} from '@/constants/screens.constant';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import ItemPostOtherChefs from '@/components/ItemPostOtherChefs';
 import {IPost} from '@/types/otherchefs.type';
+import ModalConfirm from '@/components/ModalConfirm';
+import SkeletonItemPost from '@/components/SkeletonItemPost';
+import {deviceHeight, deviceWidth} from '@/constants/device.constant';
 
 const posts: IPost[] = [
   {
@@ -235,7 +238,19 @@ const HistoryScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
+  const [listPost, setListPost] = useState<IPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [postSelecting, setPostSelecting] = useState<IPost | null>(null);
+  const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+
   const handleLoadMore = useCallback(() => {}, []);
+
+  const handleDeletePost = useCallback((post: IPost) => {
+    setPostSelecting(post);
+    setIsShowModalDelete(true);
+  }, []);
+
+  const handleConfirmDelete = useCallback(() => {}, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -244,16 +259,40 @@ const HistoryScreen = () => {
     }, [dispatch]),
   );
 
+  useEffect(() => {
+    setTimeout(() => {
+      setListPost(posts);
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   return (
     <View style={styles.screen}>
       <HeaderStack title={t(`my.${params.type}_history`)} />
-      <FlatList
-        contentContainerStyle={styles.flatListContainer}
-        data={posts}
-        keyExtractor={item => `${item.id}`}
-        renderItem={({item}) => <ItemPostOtherChefs post={item} />}
-        showsVerticalScrollIndicator={false}
-        onEndReached={handleLoadMore}
+      {!isLoading ? (
+        <FlatList
+          contentContainerStyle={styles.flatListContainer}
+          data={listPost}
+          keyExtractor={item => `${item.id}`}
+          renderItem={({item}) => (
+            <ItemPostOtherChefs
+              post={item}
+              isShowLike={params.type !== 'post'}
+              onPressDelete={() => handleDeletePost(item)}
+            />
+          )}
+          showsVerticalScrollIndicator={false}
+          onEndReached={handleLoadMore}
+        />
+      ) : (
+        <SkeletonItemPost numberItems={2} />
+      )}
+      <ModalConfirm
+        isVisible={isShowModalDelete}
+        title={t('history.delete_post')}
+        description={t('history.delete_post_description')}
+        onClose={() => setIsShowModalDelete(false)}
+        onConfirm={handleConfirmDelete}
       />
     </View>
   );
@@ -265,6 +304,7 @@ const styles = ScaledSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colorsConstant.background,
+    position: 'relative',
   },
   flatListContainer: {
     gap: '36@s',

@@ -63,9 +63,10 @@
   "other_chefs": {
     "post": "Tạo",
     "tabs": {
-      "recommend": "Recommend",
-      "all": "All"
-    }
+      "recommend": "Đề xuất",
+      "all": "Tất cả"
+    },
+    "likes": "likes"
   },
   "cancel": "Hủy",
   "delete": "Xoá",
@@ -124,6 +125,8 @@
   },
   "history": {
     "like": "Bài đăng đã thích",
-    "post": "Bài đăng của bạn"
+    "post": "Bài đăng của bạn",
+    "delete_post": "Xoá bài đăng",
+    "delete_post_description": "Bạn có chắc muốn xoá bài đăng này? Sau khi xoá sẽ không thể khôi phục!"
   }
 }

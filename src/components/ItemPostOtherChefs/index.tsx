@@ -15,12 +15,19 @@ import HeartBlack2 from '@/assets/icons/HeartBlack2';
 import BlackGradientWrapper from '../BlackGradientWrapper';
 import DotWhite from '@/assets/icons/DotWhite';
 import {useNavigation} from '@react-navigation/native';
+import TrashCanRed from '@/assets/icons/TrashCanRed';
 
 interface IItemPostOThersChef {
   post: IPost;
+  isShowLike?: boolean;
+  onPressDelete?: () => void;
 }
 
-const ItemPostOtherChefs = ({post}: IItemPostOThersChef) => {
+const ItemPostOtherChefs = ({
+  post,
+  isShowLike = true,
+  onPressDelete,
+}: IItemPostOThersChef) => {
   const {t} = useTranslation();
   const navigation = useNavigation();
 
@@ -81,13 +88,27 @@ const ItemPostOtherChefs = ({post}: IItemPostOThersChef) => {
           <Typo style={styles.userName}>{post.user_info.name}</Typo>
           <Typo style={styles.time}>{timeFormatted}</Typo>
         </View>
-        <IconXML
-          style={{marginLeft: 'auto', marginRight: scale(8)}}
-          icon={isLiked ? HeartRed : HeartBlack2}
-          width={scale(32)}
-          height={scale(32)}
-          onPress={handleLike}
-        />
+        <View style={styles.like}>
+          <Typo style={styles.likeLabel}>
+            {post.likes} {t('other_chefs.likes')}
+          </Typo>
+          {isShowLike ? (
+            <IconXML
+              icon={isLiked ? HeartRed : HeartBlack2}
+              width={scale(32)}
+              height={scale(32)}
+              onPress={handleLike}
+            />
+          ) : (
+            <IconXML
+              style={{marginLeft: scale(8)}}
+              icon={TrashCanRed}
+              width={scale(32)}
+              height={scale(32)}
+              onPress={onPressDelete}
+            />
+          )}
+        </View>
       </View>
       <Typo style={styles.description}>{post.description}</Typo>
       <Pressable style={styles.dishInfo} onPress={handlePressDish}>
@@ -151,6 +172,18 @@ const styles = ScaledSheet.create({
     color: colorsConstant.black_2,
     fontSize: '14@s',
     paddingHorizontal: '8@s',
+  },
+  like: {
+    flexDirection: 'row',
+    gap: '8@s',
+    marginLeft: 'auto',
+    alignItems: 'center',
+    marginRight: '8@s',
+  },
+  likeLabel: {
+    fontWeight: '500',
+    fontSize: '16@s',
+    color: colorsConstant.black_2,
   },
   dishInfo: {
     position: 'relative',

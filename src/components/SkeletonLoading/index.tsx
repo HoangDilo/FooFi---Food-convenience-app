@@ -1,4 +1,4 @@
-import {StyleProp, View, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import React, {useEffect} from 'react';
 import colorsConstant from '@/constants/colors.constant';
 import {ScaledSheet} from 'react-native-size-matters/extend';
@@ -12,16 +12,10 @@ import Animated, {
 } from 'react-native-reanimated';
 
 interface ISkeletonLoadingWrapperProps {
-  isLoading: boolean;
-  children: React.ReactNode;
   skeletonStyle?: StyleProp<ViewStyle>;
 }
 
-const SkeletonLoadingWrapper = ({
-  isLoading,
-  children,
-  skeletonStyle,
-}: ISkeletonLoadingWrapperProps) => {
+const SkeletonLoading = ({skeletonStyle}: ISkeletonLoadingWrapperProps) => {
   const colorValue = useSharedValue(0);
 
   const colorAnimated = useAnimatedStyle(() => {
@@ -45,33 +39,9 @@ const SkeletonLoadingWrapper = ({
     );
   }, []);
 
-  return (
-    <View style={styles.wrapper}>
-      {children}
-      {isLoading && (
-        <Animated.View
-          style={[
-            styles.skeleton,
-            skeletonStyle,
-            colorAnimated,
-          ]}></Animated.View>
-      )}
-    </View>
-  );
+  return <Animated.View style={[skeletonStyle, colorAnimated]}></Animated.View>;
 };
 
-export default SkeletonLoadingWrapper;
+export default SkeletonLoading;
 
-const styles = ScaledSheet.create({
-  wrapper: {
-    position: 'relative',
-  },
-  skeleton: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    zIndex: 2,
-    top: 0,
-    left: 0,
-  },
-});
+const styles = ScaledSheet.create({});
