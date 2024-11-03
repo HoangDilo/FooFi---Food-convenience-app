@@ -12,6 +12,7 @@ import ItemIngredientDisplay from './ItemIngredientDisplay';
 import ModalConfirm from '@/components/ModalConfirm';
 import ModalEditIngredient from '@/components/ModalEditIngredient';
 import Pagination from '@/components/Pagination';
+import {useKitchenIngredient} from '@/api/hooks/useKitchen';
 
 const PAGE_LIMIT = 5;
 

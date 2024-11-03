@@ -14,106 +14,15 @@ import Typo from '../Typo';
 import {useTranslation} from 'react-i18next';
 import SearchKitchen from '../SearchKitchen';
 import {IIngredient} from '@/types/kitchen.type';
-import {EUnit} from '@/enums/kitchen.enum';
 import ItemIngredientSelect from './ItemIngredientSelect';
+import {useKitchenIngredient} from '@/api/hooks/useKitchen';
 
 interface IModalAddKitchenIngredientProps {
   isVisible: boolean;
+  listIngredient?: IIngredient[];
   onClose: () => void;
   onSubmit: (ingredient: IIngredient) => void;
 }
-
-const listIngredientsFake: IIngredient[] = [
-  {
-    id: 1,
-    name_en: 'Flour',
-    name_vi: 'Bột mì',
-    img_url: 'https://ezcloud.vn/wp-content/uploads/2024/02/flour-la-gi.webp',
-    unit: EUnit.GRAM,
-    quantity: 0,
-  },
-  {
-    id: 2,
-    name_en: 'Sugar',
-    name_vi: 'Đường',
-    img_url:
-      'https://www.tasteofhome.com/wp-content/uploads/2019/11/sugar-shutterstock_615908132.jpg',
-    unit: EUnit.GRAM,
-    quantity: 0,
-  },
-  {
-    id: 3,
-    name_en: 'Egg',
-    name_vi: 'Trứng',
-    img_url:
-      'https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/AN_images/health-benefits-of-eggs-1296x728-feature.jpg?w=1155&h=1528',
-    unit: null, // No specific unit for countable items like eggs
-    quantity: 0,
-  },
-  {
-    id: 4,
-    name_en: 'Milk',
-    name_vi: 'Sữa',
-    img_url:
-      'https://hips.hearstapps.com/hmg-prod/images/filling-of-a-glass-of-milk-in-a-glass-glass-with-royalty-free-image-1707769552.jpg',
-    unit: EUnit.ML,
-    quantity: 0,
-  },
-  {
-    id: 5,
-    name_en: 'Butter',
-    name_vi: 'Bơ',
-    img_url:
-      'https://cdn.tgdd.vn/2020/07/CookProduct/cach-lam-bo-butter-bang-kem-tuoi-heavy-cream-1-1200x676.jpg',
-    unit: EUnit.GRAM,
-    quantity: 0,
-  },
-  {
-    id: 6,
-    name_en: 'Salt',
-    name_vi: 'Muối',
-    img_url:
-      'https://cdn-prod.medicalnewstoday.com/content/images/articles/322/322745/salt-shaker.jpg',
-    unit: EUnit.GRAM,
-    quantity: 0,
-  },
-  {
-    id: 7,
-    name_en: 'Baking Powder',
-    name_vi: 'Bột nở',
-    img_url:
-      'https://www.seriouseats.com/thmb/eMPfsLI7D9h1UxnuoDWTmd_K7tM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__images__2015__12__20151201-baking-powder-vicky-wasik-2-bc534b7950894f70844dd914295d5951.jpg',
-    unit: EUnit.GRAM,
-    quantity: 0,
-  },
-  {
-    id: 8,
-    name_en: 'Vanilla Extract',
-    name_vi: 'Tinh chất vani',
-    img_url:
-      'https://www.clubhouse.ca/-/media/project/oneweb/clubhouseca/products/00066200004637_a1c1.png?rev=dce770297c5e439b9ba51ad0e946340b&vd=20220428T152526Z&extension=webp&hash=FE74673E0B47B5C3AE1A57688C989134',
-    unit: EUnit.ML,
-    quantity: 0,
-  },
-  {
-    id: 9,
-    name_en: 'Chicken Breast',
-    name_vi: 'Ức gà',
-    img_url:
-      'https://rastellis.com/cdn/shop/products/Organic-Chicken-Beasts-2.jpg?v=1701718077&width=1946',
-    unit: EUnit.GRAM,
-    quantity: 0,
-  },
-  {
-    id: 10,
-    name_en: 'Olive Oil',
-    name_vi: 'Dầu ô liu',
-    img_url:
-      'https://cdn-prod.medicalnewstoday.com/content/images/articles/321/321246/olive-oil-in-a-bottle-which-may-be-used-on-the-face.jpg',
-    unit: EUnit.ML,
-    quantity: 0,
-  },
-];
 
 const ModalAddKitchenIngredient = ({
   isVisible,
@@ -126,9 +35,10 @@ const ModalAddKitchenIngredient = ({
   const [searchValue, setSearchValue] = useState('');
   const [ingredientSelected, setIngredientSelected] =
     useState<IIngredient | null>(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [listIngredients, setListIngredients] = useState<IIngredient[]>([]);
   const [amount, setAmount] = useState(0);
+  const dataIngredients = useKitchenIngredient();
+
+  console.log(dataIngredients.data?.pages);
 
   const stepMapping = useMemo(
     () => ({
@@ -154,17 +64,6 @@ const ModalAddKitchenIngredient = ({
       },
     }),
     [i18n.language, ingredientSelected, t],
-  );
-
-  const listIngredientsFilter = useMemo(
-    () =>
-      listIngredients.filter(ingre =>
-        ingre[`name_${i18n.language}` as keyof IIngredient]
-          ?.toString()
-          .toLocaleLowerCase()
-          .includes(searchValue.toLocaleLowerCase()),
-      ),
-    [i18n.language, listIngredients, searchValue],
   );
 
   const isAllowGoNext = useMemo(() => {
@@ -214,10 +113,6 @@ const ModalAddKitchenIngredient = ({
   }, []);
 
   useEffect(() => {
-    setListIngredients(listIngredientsFake);
-  }, []);
-
-  useEffect(() => {
     setAmount(0);
   }, [ingredientSelected]);
 
@@ -240,7 +135,7 @@ const ModalAddKitchenIngredient = ({
             )}
             {step === 0 && (
               <FlatList
-                data={listIngredientsFilter}
+                data={dataIngredients.data?.pages || []}
                 renderItem={({item}) => (
                   <ItemIngredientSelect
                     ingredient={item}

@@ -16,14 +16,14 @@ import SearchKitchen from '../SearchKitchen';
 
 interface IModalAddKitchenSpicesProps {
   isVisible: boolean;
-  listSpices: ISpice[];
+  listSpices?: ISpice[];
   onClose: () => void;
   onSubmit: (listSpicesAdd: ISpice[]) => void;
 }
 
 const ModalAddKitchenSpices = ({
   isVisible,
-  listSpices,
+  listSpices = [],
   onClose,
   onSubmit,
 }: IModalAddKitchenSpicesProps) => {

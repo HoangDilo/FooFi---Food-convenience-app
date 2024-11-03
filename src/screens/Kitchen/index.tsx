@@ -5,7 +5,7 @@ import {
   View,
 } from 'react-native';
 import React, {useCallback, useRef} from 'react';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import colorsConstant from '@/constants/colors.constant';

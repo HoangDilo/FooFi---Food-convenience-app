@@ -1,10 +1,13 @@
-import {useQuery} from '@tanstack/react-query';
+import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
 import kitchenService from '../services/kitchen.service';
+import {useCheckValidToken} from './useAuth';
+import {useMemo} from 'react';
 
 export const useKitchenTool = () => {
+  const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
   return useQuery({
     queryKey: ['list_tool'],
-    queryFn: kitchenService.getListKitchenTools,
+    queryFn,
   });
 };
 
@@ -16,8 +19,23 @@ export const useKitchenSpice = () => {
 };
 
 export const useKitchenIngredient = () => {
-  return useQuery({
-    queryKey: ['list_ingredient'],
-    queryFn: kitchenService.getListKitchenIngredient,
+  const size = useMemo(() => 10, []);
+
+  const queryFunction = useCheckValidToken((page: number) =>
+    kitchenService.getListKitchenIngredient(page, size),
+  );
+
+  return useInfiniteQuery({
+    queryKey: ['list_ingredients'],
+    initialPageParam: 0,
+    queryFn: ({pageParam}) => queryFunction(pageParam),
+    getNextPageParam: lastPage => {
+      if (lastPage) {
+        if (lastPage.currentPage < lastPage.totalPages) {
+          return lastPage.currentPage + 1;
+        }
+      }
+      return null;
+    },
   });
 };

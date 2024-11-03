@@ -23,7 +23,7 @@ interface IModalAddKitchenToolsProps {
 
 const ModalAddKitchenTools = ({
   isVisible,
-  listToolsAvailable,
+  listToolsAvailable = [],
   onClose,
   onSubmit,
 }: IModalAddKitchenToolsProps) => {

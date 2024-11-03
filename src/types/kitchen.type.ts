@@ -30,3 +30,10 @@ export interface IIngredient {
 export interface IListToolsResponse {
   data: IKitchenToolsAvailable[];
 }
+
+export interface IPaginationResponse<T> {
+  data: T[];
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+}

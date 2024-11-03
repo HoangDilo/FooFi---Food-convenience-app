@@ -1,7 +1,7 @@
 import {getAccessToken} from '@/utils/storage';
 import axios from 'axios';
 
-const BASE_URL = 'http://192.168.247.106:8080/api';
+const BASE_URL = 'http://192.168.1.250:8080/api';
 const TIME_OUT = 10000;
 const HEADERS = {
   'content-type': 'application/json',
@@ -36,6 +36,10 @@ apiClientToken.interceptors.request.use(
 );
 
 apiClientToken.interceptors.response.use(
-  response => response.data,
-  error => Promise.reject(error),
+  response => {
+    return response.data;
+  },
+  error => {
+    return Promise.reject(error);
+  },
 );
