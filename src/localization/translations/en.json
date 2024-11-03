@@ -96,7 +96,7 @@
     "email_placeholder": "Enter your email address",
     "password_placeholder": "Enter your password",
     "name_placeholder": "Enter your full name",
-    "email": "Email",
+    "mail": "Email",
     "password": "Password",
     "repeat_password": "Repeat password",
     "name": "Full name",
@@ -117,7 +117,9 @@
     "log_out": "Log out"
   },
   "toast": {
-    "login": "Please login to continue"
+    "login": "Please login to continue",
+    "login_success": "Login successfully",
+    "login_error": "Login failed! Please check your email and password again."
   },
   "languages": {
     "vi": "Vietnamese",

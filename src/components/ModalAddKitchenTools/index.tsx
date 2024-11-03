@@ -16,7 +16,7 @@ import SearchKitchen from '../SearchKitchen';
 
 interface IModalAddKitchenToolsProps {
   isVisible: boolean;
-  listToolsAvailable: IKitchenToolsAvailable[];
+  listToolsAvailable?: IKitchenToolsAvailable[];
   onClose: () => void;
   onSubmit: (listToolsAdd: IKitchenToolsAvailable[]) => void;
 }
@@ -36,7 +36,7 @@ const ModalAddKitchenTools = ({
 
   const listToolsSearch = useMemo(() => {
     const query = searchValue ?? '';
-    return listToolsAvailable.filter(tool =>
+    return listToolsAvailable?.filter(tool =>
       tool[`name_${i18n.language}` as keyof IKitchenToolsAvailable]
         .toString()
         .toLowerCase()
@@ -98,7 +98,7 @@ const ModalAddKitchenTools = ({
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="handled">
               <View style={styles.toolsContainer}>
-                {listToolsSearch.map(tool => (
+                {listToolsSearch?.map(tool => (
                   <ItemToolSelect
                     key={tool.id}
                     tool={tool}

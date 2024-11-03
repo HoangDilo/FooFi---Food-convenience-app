@@ -14,7 +14,7 @@ export default {
   shadow: '#00000088',
   shadow_2: '#00000060',
   error: '#fe0b0b',
-  success: '#2ebd30',
+  success: '#12a614',
   disable: '#dcdcdc',
   skeleton_1: '#AAA',
   skeleton_2: '#dcdcdc',

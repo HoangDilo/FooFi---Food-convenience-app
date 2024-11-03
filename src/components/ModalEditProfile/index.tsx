@@ -17,6 +17,9 @@ import {useTranslation} from 'react-i18next';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useDispatch} from 'react-redux';
 import {setUserInfo} from '@/store/reducers/my.reducer';
+import storage from '@react-native-firebase/storage';
+import moment from 'moment';
+import Toast from 'react-native-toast-message';
 
 interface IModalRemake {
   isVisible: boolean;
@@ -32,10 +35,8 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
   const [email, setEmail] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
 
-  const handleConfirm = useCallback(() => {
+  const handleConfirm = useCallback(async () => {
     Keyboard.dismiss();
-    //update api
-
     dispatch(
       setUserInfo({
         avatar_url: avatarUrl,
@@ -44,6 +45,24 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
       }),
     );
     onClose();
+    //update api
+    try {
+      const imageName = avatarUrl.substring(avatarUrl.lastIndexOf('/') + 1);
+      const fileName = `${imageName}_${moment().format()}`;
+      const refImage = storage().ref(`/foofi/avatars/${fileName}`);
+      const task = refImage.putFile(avatarUrl);
+      await task;
+      Toast.show({
+        type: 'success',
+        text1: 'Upload success',
+      });
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: 'error',
+        text1: 'Upload failed',
+      });
+    }
   }, [avatarUrl, dispatch, email, name, onClose]);
 
   const handleCancel = useCallback(() => {
@@ -65,7 +84,7 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
     Keyboard.dismiss();
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.assets) {
-        setAvatarUrl(response.assets[0].uri);
+        setAvatarUrl(response.assets[0].uri || '');
       }
     });
   }, []);

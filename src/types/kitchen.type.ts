@@ -26,3 +26,7 @@ export interface IIngredient {
   unit: EUnit | null;
   quantity: number;
 }
+
+export interface IListToolsResponse {
+  data: IKitchenToolsAvailable[];
+}

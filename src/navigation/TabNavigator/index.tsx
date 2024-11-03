@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {TAB} from '@/constants/tabs.constant';
@@ -28,8 +28,8 @@ const TabNavigator = () => {
   const dispatch = useDispatch();
 
   const handleCheckToken = useCallback(async () => {
-    const access_token = await getAccessToken();
-    dispatch(setAccessToken(access_token ?? ''));
+    const token = await getAccessToken();
+    dispatch(setAccessToken(token ?? ''));
   }, [dispatch]);
 
   const handlePressTab = useCallback(

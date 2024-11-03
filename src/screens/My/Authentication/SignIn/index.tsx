@@ -1,4 +1,4 @@
-import {TextInput, TouchableHighlight, View} from 'react-native';
+import {Keyboard, TextInput, TouchableHighlight, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
@@ -8,10 +8,13 @@ import {setAccessTokenStorage} from '@/utils/storage';
 import {useDispatch} from 'react-redux';
 import {setAccessToken} from '@/store/reducers/my.reducer';
 import {useNavigation} from '@react-navigation/native';
+import {useLogin} from '@/api/hooks/useAuth';
+import {ILoginResponse} from '@/types/auth.type';
+import Toast from 'react-native-toast-message';
 
 const INPUTS = [
   {
-    key: 'email',
+    key: 'mail',
     content_type: 'emailAddress',
     placeholder_key: 'email_placeholder',
     secureTextEntry: false,
@@ -29,16 +32,39 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const loginMutation = useLogin();
+
   const [form, setForm] = useState({
-    email: '',
+    mail: '',
     password: '',
   });
 
+  const handleSuccessLogin = useCallback(
+    async (res: ILoginResponse) => {
+      setAccessTokenStorage(res.token);
+      dispatch(setAccessToken(res.token));
+      navigation.navigate('home_tab');
+      Toast.show({
+        type: 'success',
+        text1: t('toast.login_success'),
+      });
+    },
+    [dispatch, navigation, t],
+  );
+
   const handleSignIn = useCallback(() => {
-    navigation.navigate('home_tab');
-    dispatch(setAccessToken('abc'));
-    setAccessTokenStorage('abc');
-  }, [dispatch, navigation]);
+    loginMutation.mutate(form, {
+      onSuccess: handleSuccessLogin,
+      onError: () => {
+        Toast.show({
+          type: 'error',
+          text1: t('toast.login_error'),
+          visibilityTime: 3000,
+        });
+      },
+    });
+    Keyboard.dismiss();
+  }, [form, handleSuccessLogin, loginMutation, t]);
 
   const handleChangeText = useCallback(
     (key: string, value: string) => {

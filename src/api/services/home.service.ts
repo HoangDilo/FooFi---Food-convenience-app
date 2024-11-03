@@ -1,8 +1,8 @@
 import {IRecommendForYouResponse} from '@/types/home.type';
-import { apiClient } from '..';
+import {apiClient} from '..';
 
 export default {
   getRecommendForYou(): Promise<IRecommendForYouResponse> {
-    return apiClient.get('/recommend')
+    return apiClient.get('/recommend');
   },
 };

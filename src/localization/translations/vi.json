@@ -96,7 +96,7 @@
     "email_placeholder": "Nhập địa chỉ email của bạn",
     "password_placeholder": "Nhập mật khẩu",
     "name_placeholder": "Nhập tên đầy đủ của bạn",
-    "email": "Email",
+    "mail": "Email",
     "password": "Mật khẩu",
     "repeat_password": "Nhập lại mật khẩu",
     "name": "Họ và tên",
@@ -117,7 +117,9 @@
     "log_out": "Đăng xuất"
   },
   "toast": {
-    "login": "Vui lòng đăng nhập để tiếp tục"
+    "login": "Vui lòng đăng nhập để tiếp tục",
+    "login_success": "Login successfully",
+    "login_error": "Login failed! Please check your email and password again."
   },
   "languages": {
     "vi": "Tiếng Việt",

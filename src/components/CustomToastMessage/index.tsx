@@ -53,7 +53,7 @@ const styles = ScaledSheet.create({
     borderWidth: 1.5,
   },
   toastSucess: {
-    backgroundColor: '#e3ffdeAA',
+    backgroundColor: '#f0fff4DD',
     borderColor: colorsConstant.success,
   },
   toastError: {

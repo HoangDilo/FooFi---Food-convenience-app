@@ -13,6 +13,9 @@ import i18n from '@/localization/i18n';
 import CustomToastMessage from '@/components/CustomToastMessage';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
@@ -25,11 +28,13 @@ const App = () => {
     <Provider store={store}>
       <I18nextProvider i18n={i18n} defaultNS={'translation'}>
         <GestureHandlerRootView style={{flex: 1}}>
-          <SafeAreaProvider>
-            <StatusBarCustom />
-            <MainNavigator />
-            <CustomToastMessage />
-          </SafeAreaProvider>
+          <QueryClientProvider client={queryClient}>
+            <SafeAreaProvider>
+              <StatusBarCustom />
+              <MainNavigator />
+              <CustomToastMessage />
+            </SafeAreaProvider>
+          </QueryClientProvider>
         </GestureHandlerRootView>
       </I18nextProvider>
     </Provider>

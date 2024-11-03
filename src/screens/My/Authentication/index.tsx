@@ -1,5 +1,5 @@
-import {Pressable, ScrollView, View} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {BackHandler, Pressable, ScrollView, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import Typo from '@/components/Typo';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
@@ -8,15 +8,28 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import IconXML from '@/components/IconXML';
 import Google from '@/assets/icons/Google';
+import {useAppSelector} from '@/hooks/redux';
 
 const Authentication = () => {
   const {t} = useTranslation();
+  const {access_token} = useAppSelector(state => state.my);
 
   const [isLogin, setIsLogin] = useState(true);
 
   const handleSwitchSignUp = useCallback(() => {
     setIsLogin(!isLogin);
   }, [isLogin]);
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        return !access_token;
+      },
+    );
+
+    return () => backHandler.remove();
+  }, [access_token]);
 
   return (
     <ScrollView

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "681928462243",
+    "project_id": "upload-file-ac9d3",
+    "storage_bucket": "upload-file-ac9d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681928462243:android:bd8039b7828ebcddb7d416",
+        "android_client_info": {
+          "package_name": "com.foofi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL_5PKNWqkrYFpRRT0hiA7Bv7kEqf717E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
