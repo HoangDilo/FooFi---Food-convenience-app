@@ -6,14 +6,14 @@ import {useMemo} from 'react';
 export const useKitchenTool = () => {
   const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
   return useQuery({
-    queryKey: ['list_tool'],
+    queryKey: ['list_tools'],
     queryFn,
   });
 };
 
 export const useKitchenSpice = () => {
   return useQuery({
-    queryKey: ['list_spice'],
+    queryKey: ['list_spices'],
     queryFn: kitchenService.getLitKitchenSpices,
   });
 };

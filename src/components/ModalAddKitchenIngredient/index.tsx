@@ -41,14 +41,7 @@ const ModalAddKitchenIngredient = ({
   const [ingredientSelected, setIngredientSelected] =
     useState<IIngredient | null>(null);
   const [amount, setAmount] = useState(0);
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useKitchenIngredient();
+  const {data, fetchNextPage, hasNextPage} = useKitchenIngredient();
 
   const listMapped = useMemo(() => {
     if (data) {

@@ -20,11 +20,13 @@ import {useTranslation} from 'react-i18next';
 import IconXML from '@/components/IconXML';
 import QuestionCircle from '@/assets/icons/QuestionCircle';
 import KitchenIngredients from './KitchenIngredients';
+import {useQueryClient} from '@tanstack/react-query';
 
 const KitchenScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
+  const queryClient = useQueryClient();
 
   const contentOffsetY = useRef<number>(0);
 
@@ -46,7 +48,12 @@ const KitchenScreen = () => {
     useCallback(() => {
       dispatch(setIsScrolling(contentOffsetY.current > 120));
       dispatch(setCurrentRoute(TAB.KITCHEN));
-    }, [dispatch]),
+      queryClient.refetchQueries({
+        queryKey: ['list_tools', 'list_spices', 'list_ingredients'],
+        stale: true,
+        exact: true,
+      });
+    }, [dispatch, queryClient]),
   );
 
   return (

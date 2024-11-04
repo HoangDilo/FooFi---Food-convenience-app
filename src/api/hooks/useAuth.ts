@@ -24,16 +24,17 @@ export const useCheckValidToken = <T, P extends any[]>(
     try {
       const res = await func(...args);
       return res;
-    } catch (error) {
-      console.log('axios error', error);
-
-      // dispatch(setAccessToken(''));
-      // await setAccessTokenStorage('');
-      // navigation.navigate('my');
-      // Toast.show({
-      //   type: 'error',
-      //   text1: 'Log out!',
-      // });
+    } catch (error: any) {
+      const status = error.response.status;
+      if (status === 401) {
+        dispatch(setAccessToken(''));
+        await setAccessTokenStorage('');
+        navigation.navigate('my');
+        Toast.show({
+          type: 'error',
+          text1: 'Log out!',
+        });
+      }
     }
   };
 
