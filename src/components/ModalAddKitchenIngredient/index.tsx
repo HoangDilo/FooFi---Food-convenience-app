@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   FlatList,
   Keyboard,
   KeyboardAvoidingView,
@@ -7,7 +8,11 @@ import {
   View,
 } from 'react-native';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {ScaledSheet, verticalScale} from 'react-native-size-matters/extend';
+import {
+  scale,
+  ScaledSheet,
+  verticalScale,
+} from 'react-native-size-matters/extend';
 import ModalRemake from '../ModalRemake';
 import colorsConstant from '@/constants/colors.constant';
 import Typo from '../Typo';
@@ -36,9 +41,23 @@ const ModalAddKitchenIngredient = ({
   const [ingredientSelected, setIngredientSelected] =
     useState<IIngredient | null>(null);
   const [amount, setAmount] = useState(0);
-  const dataIngredients = useKitchenIngredient();
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useKitchenIngredient();
 
-  console.log(dataIngredients.data?.pages);
+  const listMapped = useMemo(() => {
+    if (data) {
+      return data.pages.flatMap(item => item?.data || []);
+    }
+    return [];
+  }, [data]);
+
+  console.log(listMapped.map(item => item.id));
 
   const stepMapping = useMemo(
     () => ({
@@ -112,6 +131,10 @@ const ModalAddKitchenIngredient = ({
     setAmount(value ? parseFloat(value) : 0);
   }, []);
 
+  const handleFetchMore = useCallback(() => {
+    hasNextPage && fetchNextPage();
+  }, [fetchNextPage, hasNextPage]);
+
   useEffect(() => {
     setAmount(0);
   }, [ingredientSelected]);
@@ -135,7 +158,7 @@ const ModalAddKitchenIngredient = ({
             )}
             {step === 0 && (
               <FlatList
-                data={dataIngredients.data?.pages || []}
+                data={listMapped || []}
                 renderItem={({item}) => (
                   <ItemIngredientSelect
                     ingredient={item}
@@ -153,6 +176,16 @@ const ModalAddKitchenIngredient = ({
                 numColumns={2}
                 columnWrapperStyle={{gap: 10}}
                 showsVerticalScrollIndicator={false}
+                onEndReached={handleFetchMore}
+                ListFooterComponent={
+                  hasNextPage ? (
+                    <ActivityIndicator
+                      style={{marginTop: scale(8)}}
+                      size={30}
+                      color={colorsConstant.secondary}
+                    />
+                  ) : undefined
+                }
               />
             )}
             {step === 1 && (
@@ -250,8 +283,8 @@ const styles = ScaledSheet.create({
     fontWeight: '600',
   },
   flatList: {
-    maxHeight: '280@s',
-    height: '280@s',
+    maxHeight: '300@s',
+    height: '300@s',
     marginTop: '8@s',
   },
   flatListContainer: {

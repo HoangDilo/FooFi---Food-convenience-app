@@ -25,13 +25,15 @@ export const useCheckValidToken = <T, P extends any[]>(
       const res = await func(...args);
       return res;
     } catch (error) {
-      dispatch(setAccessToken(''));
-      await setAccessTokenStorage('');
-      navigation.navigate('my');
-      Toast.show({
-        type: 'error',
-        text1: 'Log out!',
-      });
+      console.log('axios error', error);
+
+      // dispatch(setAccessToken(''));
+      // await setAccessTokenStorage('');
+      // navigation.navigate('my');
+      // Toast.show({
+      //   type: 'error',
+      //   text1: 'Log out!',
+      // });
     }
   };
 

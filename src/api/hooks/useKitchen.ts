@@ -31,7 +31,7 @@ export const useKitchenIngredient = () => {
     queryFn: ({pageParam}) => queryFunction(pageParam),
     getNextPageParam: lastPage => {
       if (lastPage) {
-        if (lastPage.currentPage < lastPage.totalPages) {
+        if (lastPage.currentPage < lastPage.totalPages - 1) {
           return lastPage.currentPage + 1;
         }
       }
