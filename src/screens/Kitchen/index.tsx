@@ -12,7 +12,11 @@ import colorsConstant from '@/constants/colors.constant';
 import HeaderTab from '@/components/HeaderTab';
 import {setCurrentRoute, setIsScrolling} from '@/store/reducers/system.reducer';
 import {TAB} from '@/constants/tabs.constant';
-import {scale, ScaledSheet} from 'react-native-size-matters/extend';
+import {
+  scale,
+  ScaledSheet,
+  verticalScale,
+} from 'react-native-size-matters/extend';
 import KitchenTools from './KitchenTools';
 import KitchenSpices from './KitchenSpices';
 import Typo from '@/components/Typo';
@@ -20,13 +24,14 @@ import {useTranslation} from 'react-i18next';
 import IconXML from '@/components/IconXML';
 import QuestionCircle from '@/assets/icons/QuestionCircle';
 import KitchenIngredients from './KitchenIngredients';
-import {useQueryClient} from '@tanstack/react-query';
+import FastImage from 'react-native-fast-image';
+import {deviceWidth} from '@/constants/device.constant';
+import BlackGradientWrapper from '@/components/BlackGradientWrapper';
 
 const KitchenScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
-  const queryClient = useQueryClient();
 
   const contentOffsetY = useRef<number>(0);
 
@@ -48,12 +53,7 @@ const KitchenScreen = () => {
     useCallback(() => {
       dispatch(setIsScrolling(contentOffsetY.current > 120));
       dispatch(setCurrentRoute(TAB.KITCHEN));
-      queryClient.refetchQueries({
-        queryKey: ['list_tools', 'list_spices', 'list_ingredients'],
-        stale: true,
-        exact: true,
-      });
-    }, [dispatch, queryClient]),
+    }, [dispatch]),
   );
 
   return (
@@ -63,19 +63,28 @@ const KitchenScreen = () => {
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       onScroll={event => handleScroll(event)}>
-      <HeaderTab
-        stylesCustom={{paddingTop: insets.top + scale(16)}}
-        rightIcon={
-          <IconXML
-            icon={QuestionCircle}
-            width={scale(36)}
-            height={scale(36)}
-            onPress={handlePressQuestionMark}
-          />
-        }
-      />
+      <View style={styles.headerContainer}>
+        <FastImage
+          source={require('@/assets/images/kitchen.jpg')}
+          style={styles.headerImg}
+          resizeMode="cover"
+        />
+        <View style={styles.headerContentWrapper}>
+          <View style={styles.headerContent}>
+            <View style={{flex: 1}}>
+              <Typo style={styles.headerTitle}>{t('tabs_name.kitchen')}</Typo>
+              <Typo style={styles.description}>{t('kitchen.title')}</Typo>
+            </View>
+            <IconXML
+              icon={QuestionCircle}
+              width={scale(40)}
+              height={scale(40)}
+              style={styles.questionMark}
+            />
+          </View>
+        </View>
+      </View>
       <View style={styles.scrollViewWrapper}>
-        <Typo style={styles.description}>{t('kitchen.title')}</Typo>
         <KitchenTools />
         <KitchenSpices />
         <KitchenIngredients />
@@ -93,21 +102,50 @@ const styles = ScaledSheet.create({
     flex: 1,
     overflow: 'hidden',
     backgroundColor: colorsConstant.background,
-    marginTop: '12@s',
     padding: '24@s',
+    transform: [
+      {
+        translateY: -16,
+      },
+    ],
   },
   scrollView: {
     backgroundColor: colorsConstant.background,
   },
-  kitchenScreen: {
-    backgroundColor: colorsConstant.primary,
-  },
+  kitchenScreen: {},
   description: {
-    color: colorsConstant.gray_1,
+    color: '#FFF',
     fontSize: '16@s',
     fontWeight: '500',
     marginLeft: '4@s',
     fontStyle: 'italic',
     marginBottom: '8@s',
+  },
+  headerImg: {
+    height: '200@vs',
+    width: deviceWidth,
+  },
+  headerContainer: {
+    position: 'relative',
+  },
+  headerContentWrapper: {
+    backgroundColor: '#00000088',
+    position: 'absolute',
+    width: deviceWidth,
+    height: '200@vs',
+    justifyContent: 'center',
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    paddingHorizontal: '24@s',
+  },
+  headerTitle: {
+    color: '#FFF',
+    fontWeight: '700',
+    fontSize: '28@s',
+  },
+  questionMark: {
+    marginLeft: '80@s',
   },
 });

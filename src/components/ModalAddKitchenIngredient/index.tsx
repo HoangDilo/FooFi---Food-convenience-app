@@ -50,8 +50,6 @@ const ModalAddKitchenIngredient = ({
     return [];
   }, [data]);
 
-  console.log(listMapped.map(item => item.id));
-
   const stepMapping = useMemo(
     () => ({
       0: {

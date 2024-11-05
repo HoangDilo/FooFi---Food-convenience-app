@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 import {useDispatch} from 'react-redux';
 import {setAccessToken} from '@/store/reducers/my.reducer';
 import {setAccessTokenStorage} from '@/utils/storage';
+import {useTranslation} from 'react-i18next';
 
 export const useLogin = () => {
   return useMutation({
@@ -19,6 +20,7 @@ export const useCheckValidToken = <T, P extends any[]>(
 ) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const {t} = useTranslation();
 
   const newFunction = async (...args: P) => {
     try {
@@ -32,7 +34,7 @@ export const useCheckValidToken = <T, P extends any[]>(
         navigation.navigate('my');
         Toast.show({
           type: 'error',
-          text1: 'Log out!',
+          text1: t('logout'),
         });
       }
     }

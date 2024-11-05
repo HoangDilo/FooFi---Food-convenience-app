@@ -1,7 +1,13 @@
-import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import kitchenService from '../services/kitchen.service';
 import {useCheckValidToken} from './useAuth';
 import {useMemo} from 'react';
+import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 
 export const useKitchenTool = () => {
   const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
@@ -37,5 +43,30 @@ export const useKitchenIngredient = () => {
       }
       return null;
     },
+  });
+};
+
+export const useUserKitchenTool = () => {
+  const queryFn = useCheckValidToken(kitchenService.getUserListKitchenTools);
+  return useQuery({
+    queryKey: ['user_tools'],
+    queryFn,
+  });
+};
+
+export const useAddUserKitchenTool = () => {
+  const mutationFn = useCheckValidToken(kitchenService.addUserKitchenTools);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['add_tools'],
+    mutationFn,
+    onMutate: tools => {
+      const optimistic = tools;
+      queryClient.setQueriesData({queryKey: ['user_tools']}, old => {
+        return [...old, optimistic];
+      });
+      return {optimistic};
+    },
+    onSuccess: 
   });
 };

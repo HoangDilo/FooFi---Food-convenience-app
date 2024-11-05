@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
@@ -9,14 +9,19 @@ import ModalAddKitchenTools from '@/components/ModalAddKitchenTools';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import ItemToolDisplay from './ItemToolDisplay';
 import {useTranslation} from 'react-i18next';
-import {useKitchenTool} from '@/api/hooks/useKitchen';
+import {
+  useAddUserKitchenTool,
+  useKitchenTool,
+  useUserKitchenTool,
+} from '@/api/hooks/useKitchen';
 
 const KitchenTools = () => {
   const {t} = useTranslation();
 
   const [isOpenModalAddTools, setIsOpenModalAddTools] = useState(false);
-  const [listTools, setListTools] = useState<IKitchenToolsAvailable[]>([]);
   const dataTool = useKitchenTool();
+  const {data, isPending} = useUserKitchenTool();
+  const {mutate} = useAddUserKitchenTool();
 
   const handleAddTool = useCallback(() => {
     setIsOpenModalAddTools(true);
@@ -26,20 +31,14 @@ const KitchenTools = () => {
     setIsOpenModalAddTools(false);
   }, []);
 
-  const handleSubmit = useCallback(
-    (listAdd: IKitchenToolsAvailable[]) => {
-      setListTools(listTools.concat(listAdd));
-    },
-    [listTools],
-  );
+  const handleSubmit = useCallback((listAdd: IKitchenToolsAvailable[]) => {
+    mutate(listAdd.map(item => item.id));
+    setListTools(listTools.concat(listAdd));
+  }, []);
 
-  const handleRemoveTool = useCallback(
-    (id: number) => {
-      const listToolsFilter = listTools.filter(item => item.id !== id);
-      setListTools(listToolsFilter);
-    },
-    [listTools],
-  );
+  const handleRemoveTool = useCallback((id: number) => {
+
+  }, []);
 
   return (
     <View style={styles.toolsContainer}>
@@ -52,19 +51,26 @@ const KitchenTools = () => {
           onPress={handleAddTool}
         />
       </View>
-      {listTools.length ? (
-        <View style={styles.listTools}>
-          {listTools.map(tool => (
-            <ItemToolDisplay
-              key={tool.id}
-              tool={tool}
-              onRemoveTool={() => handleRemoveTool(tool.id)}
-            />
-          ))}
-        </View>
+      {!isPending ? (
+        <>
+          {data?.length ? (
+            <View style={styles.listTools}>
+              {data.map(tool => (
+                <ItemToolDisplay
+                  key={tool.id}
+                  tool={tool}
+                  onRemoveTool={() => handleRemoveTool(tool.id)}
+                />
+              ))}
+            </View>
+          ) : (
+            <Typo style={styles.emptyTools}>{t('kitchen.empty_tools')}</Typo>
+          )}
+        </>
       ) : (
-        <Typo style={styles.emptyTools}>{t('kitchen.empty_tools')}</Typo>
+        <ActivityIndicator style={styles.loadingIcon} />
       )}
+
       <ModalAddKitchenTools
         isVisible={isOpenModalAddTools}
         listToolsAvailable={dataTool.data}
@@ -113,5 +119,9 @@ const styles = ScaledSheet.create({
     marginTop: '8@s',
     textAlign: 'right',
     paddingHorizontal: '8@s',
+  },
+  loadingIcon: {
+    paddingVertical: '16@s',
+    paddingHorizontal: '4@s',
   },
 });

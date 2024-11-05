@@ -57,7 +57,6 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
         text1: 'Upload success',
       });
     } catch (error) {
-      console.log(error);
       Toast.show({
         type: 'error',
         text1: 'Upload failed',

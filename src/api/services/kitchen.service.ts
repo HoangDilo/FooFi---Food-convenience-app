@@ -8,7 +8,7 @@ import {apiClientToken} from '..';
 
 export default {
   getListKitchenTools(): Promise<IKitchenToolsAvailable[]> {
-    return apiClientToken.get('/tool/list');
+    return apiClientToken.get('/tool/user/tool/not-added');
   },
   getLitKitchenSpices(): Promise<ISpice[]> {
     return apiClientToken.get('/spice/list');
@@ -22,6 +22,12 @@ export default {
     );
   },
   getUserListKitchenTools(): Promise<IKitchenToolsAvailable[]> {
-    return apiClientToken.get('');
+    return apiClientToken.get('/tool/user/tool/list');
+  },
+  addUserKitchenTools(
+    tools: IKitchenToolsAvailable[],
+  ): Promise<IKitchenToolsAvailable> {
+    const toolIds = tools.map(item => item.id);
+    return apiClientToken.post('/tool/user/tool', toolIds);
   },
 };

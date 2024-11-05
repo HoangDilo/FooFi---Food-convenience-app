@@ -118,8 +118,11 @@
   },
   "toast": {
     "login": "Vui lòng đăng nhập để tiếp tục",
-    "login_success": "Login successfully",
-    "login_error": "Login failed! Please check your email and password again."
+    "login_success": "Đăng nhập thành công",
+    "login_error": "Đăng nhập thất bại, vui lòng kiểm tra lại email và mật khẩu.",
+    "logout": "Bạn đã bị đăng xuất!",
+    "email_error": "Định dạng email không đúng!",
+    "password_error": "Mật khẩu phải có 1 chữ số và 1 ký tự đặc biệt!"
   },
   "languages": {
     "vi": "Tiếng Việt",

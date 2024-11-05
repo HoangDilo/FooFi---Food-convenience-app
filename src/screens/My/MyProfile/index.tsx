@@ -103,7 +103,7 @@ const MyProfile = () => {
       i18n.changeLanguage(language);
       bottomSheetRef?.current?.close();
     },
-    [i18n],
+    [i18n, isOpenModal],
   );
 
   const handlePressChangePassword = useCallback(() => {}, []);
