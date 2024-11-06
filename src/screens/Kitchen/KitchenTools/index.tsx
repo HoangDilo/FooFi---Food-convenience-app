@@ -33,10 +33,12 @@ const KitchenTools = () => {
     setIsOpenModalAddTools(false);
   }, []);
 
-  const handleSubmit = useCallback((listAdd: IKitchenToolsAvailable[]) => {
-    mutate(listAdd.map(item => item.id));
-    setListTools(listTools.concat(listAdd));
-  }, []);
+  const handleSubmit = useCallback(
+    (listAdd: IKitchenToolsAvailable[]) => {
+      mutate(listAdd);
+    },
+    [mutate],
+  );
 
   const handleRemoveTool = useCallback((id: number) => {}, []);
 
@@ -122,8 +124,8 @@ const styles = ScaledSheet.create({
   },
   emptyTools: {
     fontSize: '14@s',
-    color: colorsConstant.gray_2,
-    marginTop: '8@s',
+    color: colorsConstant.gray_1,
+    marginVertical: '8@s',
     textAlign: 'right',
     paddingHorizontal: '8@s',
   },

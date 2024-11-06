@@ -186,10 +186,10 @@ const styles = ScaledSheet.create({
   },
   emptyLabel: {
     fontSize: '14@s',
-    color: colorsConstant.gray_2,
-    marginTop: '8@s',
+    color: colorsConstant.gray_1,
+    marginVertical: '8@s',
     textAlign: 'right',
-    paddingRight: '8@s',
+    paddingHorizontal: '8@s',
   },
   backgroundImg: {
     height: '60@s',

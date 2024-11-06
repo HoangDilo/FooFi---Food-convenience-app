@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
@@ -8,7 +8,7 @@ import IconXML from '@/components/IconXML';
 import {ISpice} from '@/types/kitchen.type';
 import ItemSpiceDisplay from './ItemSpiceDisplay';
 import ModalAddKitchenSpices from '@/components/ModalAddKitchenSpices';
-import {useKitchenSpice} from '@/api/hooks/useKitchen';
+import {useKitchenSpice, useUserKitchenSpices} from '@/api/hooks/useKitchen';
 import {deviceWidth} from '@/constants/device.constant';
 import FastImage from 'react-native-fast-image';
 import PlusWhite from '@/assets/icons/PlusWhite';
@@ -17,7 +17,8 @@ const KitchenSpices = () => {
   const {t} = useTranslation();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const {data: listSpices, isPending} = useKitchenSpice();
+  const {data: listSpices} = useKitchenSpice();
+  const {data: userListSpices, isPending} = useUserKitchenSpices();
 
   const handleAddListSpice = useCallback((listSpicesAdd: ISpice[]) => {}, []);
 
@@ -47,15 +48,19 @@ const KitchenSpices = () => {
         />
         <View style={styles.blackCover} />
       </View>
-      {data?.length ? (
+      {userListSpices?.length ? (
         <View style={styles.spicesDisplayContainer}>
-          {data.map(spice => (
-            <ItemSpiceDisplay
-              key={spice.id}
-              spice={spice}
-              onRemoveSpice={() => handleRemoveSpice(spice.id)}
-            />
-          ))}
+          {!isPending ? (
+            userListSpices.map(spice => (
+              <ItemSpiceDisplay
+                key={spice.id}
+                spice={spice}
+                onRemoveSpice={() => handleRemoveSpice(spice.id)}
+              />
+            ))
+          ) : (
+            <ActivityIndicator style={styles.loadingIcon} />
+          )}
         </View>
       ) : (
         <Typo style={styles.emptySpices}>{t('kitchen.empty_spice')}</Typo>
@@ -98,10 +103,14 @@ const styles = ScaledSheet.create({
   },
   emptySpices: {
     fontSize: '14@s',
-    color: colorsConstant.gray_2,
-    marginTop: '8@s',
+    color: colorsConstant.gray_1,
+    marginVertical: '8@s',
     textAlign: 'right',
     paddingHorizontal: '8@s',
+  },
+  loadingIcon: {
+    paddingVertical: '16@s',
+    paddingHorizontal: '4@s',
   },
   spicesDisplayContainer: {
     flexDirection: 'row',

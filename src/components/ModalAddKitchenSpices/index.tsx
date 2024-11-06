@@ -135,8 +135,8 @@ const styles = ScaledSheet.create({
     marginTop: '4@s',
   },
   scrollView: {
-    maxHeight: '280@s',
-    height: '280@s',
+    maxHeight: '300@s',
+    height: '300@s',
     marginTop: '8@s',
   },
   scrollViewContainer: {

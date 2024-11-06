@@ -99,10 +99,13 @@ const HomeScreen = () => {
     [dispatch],
   );
 
-  const handleChangeActiveMeal = useCallback((sessionName: string) => {
-    setActiveSession(sessionName);
-    bottomSheetSessionsRef.current?.close();
-  }, []);
+  const handleChangeActiveMeal = useCallback(
+    (sessionName: string) => {
+      setActiveSession(sessionName);
+      bottomSheetSessionsRef.current?.close();
+    },
+    [isBottomSheetShown],
+  );
 
   const handleSearch = useCallback(() => {
     if (searchValue) {

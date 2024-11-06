@@ -1,12 +1,14 @@
-import {IUserInfo} from '@/types/user.type';
+import {IUserInfo} from '@/types/auth.type';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initState = {
   access_token: '',
   user_info: {
-    email: '',
+    id: 0,
+    mail: '',
     name: '',
     avatar_url: '',
+    language: '',
   },
   language: '',
 };

@@ -17,15 +17,20 @@ import Toast from 'react-native-toast-message';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {getAccessToken} from '@/utils/storage';
-import {setAccessToken} from '@/store/reducers/my.reducer';
+import {setAccessToken, setUserInfo} from '@/store/reducers/my.reducer';
+import {useCheckValidToken} from '@/api/hooks/useAuth';
+import authService from '@/api/services/auth.service';
+import FastImage from 'react-native-fast-image';
+import {isValidUri} from '@/utils/image';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const TabNavigator = () => {
   const {access_token} = useAppSelector(state => state.my);
   const navigation = useNavigation();
-  const {t} = useTranslation();
+  const {t, i18n} = useTranslation();
   const dispatch = useDispatch();
+  const getUserInfoCheckLogin = useCheckValidToken(authService.getUserInfo);
 
   const handleCheckToken = useCallback(async () => {
     const token = await getAccessToken();
@@ -46,6 +51,22 @@ const TabNavigator = () => {
     [access_token, t],
   );
 
+  const handleGetUserInfo = useCallback(async () => {
+    try {
+      const userInfo = await getUserInfoCheckLogin();
+      i18n.changeLanguage(userInfo.language);
+      dispatch(setUserInfo(userInfo));
+      isValidUri(userInfo.avatar_url) &&
+        FastImage.preload([
+          {
+            uri: userInfo.avatar_url,
+          },
+        ]);
+    } catch (error) {
+      console.log('userinfo error', error);
+    }
+  }, [dispatch, getUserInfoCheckLogin, i18n]);
+
   useEffect(() => {
     navigation.navigate(access_token ? 'home_tab' : 'my');
   }, [access_token, navigation]);
@@ -53,6 +74,13 @@ const TabNavigator = () => {
   useEffect(() => {
     handleCheckToken();
   }, [handleCheckToken]);
+
+  useEffect(() => {
+    if (access_token) {
+      handleGetUserInfo();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [access_token]);
 
   return (
     <Tab.Navigator

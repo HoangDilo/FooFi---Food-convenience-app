@@ -37,6 +37,7 @@ export const useCheckValidToken = <T, P extends any[]>(
           text1: t('toast.logout'),
         });
       }
+      return Promise.reject(error);
     }
   };
 

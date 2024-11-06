@@ -4,8 +4,7 @@ import {
   ScrollView,
   View,
 } from 'react-native';
-import React, {useCallback, useRef} from 'react';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import colorsConstant from '@/constants/colors.constant';
@@ -22,11 +21,12 @@ import KitchenIngredients from './KitchenIngredients';
 import FastImage from 'react-native-fast-image';
 import {deviceWidth} from '@/constants/device.constant';
 import {useQueryClient} from '@tanstack/react-query';
+import {useAppSelector} from '@/hooks/redux';
 
 const KitchenScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
-  const insets = useSafeAreaInsets();
+  const {access_token} = useAppSelector(state => state.my);
   const queryClient = useQueryClient();
 
   const contentOffsetY = useRef<number>(0);
@@ -52,14 +52,12 @@ const KitchenScreen = () => {
     }, [dispatch]),
   );
 
-  useFocusEffect(
-    useCallback(() => {
-      queryClient.refetchQueries({queryKey: ['list_tools']});
-      queryClient.refetchQueries({queryKey: ['list_spices']});
-      queryClient.refetchQueries({queryKey: ['list_ingredients']});
-      queryClient.refetchQueries({queryKey: ['user_tools']});
-    }, [queryClient]),
-  );
+  useEffect(() => {
+    queryClient.refetchQueries({queryKey: ['list_tools']});
+    queryClient.refetchQueries({queryKey: ['list_spices']});
+    queryClient.refetchQueries({queryKey: ['list_ingredients']});
+    queryClient.refetchQueries({queryKey: ['user_tools']});
+  }, [queryClient, access_token]);
 
   return (
     <ScrollView
@@ -107,7 +105,8 @@ const styles = ScaledSheet.create({
     flex: 1,
     overflow: 'hidden',
     backgroundColor: colorsConstant.background,
-    padding: '24@s',
+    paddingHorizontal: '24@s',
+    paddingVertical: '26@s',
     transform: [
       {
         translateY: -16,

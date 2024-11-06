@@ -70,6 +70,10 @@ export const useAddUserKitchenTool = () => {
   });
 };
 
-export const useUserSpice = () => {
-  const queryFn = useCheckValidToken(kitchenService.)
-}
+export const useUserKitchenSpices = () => {
+  const queryFn = useCheckValidToken(kitchenService.getUserListKitchenSpices);
+  return useQuery({
+    queryKey: ['user_spices'],
+    queryFn,
+  });
+};

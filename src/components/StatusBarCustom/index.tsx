@@ -13,11 +13,15 @@ const StatusBarCustom = () => {
     [currentRoute],
   );
 
+  const isAnimated = useMemo(() => {
+    return currentRoute === TAB.HOME_TAB || currentRoute === TAB.KITCHEN;
+  }, [currentRoute]);
+
   return (
     <StatusBar
       barStyle={isScrolling || isDarkContent ? 'dark-content' : 'light-content'}
       backgroundColor={isScrolling ? colorsConstant.background : '#00000000'}
-      animated={currentRoute === TAB.HOME_TAB}
+      animated={isAnimated}
     />
   );
 };

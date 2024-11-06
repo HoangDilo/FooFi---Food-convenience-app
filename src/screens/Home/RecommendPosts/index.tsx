@@ -6,6 +6,7 @@ import {useTranslation} from 'react-i18next';
 import colorsConstant from '@/constants/colors.constant';
 import RecommendPostItem from '@/screens/Home/RecommendPosts/RecommendPostItem';
 import {IRecommendPostItem} from '@/types/home.type';
+import {useNavigation} from '@react-navigation/native';
 
 const listRecommendPosts: IRecommendPostItem[] = [
   {
@@ -56,6 +57,7 @@ const listRecommendPosts: IRecommendPostItem[] = [
 
 const RecommendPosts = () => {
   const {t} = useTranslation();
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -66,6 +68,11 @@ const RecommendPosts = () => {
       {listRecommendPosts.map(item => (
         <RecommendPostItem key={item.id} item={item} />
       ))}
+      <Typo
+        style={styles.otherPost}
+        onPress={() => navigation.navigate('other_chefs')}>
+        {t('home.other_post')}
+      </Typo>
     </View>
   );
 };
@@ -80,5 +87,13 @@ const styles = ScaledSheet.create({
     fontSize: '18@s',
     fontWeight: 600,
     color: colorsConstant.black_1,
+  },
+  otherPost: {
+    color: colorsConstant.secondary,
+    fontWeight: '400',
+    alignSelf: 'center',
+    fontSize: '14@s',
+    textDecorationLine: 'underline',
+    marginBottom: '8@s',
   },
 });

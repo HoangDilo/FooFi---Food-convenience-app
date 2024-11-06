@@ -11,11 +11,10 @@ import CookingInstruction from '@/screens/CookingInstruction';
 import SearchScreen from '@/screens/Search';
 import AddPost from '@/screens/AddPost';
 import DishDetails from '@/screens/DishDetails';
-import {useDispatch} from 'react-redux';
-import {getAccessToken} from '@/utils/storage';
-import FastImage from 'react-native-fast-image';
-import {setUserInfo} from '@/store/reducers/my.reducer';
 import HistoryScreen from '@/screens/History';
+import {getAccessToken} from '@/utils/storage';
+import {useDispatch} from 'react-redux';
+import {setAccessToken} from '@/store/reducers/my.reducer';
 
 declare global {
   namespace ReactNavigation {
@@ -28,26 +27,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function MainNavigator() {
   const dispatch = useDispatch();
 
-  const handleGetUserInfo = useCallback(async () => {
+  const handleGetAccessToken = useCallback(async () => {
     const access_token = await getAccessToken();
-    dispatch(
-      setUserInfo({
-        name: 'Hoàng deal đô',
-        email: 'abc@abc.gmail.com',
-        avatar_url:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDIh3uj5vwgrKZs1qNx5y7JK_KyR0dTcXp3g&s',
-      }),
-    );
-    FastImage.preload([
-      {
-        uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDIh3uj5vwgrKZs1qNx5y7JK_KyR0dTcXp3g&s',
-      },
-    ]);
+    dispatch(setAccessToken(access_token || ''));
   }, [dispatch]);
 
   useEffect(() => {
-    handleGetUserInfo();
-  }, [handleGetUserInfo]);
+    handleGetAccessToken;
+  }, [handleGetAccessToken]);
 
   return (
     <NavigationContainer>

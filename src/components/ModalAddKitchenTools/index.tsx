@@ -4,7 +4,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import React, {memo, useCallback, useMemo, useState} from 'react';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {ScaledSheet, verticalScale} from 'react-native-size-matters/extend';
 import Typo from '../Typo';
 import ModalRemake from '../ModalRemake';
@@ -13,6 +13,7 @@ import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import ItemToolSelect from './ItemToolSelect';
 import {useTranslation} from 'react-i18next';
 import SearchKitchen from '../SearchKitchen';
+import {useQueryClient} from '@tanstack/react-query';
 
 interface IModalAddKitchenToolsProps {
   isVisible: boolean;
@@ -28,6 +29,7 @@ const ModalAddKitchenTools = ({
   onSubmit,
 }: IModalAddKitchenToolsProps) => {
   const {t, i18n} = useTranslation();
+  const queryClient = useQueryClient();
 
   const [listToolsSelected, setListToolsSelected] = useState<
     IKitchenToolsAvailable[]
@@ -79,6 +81,14 @@ const ModalAddKitchenTools = ({
   const handleChangeSearchValue = useCallback((value: string) => {
     setSearchValue(value);
   }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      queryClient.refetchQueries({
+        queryKey: ['list_tools'],
+      });
+    }
+  }, [isVisible]);
 
   return (
     <ModalRemake isVisible={isVisible}>
@@ -145,8 +155,8 @@ const styles = ScaledSheet.create({
     marginTop: '4@s',
   },
   scrollView: {
-    maxHeight: '280@s',
-    height: '280@s',
+    maxHeight: '300@s',
+    height: '300@s',
     marginTop: '8@s',
   },
   toolsContainer: {
