@@ -1,6 +1,6 @@
 import {View} from 'react-native';
 import React, {useCallback, useMemo, useState} from 'react';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
 import colorsConstant from '@/constants/colors.constant';
@@ -13,6 +13,9 @@ import ModalConfirm from '@/components/ModalConfirm';
 import ModalEditIngredient from '@/components/ModalEditIngredient';
 import Pagination from '@/components/Pagination';
 import {useKitchenIngredient} from '@/api/hooks/useKitchen';
+import FastImage from 'react-native-fast-image';
+import {deviceWidth} from '@/constants/device.constant';
+import PlusWhite from '@/assets/icons/PlusWhite';
 
 const PAGE_LIMIT = 5;
 
@@ -93,11 +96,16 @@ const KitchenIngredients = () => {
           {t('kitchen.kitchen_ingredient')}
         </Typo>
         <IconXML
-          icon={PlusCircle}
+          icon={PlusWhite}
           width={32}
           height={32}
           onPress={handleAddIngredient}
         />
+        <FastImage
+          source={require('@/assets/images/kitcheningredient.jpg')}
+          style={styles.backgroundImg}
+        />
+        <View style={styles.blackCover} />
       </View>
       {listIngredients.length ? (
         <View style={styles.listIngredients}>
@@ -150,6 +158,8 @@ export default KitchenIngredients;
 const styles = ScaledSheet.create({
   mainContainer: {},
   header: {
+    position: 'relative',
+    overflow: 'hidden',
     backgroundColor: '#FFF',
     borderRadius: '16@s',
     paddingVertical: '12@s',
@@ -167,7 +177,7 @@ const styles = ScaledSheet.create({
   headerLabel: {
     fontSize: '20@s',
     fontWeight: '600',
-    color: colorsConstant.black_1,
+    color: '#FFF',
   },
   listIngredients: {
     gap: '8@s',
@@ -180,5 +190,19 @@ const styles = ScaledSheet.create({
     marginTop: '8@s',
     textAlign: 'right',
     paddingRight: '8@s',
+  },
+  backgroundImg: {
+    height: '60@s',
+    width: deviceWidth - 2 * scale(24),
+    position: 'absolute',
+    top: 0,
+    zIndex: -1,
+  },
+  blackCover: {
+    backgroundColor: '#00000060',
+    position: 'absolute',
+    height: '60@s',
+    width: deviceWidth - 2 * scale(24),
+    zIndex: -1,
   },
 });

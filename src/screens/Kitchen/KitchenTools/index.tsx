@@ -1,10 +1,9 @@
 import {ActivityIndicator, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import colorsConstant from '@/constants/colors.constant';
 import IconXML from '@/components/IconXML';
-import PlusCircle from '@/assets/icons/PlusCircle';
 import ModalAddKitchenTools from '@/components/ModalAddKitchenTools';
 import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 import ItemToolDisplay from './ItemToolDisplay';
@@ -14,6 +13,9 @@ import {
   useKitchenTool,
   useUserKitchenTool,
 } from '@/api/hooks/useKitchen';
+import FastImage from 'react-native-fast-image';
+import {deviceWidth} from '@/constants/device.constant';
+import PlusWhite from '@/assets/icons/PlusWhite';
 
 const KitchenTools = () => {
   const {t} = useTranslation();
@@ -36,20 +38,23 @@ const KitchenTools = () => {
     setListTools(listTools.concat(listAdd));
   }, []);
 
-  const handleRemoveTool = useCallback((id: number) => {
-
-  }, []);
+  const handleRemoveTool = useCallback((id: number) => {}, []);
 
   return (
     <View style={styles.toolsContainer}>
       <View style={styles.toolsHeader}>
         <Typo style={styles.headerLabel}>{t('kitchen.kitchen_tools')}</Typo>
         <IconXML
-          icon={PlusCircle}
+          icon={PlusWhite}
           width={32}
           height={32}
           onPress={handleAddTool}
         />
+        <FastImage
+          source={require('@/assets/images/kitchentool.jpg')}
+          style={styles.backgroundImg}
+        />
+        <View style={styles.blackCover} />
       </View>
       {!isPending ? (
         <>
@@ -86,6 +91,7 @@ export default KitchenTools;
 const styles = ScaledSheet.create({
   toolsContainer: {},
   toolsHeader: {
+    position: 'relative',
     backgroundColor: '#FFF',
     borderRadius: '16@s',
     paddingVertical: '12@s',
@@ -99,11 +105,12 @@ const styles = ScaledSheet.create({
       width: 3,
       height: 3,
     },
+    overflow: 'hidden',
   },
   headerLabel: {
     fontSize: '20@s',
     fontWeight: '600',
-    color: colorsConstant.black_1,
+    color: '#FFF',
   },
   listTools: {
     flexDirection: 'row',
@@ -123,5 +130,19 @@ const styles = ScaledSheet.create({
   loadingIcon: {
     paddingVertical: '16@s',
     paddingHorizontal: '4@s',
+  },
+  backgroundImg: {
+    height: '60@s',
+    width: deviceWidth - 2 * scale(24),
+    position: 'absolute',
+    top: 0,
+    zIndex: -1,
+  },
+  blackCover: {
+    backgroundColor: '#00000060',
+    position: 'absolute',
+    height: '60@s',
+    width: deviceWidth - 2 * scale(24),
+    zIndex: -1,
   },
 });

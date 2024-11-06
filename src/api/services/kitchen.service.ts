@@ -11,7 +11,7 @@ export default {
     return apiClientToken.get('/tool/user/tool/not-added');
   },
   getLitKitchenSpices(): Promise<ISpice[]> {
-    return apiClientToken.get('/spice/list');
+    return apiClientToken.get('/spice/user/not-added');
   },
   getListKitchenIngredient(
     page: number,
@@ -29,5 +29,8 @@ export default {
   ): Promise<IKitchenToolsAvailable> {
     const toolIds = tools.map(item => item.id);
     return apiClientToken.post('/tool/user/tool', toolIds);
+  },
+  getUserListKitchenSpices(): Promise<ISpice[]> {
+    return apiClientToken.get('/spice/user/list');
   },
 };

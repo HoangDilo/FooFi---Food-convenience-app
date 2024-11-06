@@ -7,7 +7,6 @@ import {
 import kitchenService from '../services/kitchen.service';
 import {useCheckValidToken} from './useAuth';
 import {useMemo} from 'react';
-import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 
 export const useKitchenTool = () => {
   const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
@@ -67,6 +66,10 @@ export const useAddUserKitchenTool = () => {
       });
       return {optimistic};
     },
-    onSuccess: 
+    onSuccess: () => {},
   });
 };
+
+export const useUserSpice = () => {
+  const queryFn = useCheckValidToken(kitchenService.)
+}

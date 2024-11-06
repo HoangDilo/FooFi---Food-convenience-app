@@ -34,7 +34,7 @@ export const useCheckValidToken = <T, P extends any[]>(
         navigation.navigate('my');
         Toast.show({
           type: 'error',
-          text1: t('logout'),
+          text1: t('toast.logout'),
         });
       }
     }

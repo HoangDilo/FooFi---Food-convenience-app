@@ -1,42 +1,31 @@
 import {View} from 'react-native';
 import React, {useCallback, useState} from 'react';
-import {ScaledSheet} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
-import PlusCircle from '@/assets/icons/PlusCircle';
 import IconXML from '@/components/IconXML';
 import {ISpice} from '@/types/kitchen.type';
 import ItemSpiceDisplay from './ItemSpiceDisplay';
 import ModalAddKitchenSpices from '@/components/ModalAddKitchenSpices';
 import {useKitchenSpice} from '@/api/hooks/useKitchen';
+import {deviceWidth} from '@/constants/device.constant';
+import FastImage from 'react-native-fast-image';
+import PlusWhite from '@/assets/icons/PlusWhite';
 
 const KitchenSpices = () => {
   const {t} = useTranslation();
 
-  const [listSpices, setListSpices] = useState<ISpice[]>([]);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const dataSpices = useKitchenSpice();
+  const {data: listSpices, isPending} = useKitchenSpice();
 
-  const handleAddListSpice = useCallback(
-    (listSpicesAdd: ISpice[]) => {
-      const listSpicesNew = listSpices.concat(listSpicesAdd);
-      setListSpices(listSpicesNew);
-    },
-    [listSpices],
-  );
+  const handleAddListSpice = useCallback((listSpicesAdd: ISpice[]) => {}, []);
 
   const handleAddSpice = useCallback(() => {
     setIsOpenModal(true);
   }, []);
 
-  const handleRemoveSpice = useCallback(
-    (id: number) => {
-      const listSpicesFiltered = listSpices.filter(spice => spice.id !== id);
-      setListSpices(listSpicesFiltered);
-    },
-    [listSpices],
-  );
+  const handleRemoveSpice = useCallback((id: number) => {}, []);
 
   const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);
@@ -47,15 +36,20 @@ const KitchenSpices = () => {
       <View style={styles.header}>
         <Typo style={styles.headerLabel}>{t('kitchen.kitchen_spices')}</Typo>
         <IconXML
-          icon={PlusCircle}
+          icon={PlusWhite}
           width={32}
           height={32}
           onPress={handleAddSpice}
         />
+        <FastImage
+          source={require('@/assets/images/kitchenspice.jpeg')}
+          style={styles.backgroundImg}
+        />
+        <View style={styles.blackCover} />
       </View>
-      {listSpices.length ? (
+      {data?.length ? (
         <View style={styles.spicesDisplayContainer}>
-          {listSpices.map(spice => (
+          {data.map(spice => (
             <ItemSpiceDisplay
               key={spice.id}
               spice={spice}
@@ -68,7 +62,7 @@ const KitchenSpices = () => {
       )}
       <ModalAddKitchenSpices
         isVisible={isOpenModal}
-        listSpices={dataSpices.data}
+        listSpices={listSpices}
         onSubmit={handleAddListSpice}
         onClose={handleCloseModal}
       />
@@ -81,6 +75,8 @@ export default KitchenSpices;
 const styles = ScaledSheet.create({
   container: {},
   header: {
+    position: 'relative',
+    overflow: 'hidden',
     backgroundColor: '#FFF',
     borderRadius: '16@s',
     paddingVertical: '12@s',
@@ -98,7 +94,7 @@ const styles = ScaledSheet.create({
   headerLabel: {
     fontSize: '20@s',
     fontWeight: '600',
-    color: colorsConstant.black_1,
+    color: '#FFF',
   },
   emptySpices: {
     fontSize: '14@s',
@@ -114,5 +110,19 @@ const styles = ScaledSheet.create({
     columnGap: '8@s',
     paddingVertical: '16@s',
     paddingHorizontal: '4@s',
+  },
+  backgroundImg: {
+    height: '60@s',
+    width: deviceWidth - 2 * scale(24),
+    position: 'absolute',
+    top: 0,
+    zIndex: -1,
+  },
+  blackCover: {
+    backgroundColor: '#00000060',
+    position: 'absolute',
+    height: '60@s',
+    width: deviceWidth - 2 * scale(24),
+    zIndex: -1,
   },
 });

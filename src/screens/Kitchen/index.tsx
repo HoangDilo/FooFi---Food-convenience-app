@@ -9,14 +9,9 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import colorsConstant from '@/constants/colors.constant';
-import HeaderTab from '@/components/HeaderTab';
 import {setCurrentRoute, setIsScrolling} from '@/store/reducers/system.reducer';
 import {TAB} from '@/constants/tabs.constant';
-import {
-  scale,
-  ScaledSheet,
-  verticalScale,
-} from 'react-native-size-matters/extend';
+import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import KitchenTools from './KitchenTools';
 import KitchenSpices from './KitchenSpices';
 import Typo from '@/components/Typo';
@@ -26,12 +21,13 @@ import QuestionCircle from '@/assets/icons/QuestionCircle';
 import KitchenIngredients from './KitchenIngredients';
 import FastImage from 'react-native-fast-image';
 import {deviceWidth} from '@/constants/device.constant';
-import BlackGradientWrapper from '@/components/BlackGradientWrapper';
+import {useQueryClient} from '@tanstack/react-query';
 
 const KitchenScreen = () => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
   const insets = useSafeAreaInsets();
+  const queryClient = useQueryClient();
 
   const contentOffsetY = useRef<number>(0);
 
@@ -54,6 +50,15 @@ const KitchenScreen = () => {
       dispatch(setIsScrolling(contentOffsetY.current > 120));
       dispatch(setCurrentRoute(TAB.KITCHEN));
     }, [dispatch]),
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      queryClient.refetchQueries({queryKey: ['list_tools']});
+      queryClient.refetchQueries({queryKey: ['list_spices']});
+      queryClient.refetchQueries({queryKey: ['list_ingredients']});
+      queryClient.refetchQueries({queryKey: ['user_tools']});
+    }, [queryClient]),
   );
 
   return (
