@@ -1,0 +1,138 @@
+{
+  "tabs_name": {
+    "home": "Trang chủ",
+    "other_chefs": "Chef khác",
+    "kitchen": "Bếp của tôi",
+    "chat_bot": "Co-Chef",
+    "my": "Cá nhân"
+  },
+  "daySession": {
+    "morning": "Buổi sáng",
+    "noon": "Buổi trưa",
+    "afternoon": "Buổi chiều",
+    "evening": "Buổi tối",
+    "night": "Bổi đêm"
+  },
+  "mealBySession": {
+    "morning": "Bữa sáng",
+    "noon": "Bữa trưa",
+    "afternoon": "Bữa xế",
+    "evening": "Bữa tối",
+    "night": "Bữa ăn đêm"
+  },
+  "meals": {
+    "breakfast": "Bữa sáng",
+    "lunch": "Bữa trưa",
+    "linner": "Bữa xế",
+    "dinner": "Bữa tối",
+    "supper": "Bữa ăn đêm"
+  },
+  "home": {
+    "recommend_for_you": "Món ăn đề xuất cho bạn",
+    "its_now": "Bây giờ là",
+    "you_want_other": "Bạn muốn món ăn khác?",
+    "find_your_dish": "Tìm bất kỳ món ăn nào",
+    "search": "Tìm kiếm",
+    "cooking_for": "Nấu món ăn cho",
+    "cooking_with_your_ingredients": "Nấu từ nguyên liệu sẵn có",
+    "you_dont_want_session": "Bạn không muốn nấu",
+    "recommend_posts": "Công thức nấu ăn từ các đầu bếp khác",
+    "other_post": "Các bài đăng khác"
+  },
+  "other_options": "Lựa chọn khác",
+  "see_more": "Xem thêm",
+  "kitchen": {
+    "title": "Quản lý bếp của bạn một cách dễ dàng!",
+    "kitchen_tools": "Dụng cụ nấu ăn",
+    "empty_tools": "Bạn chưa thêm dụng cụ, hãy thêm ngay nào",
+    "add_tools": "Thêm dụng cụ có trong bếp của bạn",
+    "kitchen_spices": "Gia vị",
+    "empty_spice": "Bạn chưa thêm gia vị, hãy thêm ngay nào",
+    "add_spice": "Thêm gia vị có trong bếp của bạn",
+    "empty_ingredient": "Bạn chưa thêm nguyên liệu nào, hãy thêm ngay nào",
+    "kitchen_ingredient": "Nguyên liệu",
+    "ok": "Ok",
+    "placeholder_search": "Tìm kiếm tên của {{value}}",
+    "select_ingredient": "Lựa chọn một nguyên liệu có trong bếp của bạn",
+    "select_amount": "Nhập số lượng của {{ingredient}}",
+    "confirm": "Xác nhận",
+    "confirm_content": "{{food}} sẽ được thêm vào!",
+    "quantity": "Số lượng",
+    "edit_modal_title": "Chỉnh sửa số lượng",
+    "placeholder_modal_edit": "Nhập số lượng mới"
+  },
+  "other_chefs": {
+    "post": "Tạo",
+    "tabs": {
+      "recommend": "Đề xuất",
+      "all": "Tất cả"
+    },
+    "likes": "likes"
+  },
+  "cancel": "Hủy",
+  "delete": "Xoá",
+  "add": "Thêm",
+  "next": "Tiếp",
+  "back": "Quay lại",
+  "confirm": "Xác nhận",
+  "close": "Đóng",
+  "save": "Lưu",
+  "pagination": "Hiển thị {{start}}~{{end}} {{name}} trên tổng số {{total}}",
+  "confirm_delete_title": "Xác nhận xóa bỏ",
+  "confirm_delete_desc": "{{value}} sẽ bị xoá bỏ, bạn chắc chứ?",
+  "time": {
+    "minute": "phút",
+    "hour": "giờ",
+    "just_now": "Vừa xong",
+    "ago": "trước"
+  },
+  "approved": "TIÊU CHUẨN",
+  "required": "yêu cầu",
+  "start_cooking": "Bắt đầu nấu",
+  "my": {
+    "sign_in": "Đăng nhập",
+    "sign_up": "Đăng ký",
+    "sign_in_description": "Đăng nhập để sử dụng các chức năng của FooFi",
+    "sign_up_description": "Tạo một tài khoản FooFi mới",
+    "email_placeholder": "Nhập địa chỉ email của bạn",
+    "password_placeholder": "Nhập mật khẩu",
+    "name_placeholder": "Nhập tên đầy đủ của bạn",
+    "mail": "Email",
+    "password": "Mật khẩu",
+    "repeat_password": "Nhập lại mật khẩu",
+    "name": "Họ và tên",
+    "or": "Hoặc",
+    "sign_in_google": "Đăng nhập bằng Google",
+    "dont_have_account": "Chưa có tài khoản?",
+    "already_have_account": "Bạn có tài khoản rồi?",
+    "create_account": "Tạo tài khoản mới",
+    "placeholder_name": "Nhập tên mới của bạn",
+    "placeholder_email": "Nhập email mới của bạn",
+    "history": "Lịch sử",
+    "settings": "Cài đặt",
+    "privacy": "Bảo mật",
+    "like_history": "Bài đăng bạn đã thích",
+    "post_history": "Bài đăng của bạn",
+    "language": "Ngôn ngữ",
+    "change_password": "Đổi mật khẩu",
+    "log_out": "Đăng xuất"
+  },
+  "toast": {
+    "login": "Vui lòng đăng nhập để tiếp tục",
+    "login_success": "Đăng nhập thành công",
+    "login_error": "Đăng nhập thất bại, vui lòng kiểm tra lại email và mật khẩu.",
+    "logout": "Bạn đã bị đăng xuất!",
+    "email_error": "Định dạng email không đúng!",
+    "password_error": "Mật khẩu phải có 1 chữ số và 1 ký tự đặc biệt!"
+  },
+  "languages": {
+    "vi": "Tiếng Việt",
+    "en": "Tiếng Anh"
+  },
+  "history": {
+    "like": "Bài đăng đã thích",
+    "post": "Bài đăng của bạn",
+    "delete_post": "Xoá bài đăng",
+    "delete_post_description": "Bạn có chắc muốn xoá bài đăng này? Sau khi xoá sẽ không thể khôi phục!"
+  }
+}

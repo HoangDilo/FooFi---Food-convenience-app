@@ -1,0 +1,53 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/Inter-Bold.otf",
+      "sha1": "6f4cbdd03575a42523e50e081224dcc8e693f52b"
+    },
+    {
+      "path": "src/assets/fonts/Inter-BoldItalic.otf",
+      "sha1": "1d478c5d35e6e0f8cf498e88a28f922186cbcfa4"
+    },
+    {
+      "path": "src/assets/fonts/Inter-ExtraBold.otf",
+      "sha1": "721b42448e9efacb14a73283f06322e92aa491cb"
+    },
+    {
+      "path": "src/assets/fonts/Inter-ExtraBoldItalic.otf",
+      "sha1": "ac09011716e46706ffff1b6381735f588616b6b4"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Italic.otf",
+      "sha1": "20aacb060d870e2d5b397c8acb939fbaf6cb98f5"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Light.otf",
+      "sha1": "271bac061c70e75f4200897c99b4c471c5fce9d6"
+    },
+    {
+      "path": "src/assets/fonts/Inter-LightItalic.otf",
+      "sha1": "263737f19d12d57d599e5afbadcea79a99a0301a"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Medium.otf",
+      "sha1": "544480e3ddc0f4837dbfc2e9d31cf0e42ef5bb8a"
+    },
+    {
+      "path": "src/assets/fonts/Inter-MediumItalic.otf",
+      "sha1": "4ff60ab9d7e0e79f02bd5c9066933c1e5e6e99bc"
+    },
+    {
+      "path": "src/assets/fonts/Inter-Regular.otf",
+      "sha1": "a4a1d042922d4e437e4e979b74cd75e269eb9513"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBold.otf",
+      "sha1": "d69aaaa0a3875e5183f6391339cdcd9d7bb8bb45"
+    },
+    {
+      "path": "src/assets/fonts/Inter-SemiBoldItalic.otf",
+      "sha1": "9f80ed366fd3917f000c407118753b3ae75c6ccc"
+    }
+  ]
+}
