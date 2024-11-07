@@ -4,7 +4,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import ModalRemake from '../ModalRemake';
 import Typo from '../Typo';
 import ItemSpiceSelect from './ItemSpiceSelect';
@@ -13,6 +13,7 @@ import {ScaledSheet, verticalScale} from 'react-native-size-matters/extend';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
 import SearchKitchen from '../SearchKitchen';
+import {useQueryClient} from '@tanstack/react-query';
 
 interface IModalAddKitchenSpicesProps {
   isVisible: boolean;
@@ -28,6 +29,7 @@ const ModalAddKitchenSpices = ({
   onSubmit,
 }: IModalAddKitchenSpicesProps) => {
   const {t, i18n} = useTranslation();
+  const queryClient = useQueryClient();
 
   const [listSpicesAdd, setListSpicesAdd] = useState<ISpice[]>([]);
   const [searchValue, setSearchValue] = useState('');
@@ -72,6 +74,10 @@ const ModalAddKitchenSpices = ({
   const handleChangeSearch = useCallback((value: string) => {
     setSearchValue(value);
   }, []);
+
+  useEffect(() => {
+    isVisible && queryClient.refetchQueries({queryKey: ['list_spices']});
+  }, [isVisible, queryClient]);
 
   return (
     <ModalRemake isVisible={isVisible}>

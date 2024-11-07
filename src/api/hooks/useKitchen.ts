@@ -1,4 +1,5 @@
 import {
+  keepPreviousData,
   useInfiniteQuery,
   useMutation,
   useQuery,
@@ -7,7 +8,7 @@ import {
 import kitchenService from '../services/kitchen.service';
 import {useCheckValidToken} from './useAuth';
 import {useMemo} from 'react';
-import {IKitchenToolsAvailable} from '@/types/kitchen.type';
+import {IKitchenToolsAvailable, ISpice} from '@/types/kitchen.type';
 
 export const useKitchenTool = () => {
   const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
@@ -62,8 +63,6 @@ export const useAddUserKitchenTool = () => {
     mutationFn,
     onMutate: tools => {
       const optimistic = tools;
-      console.log(optimistic);
-
       queryClient.setQueriesData({queryKey: ['user_tools']}, old => {
         const oldClone = JSON.parse(JSON.stringify(old));
         return [...oldClone, ...optimistic];
@@ -83,10 +82,94 @@ export const useAddUserKitchenTool = () => {
   });
 };
 
+export const useDeleteKitchenTool = () => {
+  const mutationFn = useCheckValidToken(kitchenService.deleteUserTool);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['delete_tools'],
+    mutationFn,
+    onMutate: toolId => {
+      let oldList: IKitchenToolsAvailable[] = [];
+      queryClient.setQueriesData({queryKey: ['user_tools']}, old => {
+        const oldClone = JSON.parse(
+          JSON.stringify(old),
+        ) as IKitchenToolsAvailable[];
+        oldList = oldClone;
+        return oldClone.filter(item => item.id !== toolId);
+      });
+      return {oldList};
+    },
+    onError: (result, variables, context) => {
+      queryClient.setQueriesData({queryKey: ['user_tools']}, () => {
+        return context?.oldList;
+      });
+    },
+  });
+};
+
 export const useUserKitchenSpices = () => {
   const queryFn = useCheckValidToken(kitchenService.getUserListKitchenSpices);
   return useQuery({
     queryKey: ['user_spices'],
     queryFn,
+  });
+};
+
+export const useAddUserKitchenSpice = () => {
+  const mutationFn = useCheckValidToken(kitchenService.addUserKitchenSpice);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['add_spices'],
+    mutationFn,
+    onMutate: spices => {
+      const optimistic = spices;
+      queryClient.setQueriesData({queryKey: ['user_spices']}, old => {
+        const oldClone = JSON.parse(JSON.stringify(old)) as ISpice[];
+        return [...oldClone, ...optimistic];
+      });
+      return {optimistic};
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueriesData({queryKey: ['user_spices']}, old => {
+        const oldClone = JSON.parse(JSON.stringify(old)) as ISpice[];
+        return oldClone.filter(
+          item => !context?.optimistic.some(itemOp => itemOp.id !== item.id),
+        );
+      });
+    },
+  });
+};
+
+export const useDeleteUserKitchenSpice = () => {
+  const mutationFn = useCheckValidToken(kitchenService.deleteUserSpice);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['delete_spice'],
+    mutationFn,
+    onMutate: spiceId => {
+      let oldList: ISpice[] = [];
+      queryClient.setQueriesData({queryKey: ['user_spices']}, old => {
+        const oldClone = JSON.parse(JSON.stringify(old)) as ISpice[];
+        oldList = oldClone;
+        return oldClone.filter(item => item.id !== spiceId);
+      });
+      return {oldList};
+    },
+    onError: (error, variables, context) => {
+      queryClient.setQueriesData({queryKey: ['user_spices']}, () => {
+        return context?.oldList;
+      });
+    },
+  });
+};
+
+export const useUserIngredients = (page: number) => {
+  const queryFunction = useCheckValidToken(
+    kitchenService.getUserListKitchenIngredients,
+  );
+  return useQuery({
+    queryKey: ['user_ingredients', page],
+    queryFn: () => queryFunction(page, 5),
+    placeholderData: keepPreviousData,
   });
 };

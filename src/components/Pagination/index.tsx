@@ -33,10 +33,11 @@ const Pagination = ({
     return currentPage * limit + 1;
   }, [currentPage, limit]);
   const endCount = useMemo(() => {
-    return currentPageItemCount < limit
-      ? currentPageItemCount
-      : currentPage * limit + limit;
-  }, [currentPage, currentPageItemCount, limit]);
+    return currentPageItemCount < limit &&
+      totalCount === (currentPage + 1) * limit
+      ? currentPage * limit + limit
+      : totalCount;
+  }, [currentPage, currentPageItemCount, limit, totalCount]);
 
   const ableGoPrevious = useMemo(() => currentPage > 0, [currentPage]);
 
@@ -44,6 +45,8 @@ const Pagination = ({
     () => (currentPage + 1) * limit < totalCount,
     [currentPage, limit, totalCount],
   );
+
+  console.log(ableGoPrevious);
 
   return (
     <View style={styles.pagination}>
@@ -67,7 +70,7 @@ const Pagination = ({
               },
             ],
           }}
-          onPress={() => ableGoPrevious && onGoPrevious}
+          onPress={() => ableGoPrevious && onGoPrevious()}
         />
         <IconXML
           icon={ableGoNext ? Caret : CaretDisabled}
@@ -88,6 +91,7 @@ const styles = ScaledSheet.create({
     gap: '12@s',
     justifyContent: 'flex-end',
     marginTop: '8@s',
+    paddingHorizontal: '12@s',
   },
   paginationText: {
     color: colorsConstant.gray_1,

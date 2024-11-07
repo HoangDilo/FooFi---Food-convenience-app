@@ -8,7 +8,12 @@ import IconXML from '@/components/IconXML';
 import {ISpice} from '@/types/kitchen.type';
 import ItemSpiceDisplay from './ItemSpiceDisplay';
 import ModalAddKitchenSpices from '@/components/ModalAddKitchenSpices';
-import {useKitchenSpice, useUserKitchenSpices} from '@/api/hooks/useKitchen';
+import {
+  useAddUserKitchenSpice,
+  useDeleteUserKitchenSpice,
+  useKitchenSpice,
+  useUserKitchenSpices,
+} from '@/api/hooks/useKitchen';
 import {deviceWidth} from '@/constants/device.constant';
 import FastImage from 'react-native-fast-image';
 import PlusWhite from '@/assets/icons/PlusWhite';
@@ -19,14 +24,26 @@ const KitchenSpices = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const {data: listSpices} = useKitchenSpice();
   const {data: userListSpices, isPending} = useUserKitchenSpices();
+  const {mutate: addSpices} = useAddUserKitchenSpice();
+  const {mutate: deleteSpices} = useDeleteUserKitchenSpice();
 
-  const handleAddListSpice = useCallback((listSpicesAdd: ISpice[]) => {}, []);
+  const handleAddListSpice = useCallback(
+    (listSpicesAdd: ISpice[]) => {
+      addSpices(listSpicesAdd);
+    },
+    [addSpices],
+  );
 
   const handleAddSpice = useCallback(() => {
     setIsOpenModal(true);
   }, []);
 
-  const handleRemoveSpice = useCallback((id: number) => {}, []);
+  const handleRemoveSpice = useCallback(
+    (id: number) => {
+      deleteSpices(id);
+    },
+    [deleteSpices],
+  );
 
   const handleCloseModal = useCallback(() => {
     setIsOpenModal(false);

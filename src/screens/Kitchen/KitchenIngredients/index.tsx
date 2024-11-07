@@ -5,14 +5,13 @@ import Typo from '@/components/Typo';
 import IconXML from '@/components/IconXML';
 import colorsConstant from '@/constants/colors.constant';
 import {useTranslation} from 'react-i18next';
-import PlusCircle from '@/assets/icons/PlusCircle';
 import {IIngredient} from '@/types/kitchen.type';
 import ModalAddKitchenIngredient from '@/components/ModalAddKitchenIngredient';
 import ItemIngredientDisplay from './ItemIngredientDisplay';
 import ModalConfirm from '@/components/ModalConfirm';
 import ModalEditIngredient from '@/components/ModalEditIngredient';
 import Pagination from '@/components/Pagination';
-import {useKitchenIngredient} from '@/api/hooks/useKitchen';
+import {useUserIngredients} from '@/api/hooks/useKitchen';
 import FastImage from 'react-native-fast-image';
 import {deviceWidth} from '@/constants/device.constant';
 import PlusWhite from '@/assets/icons/PlusWhite';
@@ -22,14 +21,16 @@ const PAGE_LIMIT = 5;
 const KitchenIngredients = () => {
   const {t, i18n} = useTranslation();
   const [isShowModalAdd, setIsShowModalAdd] = useState(false);
-  const [listIngredients, setListIngredient] = useState<IIngredient[]>([]);
   const [ingredientActing, setIngredientActing] = useState<IIngredient | null>(
     null,
   );
   const [isShowModalConfirm, setIsShowModalConfirm] = useState(false);
   const [isShowModalEdit, setIsShowModalEdit] = useState(false);
-  const [currentPage, setCurentPage] = useState(0);
-  const [totalCount, setTotalCount] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const {data: listIngredients} = useUserIngredients(currentPage);
+
+  console.log(listIngredients?.data);
 
   const ingredientInfoDisplay = useMemo(
     () =>
@@ -45,14 +46,8 @@ const KitchenIngredients = () => {
     setIsShowModalAdd(true);
   }, []);
 
-  const handleAddIngredientToList = useCallback(
-    (ingredient: IIngredient) => {
-      const listClone = JSON.parse(JSON.stringify(listIngredients));
-      listClone.push(ingredient);
-      setListIngredient(listClone);
-    },
-    [listIngredients],
-  );
+  const handleAddIngredientToList = useCallback((ingredient: IIngredient) => {},
+  []);
 
   const handleChooseEdit = useCallback((ingredient: IIngredient) => {
     setIngredientActing(ingredient);
@@ -65,12 +60,8 @@ const KitchenIngredients = () => {
   }, []);
 
   const handleConfirmDelete = useCallback(() => {
-    const listDeleted = listIngredients.filter(
-      item => item.id !== ingredientActing?.id,
-    );
-    setListIngredient(listDeleted);
     setIsShowModalConfirm(false);
-  }, [ingredientActing?.id, listIngredients]);
+  }, []);
 
   const handleEditIngredient = useCallback(
     (value: string) => {
@@ -83,11 +74,13 @@ const KitchenIngredients = () => {
       if (ingredientEdit) {
         ingredientEdit.quantity = parseFloat(value);
       }
-      setListIngredient(listClone);
+
       setIsShowModalEdit(false);
     },
     [ingredientActing?.id, listIngredients],
   );
+
+  console.log(currentPage);
 
   return (
     <View style={styles.mainContainer}>
@@ -107,9 +100,9 @@ const KitchenIngredients = () => {
         />
         <View style={styles.blackCover} />
       </View>
-      {listIngredients.length ? (
+      {listIngredients?.data.length ? (
         <View style={styles.listIngredients}>
-          {listIngredients.map(ingredient => (
+          {listIngredients.data.map(ingredient => (
             <ItemIngredientDisplay
               ingredient={ingredient}
               key={ingredient.id}
@@ -120,11 +113,11 @@ const KitchenIngredients = () => {
           <Pagination
             limit={PAGE_LIMIT}
             currentPage={currentPage}
-            totalCount={totalCount}
-            currentPageItemCount={listIngredients.length}
+            totalCount={listIngredients.totalItems}
+            currentPageItemCount={listIngredients.data.length}
             nameItem={t('kitchen.kitchen_ingredient').toLocaleLowerCase()}
-            onGoNext={() => setCurentPage(currentPage + 1)}
-            onGoPrevious={() => setCurentPage(currentPage - 1)}
+            onGoNext={() => setCurrentPage(currentPage + 1)}
+            onGoPrevious={() => setCurrentPage(currentPage - 1)}
           />
         </View>
       ) : (
@@ -189,7 +182,7 @@ const styles = ScaledSheet.create({
     color: colorsConstant.gray_1,
     marginVertical: '8@s',
     textAlign: 'right',
-    paddingHorizontal: '8@s',
+    paddingRight: '8@s',
   },
   backgroundImg: {
     height: '60@s',

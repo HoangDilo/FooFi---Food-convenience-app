@@ -33,4 +33,22 @@ export default {
   getUserListKitchenSpices(): Promise<ISpice[]> {
     return apiClientToken.get('/spice/user/spice/list');
   },
+  addUserKitchenSpice(spices: ISpice[]): Promise<ISpice[]> {
+    const spiceIds = spices.map(item => item.id);
+    return apiClientToken.post('/spice/user/spice', spiceIds);
+  },
+  deleteUserTool(toolId: number): Promise<IKitchenToolsAvailable> {
+    return apiClientToken.delete(`/tool/user/tool/${toolId}`);
+  },
+  deleteUserSpice(spiceId: number): Promise<ISpice> {
+    return apiClientToken.delete(`/spice/user/spice/${spiceId}`);
+  },
+  getUserListKitchenIngredients(
+    page: number,
+    size: number,
+  ): Promise<IPaginationResponse<IIngredient>> {
+    return apiClientToken.get(
+      `ingredient/user/ingredient/list?page=${page}&size=${size}`,
+    );
+  },
 };

@@ -10,6 +10,7 @@ import ItemToolDisplay from './ItemToolDisplay';
 import {useTranslation} from 'react-i18next';
 import {
   useAddUserKitchenTool,
+  useDeleteKitchenTool,
   useKitchenTool,
   useUserKitchenTool,
 } from '@/api/hooks/useKitchen';
@@ -24,6 +25,7 @@ const KitchenTools = () => {
   const dataTool = useKitchenTool();
   const {data, isPending} = useUserKitchenTool();
   const {mutate} = useAddUserKitchenTool();
+  const {mutate: deleteTool} = useDeleteKitchenTool();
 
   const handleAddTool = useCallback(() => {
     setIsOpenModalAddTools(true);
@@ -40,7 +42,12 @@ const KitchenTools = () => {
     [mutate],
   );
 
-  const handleRemoveTool = useCallback((id: number) => {}, []);
+  const handleRemoveTool = useCallback(
+    (id: number) => {
+      deleteTool(id);
+    },
+    [deleteTool],
+  );
 
   return (
     <View style={styles.toolsContainer}>
