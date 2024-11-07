@@ -123,7 +123,11 @@
     "login_error": "Login failed! Please check your email and password again.",
     "logout": "You just got logged out!",
     "email_error": "Invalid email format!",
-    "password_error": "Password must have at least 1 number and 1 special character!"
+    "password_error": "Password must have at least 1 number and 1 special character!",
+    "edit_ingredient_success": "Edit ingredient's quantity successfully!",
+    "edit_ingredient_error": "Edit ingredient's quantity fail!",
+    "add_ingredient_success": "Add new ingredient successfully!",
+    "add_ingredient_error": "Add ingredient fail!"
   },
   "languages": {
     "vi": "Vietnamese",

@@ -8,7 +8,14 @@ import {
 import kitchenService from '../services/kitchen.service';
 import {useCheckValidToken} from './useAuth';
 import {useMemo} from 'react';
-import {IKitchenToolsAvailable, ISpice} from '@/types/kitchen.type';
+import {
+  IIngredient,
+  IKitchenToolsAvailable,
+  IPaginationResponse,
+  ISpice,
+} from '@/types/kitchen.type';
+import Toast from 'react-native-toast-message';
+import {useTranslation} from 'react-i18next';
 
 export const useKitchenTool = () => {
   const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
@@ -171,5 +178,99 @@ export const useUserIngredients = (page: number) => {
     queryKey: ['user_ingredients', page],
     queryFn: () => queryFunction(page, 5),
     placeholderData: keepPreviousData,
+  });
+};
+
+export const useEditUserIngredient = (page: number) => {
+  const mutationFn = useCheckValidToken(kitchenService.editIngredientQuantity);
+  const queryClient = useQueryClient();
+  const {t} = useTranslation();
+
+  return useMutation({
+    mutationKey: ['edit_ingredient'],
+    mutationFn,
+    onMutate: payload => {
+      queryClient.setQueryData(['user_ingredients', page], old => {
+        const oldClone = JSON.parse(
+          JSON.stringify(old),
+        ) as IPaginationResponse<IIngredient>;
+        const ingredientFound = oldClone.data.find(
+          item => item.id === payload.id,
+        );
+        if (ingredientFound) {
+          ingredientFound.quantity = payload.quantity;
+        }
+        return oldClone;
+      });
+      return {quantity: payload.quantity};
+    },
+    onSuccess: () => {
+      Toast.show({
+        type: 'success',
+        text1: t('toast.edit_ingredient_success'),
+      });
+    },
+    onError: () => {
+      Toast.show({
+        type: 'error',
+        text1: t('toast.edit_ingredient_error'),
+      });
+    },
+  });
+};
+
+export const useAddUserIngredient = (lastPage: number, currentPage: number) => {
+  const mutationFn = useCheckValidToken(kitchenService.addUserIngredient);
+  const queryClient = useQueryClient();
+  const {t} = useTranslation();
+  return useMutation({
+    mutationKey: ['add_ingredient'],
+    mutationFn,
+    onMutate: ingredient => {
+      queryClient.setQueryData(['user_ingredients', lastPage], old => {
+        const oldClone = JSON.parse(
+          JSON.stringify(old),
+        ) as IPaginationResponse<IIngredient>;
+        oldClone.data.push(ingredient);
+        oldClone.totalItems = oldClone.totalItems + 1;
+        return oldClone;
+      });
+      queryClient.setQueriesData(
+        {queryKey: ['user_ingredients', currentPage]},
+        old => {
+          const oldClone = JSON.parse(
+            JSON.stringify(old),
+          ) as IPaginationResponse<IIngredient>;
+          oldClone.totalPages = oldClone.totalPages + 1;
+          return oldClone;
+        },
+      );
+      return {id: ingredient.id};
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries();
+      Toast.show({
+        type: 'success',
+        text1: t('toast.add_ingredient_success'),
+      });
+    },
+    onError: () => {
+      Toast.show({
+        type: 'error',
+        text1: t('toast.add_ingredient_error'),
+      });
+    },
+  });
+};
+
+export const useDeleteUserIngredient = (page: number) => {
+  const mutationFn = useCheckValidToken(kitchenService.deleteUserIngredient);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['delete_ingredient'],
+    mutationFn,
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['user_ingredients', page]});
+    },
   });
 };

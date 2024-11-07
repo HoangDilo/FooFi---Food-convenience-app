@@ -123,7 +123,11 @@
     "login_error": "Đăng nhập thất bại, vui lòng kiểm tra lại email và mật khẩu.",
     "logout": "Bạn đã bị đăng xuất!",
     "email_error": "Định dạng email không đúng!",
-    "password_error": "Mật khẩu phải có 1 chữ số và 1 ký tự đặc biệt!"
+    "password_error": "Mật khẩu phải có 1 chữ số và 1 ký tự đặc biệt!",
+    "edit_ingredient_success": "Sửa đổi số lượng thành công!",
+    "edit_ingredient_error": "Sửa đổi số lượng thất bại",
+    "add_ingredient_success": "Thêm mới nguyên liệu thành công",
+    "add_ingredient_error": "Thêm mới nguyên liệu thất bại"
   },
   "languages": {
     "vi": "Tiếng Việt",

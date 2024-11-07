@@ -21,6 +21,7 @@ import SearchKitchen from '../SearchKitchen';
 import {IIngredient} from '@/types/kitchen.type';
 import ItemIngredientSelect from './ItemIngredientSelect';
 import {useKitchenIngredient} from '@/api/hooks/useKitchen';
+import {useQueryClient} from '@tanstack/react-query';
 
 interface IModalAddKitchenIngredientProps {
   isVisible: boolean;
@@ -35,6 +36,7 @@ const ModalAddKitchenIngredient = ({
   onSubmit,
 }: IModalAddKitchenIngredientProps) => {
   const {t, i18n} = useTranslation();
+  const queryClient = useQueryClient();
 
   const [step, setStep] = useState<number>(0);
   const [searchValue, setSearchValue] = useState('');
@@ -129,6 +131,12 @@ const ModalAddKitchenIngredient = ({
   useEffect(() => {
     setAmount(0);
   }, [ingredientSelected]);
+
+  useEffect(() => {
+    if (isVisible) {
+      queryClient.refetchQueries({queryKey: ['list_ingredients']});
+    }
+  }, [isVisible]);
 
   return (
     <ModalRemake isVisible={isVisible}>

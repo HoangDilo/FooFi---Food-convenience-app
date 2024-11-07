@@ -33,11 +33,8 @@ const Pagination = ({
     return currentPage * limit + 1;
   }, [currentPage, limit]);
   const endCount = useMemo(() => {
-    return currentPageItemCount < limit &&
-      totalCount === (currentPage + 1) * limit
-      ? currentPage * limit + limit
-      : totalCount;
-  }, [currentPage, currentPageItemCount, limit, totalCount]);
+    return currentPage * limit + currentPageItemCount;
+  }, [currentPage, currentPageItemCount, limit]);
 
   const ableGoPrevious = useMemo(() => currentPage > 0, [currentPage]);
 
@@ -45,8 +42,6 @@ const Pagination = ({
     () => (currentPage + 1) * limit < totalCount,
     [currentPage, limit, totalCount],
   );
-
-  console.log(ableGoPrevious);
 
   return (
     <View style={styles.pagination}>

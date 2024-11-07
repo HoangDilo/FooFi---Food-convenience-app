@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next';
 
 const INPUTS = [
   {
-    key: 'email',
+    key: 'mail',
     content_type: 'emailAddress',
     placeholder_key: 'email_placeholder',
     secureTextEntry: false,

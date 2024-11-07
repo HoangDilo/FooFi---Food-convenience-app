@@ -1,8 +1,8 @@
 import {getAccessToken} from '@/utils/storage';
 import axios from 'axios';
 
-const BASE_URL = 'http://192.168.2.33:8080/api';
-// const BASE_URL = 'http://192.168.1.250:8080/api';
+// const BASE_URL = 'http://192.168.2.33:8080/api';
+const BASE_URL = 'http://192.168.1.250:8080/api';
 const TIME_OUT = 10000;
 const HEADERS = {
   'content-type': 'application/json',

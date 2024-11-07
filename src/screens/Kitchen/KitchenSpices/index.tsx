@@ -76,7 +76,11 @@ const KitchenSpices = () => {
               />
             ))
           ) : (
-            <ActivityIndicator style={styles.loadingIcon} />
+            <ActivityIndicator
+              style={styles.loadingIcon}
+              size={28}
+              color={colorsConstant.secondary}
+            />
           )}
         </View>
       ) : (

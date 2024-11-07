@@ -82,7 +82,11 @@ const KitchenTools = () => {
           )}
         </>
       ) : (
-        <ActivityIndicator style={styles.loadingIcon} />
+        <ActivityIndicator
+          style={styles.loadingIcon}
+          size={28}
+          color={colorsConstant.secondary}
+        />
       )}
 
       <ModalAddKitchenTools

@@ -18,7 +18,7 @@ export default {
     size: number,
   ): Promise<IPaginationResponse<IIngredient>> {
     return apiClientToken.get(
-      `ingredient/paginated-list?page=${page}&size=${size}`,
+      `ingredient/user/ingredient/not-added?page=${page}&size=${size}`,
     );
   },
   getUserListKitchenTools(): Promise<IKitchenToolsAvailable[]> {
@@ -48,7 +48,24 @@ export default {
     size: number,
   ): Promise<IPaginationResponse<IIngredient>> {
     return apiClientToken.get(
-      `ingredient/user/ingredient/list?page=${page}&size=${size}`,
+      `/ingredient/user/ingredient/list?page=${page}&size=${size}`,
     );
+  },
+  editIngredientQuantity(payload: {
+    id: number;
+    quantity: number;
+  }): Promise<IIngredient> {
+    console.log('abc');
+
+    return apiClientToken.put(`/ingredient/user/ingredient`, payload);
+  },
+  deleteUserIngredient(id: number): Promise<IIngredient> {
+    return apiClientToken.delete(`/ingredient/user/ingredient/${id}`);
+  },
+  addUserIngredient(ingredient: IIngredient): Promise<IIngredient> {
+    return apiClientToken.post('ingredient/user/ingredient', {
+      id: ingredient.id,
+      quantity: ingredient.quantity,
+    });
   },
 };

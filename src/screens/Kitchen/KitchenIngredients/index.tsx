@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import React, {useCallback, useMemo, useState} from 'react';
 import {scale, ScaledSheet} from 'react-native-size-matters/extend';
 import Typo from '@/components/Typo';
@@ -11,7 +11,12 @@ import ItemIngredientDisplay from './ItemIngredientDisplay';
 import ModalConfirm from '@/components/ModalConfirm';
 import ModalEditIngredient from '@/components/ModalEditIngredient';
 import Pagination from '@/components/Pagination';
-import {useUserIngredients} from '@/api/hooks/useKitchen';
+import {
+  useAddUserIngredient,
+  useDeleteUserIngredient,
+  useEditUserIngredient,
+  useUserIngredients,
+} from '@/api/hooks/useKitchen';
 import FastImage from 'react-native-fast-image';
 import {deviceWidth} from '@/constants/device.constant';
 import PlusWhite from '@/assets/icons/PlusWhite';
@@ -28,9 +33,13 @@ const KitchenIngredients = () => {
   const [isShowModalEdit, setIsShowModalEdit] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const {data: listIngredients} = useUserIngredients(currentPage);
-
-  console.log(listIngredients?.data);
+  const {data: listIngredients, isPending} = useUserIngredients(currentPage);
+  const {mutate: editIngredient} = useEditUserIngredient(currentPage);
+  const {mutate: addIngredient} = useAddUserIngredient(
+    listIngredients?.totalPages - 1,
+    currentPage,
+  );
+  const {mutate: deleteIngredient} = useDeleteUserIngredient(currentPage);
 
   const ingredientInfoDisplay = useMemo(
     () =>
@@ -46,8 +55,12 @@ const KitchenIngredients = () => {
     setIsShowModalAdd(true);
   }, []);
 
-  const handleAddIngredientToList = useCallback((ingredient: IIngredient) => {},
-  []);
+  const handleAddIngredientToList = useCallback(
+    (ingredient: IIngredient) => {
+      addIngredient(ingredient);
+    },
+    [addIngredient],
+  );
 
   const handleChooseEdit = useCallback((ingredient: IIngredient) => {
     setIngredientActing(ingredient);
@@ -60,27 +73,19 @@ const KitchenIngredients = () => {
   }, []);
 
   const handleConfirmDelete = useCallback(() => {
+    ingredientActing && deleteIngredient(ingredientActing?.id);
     setIsShowModalConfirm(false);
-  }, []);
+  }, [deleteIngredient, ingredientActing]);
 
   const handleEditIngredient = useCallback(
     (value: string) => {
-      const listClone = JSON.parse(
-        JSON.stringify(listIngredients),
-      ) as IIngredient[];
-      const ingredientEdit = listClone.find(
-        item => item.id === ingredientActing?.id,
-      );
-      if (ingredientEdit) {
-        ingredientEdit.quantity = parseFloat(value);
+      if (ingredientActing) {
+        editIngredient({id: ingredientActing.id, quantity: parseFloat(value)});
+        setIsShowModalEdit(false);
       }
-
-      setIsShowModalEdit(false);
     },
-    [ingredientActing?.id, listIngredients],
+    [editIngredient, ingredientActing],
   );
-
-  console.log(currentPage);
 
   return (
     <View style={styles.mainContainer}>
@@ -102,14 +107,22 @@ const KitchenIngredients = () => {
       </View>
       {listIngredients?.data.length ? (
         <View style={styles.listIngredients}>
-          {listIngredients.data.map(ingredient => (
-            <ItemIngredientDisplay
-              ingredient={ingredient}
-              key={ingredient.id}
-              onChooseEdit={() => handleChooseEdit(ingredient)}
-              onChooseDelete={() => handleChooseDelete(ingredient)}
+          {!isPending ? (
+            listIngredients.data.map(ingredient => (
+              <ItemIngredientDisplay
+                ingredient={ingredient}
+                key={ingredient.id}
+                onChooseEdit={() => handleChooseEdit(ingredient)}
+                onChooseDelete={() => handleChooseDelete(ingredient)}
+              />
+            ))
+          ) : (
+            <ActivityIndicator
+              style={styles.loadingIcon}
+              size={28}
+              color={colorsConstant.secondary}
             />
-          ))}
+          )}
           <Pagination
             limit={PAGE_LIMIT}
             currentPage={currentPage}
@@ -197,5 +210,9 @@ const styles = ScaledSheet.create({
     height: '60@s',
     width: deviceWidth - 2 * scale(24),
     zIndex: -1,
+  },
+  loadingIcon: {
+    paddingVertical: '16@s',
+    paddingHorizontal: '4@s',
   },
 });
