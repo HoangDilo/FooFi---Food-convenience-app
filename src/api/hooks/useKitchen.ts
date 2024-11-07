@@ -7,6 +7,7 @@ import {
 import kitchenService from '../services/kitchen.service';
 import {useCheckValidToken} from './useAuth';
 import {useMemo} from 'react';
+import {IKitchenToolsAvailable} from '@/types/kitchen.type';
 
 export const useKitchenTool = () => {
   const queryFn = useCheckValidToken(kitchenService.getListKitchenTools);
@@ -61,12 +62,24 @@ export const useAddUserKitchenTool = () => {
     mutationFn,
     onMutate: tools => {
       const optimistic = tools;
+      console.log(optimistic);
+
       queryClient.setQueriesData({queryKey: ['user_tools']}, old => {
-        return [...old, optimistic];
+        const oldClone = JSON.parse(JSON.stringify(old));
+        return [...oldClone, ...optimistic];
       });
       return {optimistic};
     },
-    onSuccess: () => {},
+    onError: (result, variables, context) => {
+      queryClient.setQueriesData({queryKey: ['user_tools']}, old => {
+        const oldClone = JSON.parse(
+          JSON.stringify(old),
+        ) as IKitchenToolsAvailable[];
+        return oldClone.filter(
+          item => !context?.optimistic.some(itemOp => itemOp.id === item.id),
+        );
+      });
+    },
   });
 };
 
