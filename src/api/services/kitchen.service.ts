@@ -55,8 +55,6 @@ export default {
     id: number;
     quantity: number;
   }): Promise<IIngredient> {
-    console.log('abc');
-
     return apiClientToken.put(`/ingredient/user/ingredient`, payload);
   },
   deleteUserIngredient(id: number): Promise<IIngredient> {

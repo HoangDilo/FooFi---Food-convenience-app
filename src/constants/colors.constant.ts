@@ -6,6 +6,7 @@ export default {
   gray_1: '#666666',
   gray_2: '#8a8a8a',
   gray_3: '#F0F0F0',
+  gray_4: '#aaa',
   black_1: '#1a1a1a',
   black_2: '#333333',
   transparent: '#00000000',

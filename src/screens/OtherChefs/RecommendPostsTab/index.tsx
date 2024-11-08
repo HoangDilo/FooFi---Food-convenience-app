@@ -1,9 +1,10 @@
 import {FlatList, RefreshControl} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ScaledSheet} from 'react-native-size-matters/extend';
 import {IPost} from '@/types/otherchefs.type';
 import ItemPostOtherChefs from '@/components/ItemPostOtherChefs';
 import colorsConstant from '@/constants/colors.constant';
+import SkeletonItemPost from '@/components/SkeletonItemPost';
 
 const posts: IPost[] = [
   {
@@ -225,6 +226,7 @@ const posts: IPost[] = [
 
 const RecommendPostsTab = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
@@ -233,21 +235,33 @@ const RecommendPostsTab = () => {
     }, 3000);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
   return (
-    <FlatList
-      contentContainerStyle={styles.flatListContainer}
-      data={posts}
-      keyExtractor={item => `${item.id}`}
-      renderItem={({item}) => <ItemPostOtherChefs post={item} />}
-      showsVerticalScrollIndicator={false}
-      refreshControl={
-        <RefreshControl
-          colors={[colorsConstant.primary]}
-          refreshing={isRefreshing}
-          onRefresh={handleRefresh}
+    <>
+      {!isLoading ? (
+        <FlatList
+          contentContainerStyle={styles.flatListContainer}
+          data={posts}
+          keyExtractor={item => `${item.id}`}
+          renderItem={({item}) => <ItemPostOtherChefs post={item} />}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              colors={[colorsConstant.primary]}
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+            />
+          }
         />
-      }
-    />
+      ) : (
+        <SkeletonItemPost numberItems={2} />
+      )}
+    </>
   );
 };
 

@@ -228,9 +228,16 @@ export const useAddUserIngredient = (lastPage: number, currentPage: number) => {
     mutationFn,
     onMutate: ingredient => {
       queryClient.setQueryData(['user_ingredients', lastPage], old => {
-        const oldClone = JSON.parse(
-          JSON.stringify(old),
-        ) as IPaginationResponse<IIngredient>;
+        const oldClone = old
+          ? (JSON.parse(
+              JSON.stringify(old),
+            ) as IPaginationResponse<IIngredient>)
+          : {
+              data: [],
+              currentPage: 0,
+              totalPages: 0,
+              totalItems: 0,
+            };
         oldClone.data.push(ingredient);
         oldClone.totalItems = oldClone.totalItems + 1;
         return oldClone;

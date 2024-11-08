@@ -47,9 +47,9 @@ const styles = ScaledSheet.create({
     width: '90%',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: '16@s',
-    paddingVertical: '12@s',
-    gap: '12@s',
+    paddingHorizontal: '12@s',
+    paddingVertical: '8@s',
+    gap: '8@s',
     borderWidth: 1.5,
   },
   toastSucess: {

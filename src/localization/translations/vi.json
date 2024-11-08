@@ -114,6 +114,9 @@
     "like_history": "Bài đăng bạn đã thích",
     "post_history": "Bài đăng của bạn",
     "language": "Ngôn ngữ",
+    "language_desc": "Đổi ngôn ngữ hiển thị và của món ăn",
+    "recommend_criteria": "Tiêu chí đề xuất",
+    "recommend_criteria_desc": "Tuỳ chỉnh cách hệ thống đề xuất món ăn",
     "change_password": "Đổi mật khẩu",
     "log_out": "Đăng xuất"
   },
@@ -127,7 +130,9 @@
     "edit_ingredient_success": "Sửa đổi số lượng thành công!",
     "edit_ingredient_error": "Sửa đổi số lượng thất bại",
     "add_ingredient_success": "Thêm mới nguyên liệu thành công",
-    "add_ingredient_error": "Thêm mới nguyên liệu thất bại"
+    "add_ingredient_error": "Thêm mới nguyên liệu thất bại",
+    "edit_profile_success": "Sửa đổi thông tin thành công!",
+    "edit_profile_error": "Sửa thông tin thất bại, vui lòng thử lại!"
   },
   "languages": {
     "vi": "Tiếng Việt",
@@ -138,5 +143,14 @@
     "post": "Bài đăng của bạn",
     "delete_post": "Xoá bài đăng",
     "delete_post_description": "Bạn có chắc muốn xoá bài đăng này? Sau khi xoá sẽ không thể khôi phục!"
+  },
+  "add_post": {
+    "title": "Add new post",
+    "label_dish_name": "Dish name",
+    "dish_name_placeholder": "Enter your dish name",
+    "dish_image": "Dish image",
+    "no_image": "No image selected",
+    "dish_desc": "Description",
+    "dish_desc_placeholder": "Describe this dish"
   }
 }

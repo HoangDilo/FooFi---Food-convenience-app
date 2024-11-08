@@ -20,6 +20,8 @@ import {setUserInfo} from '@/store/reducers/my.reducer';
 import storage from '@react-native-firebase/storage';
 import moment from 'moment';
 import Toast from 'react-native-toast-message';
+import {isValidUri} from '@/utils/image';
+import authService from '@/api/services/auth.service';
 
 interface IModalRemake {
   isVisible: boolean;
@@ -32,51 +34,61 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
 
   const handleConfirm = useCallback(async () => {
     Keyboard.dismiss();
     dispatch(
       setUserInfo({
+        ...user_info,
         avatar_url: avatarUrl,
         name: name,
-        email: email,
       }),
     );
     onClose();
-    //update api
     try {
-      const imageName = avatarUrl.substring(avatarUrl.lastIndexOf('/') + 1);
-      const fileName = `${imageName}_${moment().format()}`;
-      const refImage = storage().ref(`/foofi/avatars/${fileName}`);
-      const task = refImage.putFile(avatarUrl);
-      await task;
-      Toast.show({
-        type: 'success',
-        text1: 'Upload success',
-      });
+      if (isValidUri(avatarUrl)) {
+        const imageName = avatarUrl.substring(avatarUrl.lastIndexOf('/') + 1);
+        const fileName = `${imageName}_${moment().format()}`;
+        const refImage = storage().ref(`/foofi/avatars/${fileName}`);
+        if (avatarUrl !== user_info.avatar_url) {
+          const task = refImage.putFile(avatarUrl);
+          await task;
+          const url = await storage()
+            .ref(`/foofi/avatars/${fileName}`)
+            .getDownloadURL();
+          await authService.updateUserInfo({
+            ...user_info,
+            avatar_url: url,
+            name,
+          });
+        } else {
+          await authService.updateUserInfo({
+            ...user_info,
+            name,
+          });
+        }
+        Toast.show({
+          type: 'success',
+          text1: t('toast.edit_profile_success'),
+        });
+      }
     } catch (error) {
       Toast.show({
         type: 'error',
-        text1: 'Upload failed',
+        text1: t('toast.edit_profile_error'),
       });
     }
-  }, [avatarUrl, dispatch, email, name, onClose]);
+  }, [avatarUrl, dispatch, name, onClose, t, user_info]);
 
   const handleCancel = useCallback(() => {
     onClose();
     setName(user_info.name);
-    setEmail(user_info.email);
     setAvatarUrl(user_info.avatar_url);
-  }, [onClose, user_info.avatar_url, user_info.email, user_info.name]);
+  }, [onClose, user_info.avatar_url, user_info.name]);
 
   const handleChangeName = useCallback((value: string) => {
     setName(value);
-  }, []);
-
-  const handleChangeEmail = useCallback((value: string) => {
-    setEmail(value);
   }, []);
 
   const handlePressAvatar = useCallback(() => {
@@ -90,7 +102,6 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
 
   useEffect(() => {
     setName(user_info.name);
-    setEmail(user_info.email);
     setAvatarUrl(user_info.avatar_url);
   }, [user_info]);
 
@@ -101,7 +112,14 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
         keyboardVerticalOffset={verticalScale(48)}>
         <View style={styles.container}>
           <Pressable onPress={handlePressAvatar} style={styles.avatarWrapper}>
-            <FastImage source={{uri: avatarUrl}} style={styles.avatar} />
+            <FastImage
+              source={
+                isValidUri(avatarUrl)
+                  ? {uri: avatarUrl}
+                  : require('@/assets/images/defaultAvatar.png')
+              }
+              style={styles.avatar}
+            />
           </Pressable>
           <Typo style={styles.label}>{t('my.name')}</Typo>
           <TextInput
@@ -112,16 +130,6 @@ const ModalEditProfile = ({isVisible, onClose}: IModalRemake) => {
             textContentType="name"
             value={name}
             onChangeText={handleChangeName}
-          />
-          <Typo style={styles.label}>{t('my.email')}</Typo>
-          <TextInput
-            style={styles.input}
-            placeholder={t('my.placeholder_email')}
-            placeholderTextColor={colorsConstant.skeleton_1}
-            cursorColor={colorsConstant.primary}
-            textContentType="name"
-            value={email}
-            onChangeText={handleChangeEmail}
           />
           <View style={styles.buttonContainer}>
             <Typo onPress={handleCancel} style={styles.cancel}>

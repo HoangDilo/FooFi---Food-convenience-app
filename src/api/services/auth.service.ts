@@ -1,4 +1,9 @@
-import {ILoginPayload, ILoginResponse, IUserInfo} from '@/types/auth.type';
+import {
+  ILoginPayload,
+  ILoginResponse,
+  IUserInfo,
+  IUserLanguage,
+} from '@/types/auth.type';
 import {apiClient, apiClientToken} from '..';
 
 export default {
@@ -10,5 +15,11 @@ export default {
   },
   getUserInfo(): Promise<IUserInfo> {
     return apiClientToken.get('/user/info');
+  },
+  updateUserInfo(payload: IUserInfo): Promise<IUserInfo> {
+    return apiClientToken.post('/user/info', payload);
+  },
+  updateUserLanguage(payload: IUserLanguage): Promise<IUserInfo> {
+    return apiClientToken.post('/user/info/language', payload);
   },
 };

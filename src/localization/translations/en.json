@@ -114,6 +114,9 @@
     "like_history": "Liked posts",
     "post_history": "Your posts",
     "language": "Language",
+    "language_desc": "Change the display language and dishes",
+    "recommend_criteria": "Recommendation criteria",
+    "recommend_criteria_desc": "Customize the way dishes are recommended",
     "change_password": "Change password",
     "log_out": "Log out"
   },
@@ -127,7 +130,9 @@
     "edit_ingredient_success": "Edit ingredient's quantity successfully!",
     "edit_ingredient_error": "Edit ingredient's quantity fail!",
     "add_ingredient_success": "Add new ingredient successfully!",
-    "add_ingredient_error": "Add ingredient fail!"
+    "add_ingredient_error": "Add ingredient fail!",
+    "edit_profile_success": "Edit profile successfully!",
+    "edit_profile_error": "Edit profile failed! Please try again"
   },
   "languages": {
     "vi": "Vietnamese",
@@ -138,5 +143,8 @@
     "post": "Your posts",
     "delete_post": "Delete post",
     "delete_post_description": "Are you sure you want to delete this post? After deleted, it can not be recovered"
+  },
+  "add_post": {
+    "title": "Add new post",
   }
 }

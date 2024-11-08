@@ -26,6 +26,10 @@ import {Easing} from 'react-native-reanimated';
 import {setIsBottomSheetShowing} from '@/store/reducers/system.reducer';
 import {deviceHeight} from '@/constants/device.constant';
 import CheckOrange from '@/assets/icons/CheckOrange';
+import {isValidUri} from '@/utils/image';
+import authService from '@/api/services/auth.service';
+import {ELanguage} from '@/enums/user.enum';
+import Gear from '@/assets/icons/Gear';
 
 const HISTORIES = [
   {
@@ -49,8 +53,11 @@ const MyProfile = () => {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isShowBottomSheet, setIsShowBottomSheet] = useState(false);
+  const [isShowBottomSheetCriteria, setIsShowBottomSheetCriteria] =
+    useState(false);
 
   const bottomSheetRef = useRef<BottomSheet | null>(null);
+  const bottomSheetCriteriaRef = useRef<BottomSheet | null>(null);
 
   const snapPoints = useMemo(() => [160 + insets.bottom], [insets.bottom]);
 
@@ -77,6 +84,16 @@ const MyProfile = () => {
     [dispatch],
   );
 
+  const handleChangeBSCriteria = useCallback(
+    (index: number) => {
+      dispatch(setIsBottomSheetShowing(index !== -1));
+      setTimeout(() => {
+        setIsShowBottomSheetCriteria(index !== -1);
+      }, 200);
+    },
+    [dispatch],
+  );
+
   const handleEditProfile = useCallback(() => {
     setIsOpenModal(true);
   }, []);
@@ -93,14 +110,20 @@ const MyProfile = () => {
     setIsShowBottomSheet(true);
   }, [dispatch]);
 
+  const handlePressCriteria = useCallback(() => {
+    dispatch(setIsBottomSheetShowing(true));
+    setIsShowBottomSheetCriteria(true);
+  }, [dispatch]);
+
   const handleLogout = useCallback(() => {
     dispatch(setAccessToken(''));
     setAccessTokenStorage('');
   }, [dispatch]);
 
   const handleChangeLanguage = useCallback(
-    (language: string) => {
+    async (language: ELanguage) => {
       i18n.changeLanguage(language);
+      await authService.updateUserLanguage({language});
       bottomSheetRef?.current?.close();
     },
     [i18n, isOpenModal],
@@ -117,11 +140,15 @@ const MyProfile = () => {
         keyboardShouldPersistTaps="handled">
         <View style={[styles.header, {paddingTop: insets.top + scale(20)}]}>
           <FastImage
-            source={{uri: user_info.avatar_url}}
+            source={
+              isValidUri(user_info.avatar_url)
+                ? {uri: user_info.avatar_url}
+                : require('@/assets/images/defaultAvatar.png')
+            }
             style={styles.avatar}
           />
           <Typo style={styles.name}>{user_info.name}</Typo>
-          <Typo style={styles.email}>{user_info.email}</Typo>
+          <Typo style={styles.email}>{user_info.mail}</Typo>
         </View>
         <IconXML
           icon={Edit}
@@ -160,13 +187,36 @@ const MyProfile = () => {
               height={scale(28)}
               style={styles.optionIcon}
             />
-            <Typo style={styles.labelOption}>{t('my.language')}</Typo>
+            <View>
+              <Typo style={[styles.labelOption, {fontSize: scale(16)}]}>
+                {t('my.language')}
+              </Typo>
+              <Typo style={styles.optionDescription}>
+                {t('my.language_desc')}
+              </Typo>
+            </View>
             <IconXML
               icon={LANGUAGE.find(lang => lang.key === i18n.language)?.icon}
               width={scale(28)}
               height={scale(28)}
               style={styles.iconCaret}
             />
+          </Pressable>
+          <Pressable style={styles.itemOptions} onPress={handlePressCriteria}>
+            <IconXML
+              icon={Gear}
+              width={scale(28)}
+              height={scale(28)}
+              style={styles.optionIcon}
+            />
+            <View>
+              <Typo style={[styles.labelOption, {fontSize: scale(16)}]}>
+                {t('my.recommend_criteria')}
+              </Typo>
+              <Typo style={styles.optionDescription}>
+                {t('my.recommend_criteria_desc')}
+              </Typo>
+            </View>
           </Pressable>
           <Typo style={styles.titleOptions}>{t('my.privacy')}</Typo>
           <Pressable
@@ -180,9 +230,7 @@ const MyProfile = () => {
             />
             <Typo style={styles.labelOption}>{t('my.change_password')}</Typo>
           </Pressable>
-          <Pressable
-            style={[styles.itemOptions, {marginTop: scale(12)}]}
-            onPress={handleLogout}>
+          <Pressable style={styles.itemOptions} onPress={handleLogout}>
             <IconXML
               icon={Logout}
               width={scale(28)}
@@ -218,7 +266,7 @@ const MyProfile = () => {
               <Pressable
                 key={lang.key}
                 style={styles.language}
-                onPress={() => handleChangeLanguage(lang.key)}>
+                onPress={() => handleChangeLanguage(lang.key as ELanguage)}>
                 <IconXML
                   icon={lang.icon}
                   width={scale(36)}
@@ -236,6 +284,25 @@ const MyProfile = () => {
                 )}
               </Pressable>
             ))}
+          </BottomSheet>
+        </View>
+      )}
+      {isShowBottomSheetCriteria && (
+        <View style={styles.bottomSheetContainer}>
+          <BottomSheet
+            ref={bottomSheetCriteriaRef}
+            snapPoints={snapPoints}
+            backdropComponent={renderBackdrop}
+            animationConfigs={{
+              duration: 200,
+              easing: Easing.inOut(Easing.quad),
+            }}
+            handleIndicatorStyle={{backgroundColor: colorsConstant.secondary}}
+            onChange={index => handleChangeBSCriteria(index)}
+            style={styles.bottomSheetView}
+            containerHeight={136}
+            enablePanDownToClose>
+            <View></View>
           </BottomSheet>
         </View>
       )}
@@ -298,13 +365,14 @@ const styles = ScaledSheet.create({
   itemOptions: {
     borderRadius: '8@s',
     backgroundColor: '#FFF',
-    shadowColor: colorsConstant.shadow_2,
+    shadowColor: '#00000040',
     elevation: 4,
     shadowOffset: {
       width: 3,
       height: 3,
     },
-    padding: '16@s',
+    paddingHorizontal: '16@s',
+    height: '60@s',
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -315,6 +383,11 @@ const styles = ScaledSheet.create({
     fontSize: '18@s',
     fontWeight: '500',
     color: colorsConstant.black_2,
+  },
+  optionDescription: {
+    fontSize: '12@s',
+    fontWeight: 400,
+    color: colorsConstant.gray_1,
   },
   iconCaret: {
     marginLeft: 'auto',

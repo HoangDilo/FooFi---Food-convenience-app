@@ -1,14 +1,27 @@
+import {ELanguage} from '@/enums/user.enum';
 import {IUserInfo} from '@/types/auth.type';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-const initState = {
+interface IInitState {
+  access_token: string;
+  user_info: {
+    id: number;
+    mail: string;
+    name: string;
+    avatar_url: string;
+    language: ELanguage;
+  };
+  language: '';
+}
+
+const initState: IInitState = {
   access_token: '',
   user_info: {
     id: 0,
     mail: '',
     name: '',
     avatar_url: '',
-    language: '',
+    language: ELanguage.EN,
   },
   language: '',
 };

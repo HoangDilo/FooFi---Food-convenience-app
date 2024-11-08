@@ -16,3 +16,7 @@ export interface IUserInfo {
   avatar_url: string;
   language: ELanguage;
 }
+
+export interface IUserLanguage {
+  language: ELanguage;
+}
